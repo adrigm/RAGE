@@ -19,9 +19,6 @@
     <Filter Include="Archivos de código fuente\Core">
       <UniqueIdentifier>{0b32d24a-7299-4d3c-a8e1-b516a2f0f24f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de código fuente\Core\Win32">
-      <UniqueIdentifier>{cf30f198-2575-46ed-b10b-381e41751a18}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\RAGE\Core\App.hpp">
@@ -48,6 +45,9 @@
     <ClInclude Include="..\..\..\include\RAGE\Core\ConfigCreate.hpp">
       <Filter>Archivos de encabezado\Core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\AssetManager.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\RAGE\Core\App.cpp">
@@ -60,6 +60,9 @@
       <Filter>Archivos de código fuente\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\RAGE\Core\ConfigCreate.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\AssetManager.cpp">
       <Filter>Archivos de código fuente\Core</Filter>
     </ClCompile>
   </ItemGroup>

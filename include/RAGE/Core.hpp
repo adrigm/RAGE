@@ -6,6 +6,7 @@
 #include <RAGE/Core/StringUtil.hpp>
 #include <RAGE/Core/ConfigReader.hpp>
 #include <RAGE/Core/ConfigCreate.hpp>
+#include <RAGE/Core/AssetManager.hpp>
 #include <RAGE/Core/App.hpp>
 
 #endif // RAGE_CORE_HPP

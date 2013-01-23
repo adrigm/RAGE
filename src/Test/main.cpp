@@ -7,6 +7,14 @@ int main(int argc, char **argv)
 
 	anApp->RegisterExecutableDir(argc, argv);
 
+	ra::AssetManager* am = ra::AssetManager::Instance();
+	am->SetPath("Data");
+
+	am->GetSoundBuffer("sonido.ogg");
+
+	ra::App::Release;
+	anApp = 0;
+
 	system("PAUSE");
 
 	return 0;

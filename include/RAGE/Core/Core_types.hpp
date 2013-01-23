@@ -27,9 +27,10 @@ enum StatusType {
 };
 
 
-// Forward declare GGE classes provided
+// Forward declare RAGE Core classes provided
 class ConfigReader;
 class ConfigCreate;
+class AssetManager;
 class App;
 
 // Foward declare TmxMap
