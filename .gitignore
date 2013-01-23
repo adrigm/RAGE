@@ -66,6 +66,7 @@ _ReSharper*/
 boost/
 SFML/
 log.txt
+*.opensdf
 
 #codelite
 *.db

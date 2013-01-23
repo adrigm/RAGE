@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RAGE", "RAGE\RAGE.vcxproj", "{E962D404-0B8A-4DCC-A863-B3D58063F0CD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test", "Test\Test.vcxproj", "{B02864C4-0C4E-402C-A7A8-2B4BEBAD3353}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E962D404-0B8A-4DCC-A863-B3D58063F0CD} = {E962D404-0B8A-4DCC-A863-B3D58063F0CD}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E962D404-0B8A-4DCC-A863-B3D58063F0CD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E962D404-0B8A-4DCC-A863-B3D58063F0CD}.Debug|Win32.Build.0 = Debug|Win32
+		{E962D404-0B8A-4DCC-A863-B3D58063F0CD}.Release|Win32.ActiveCfg = Release|Win32
+		{E962D404-0B8A-4DCC-A863-B3D58063F0CD}.Release|Win32.Build.0 = Release|Win32
+		{B02864C4-0C4E-402C-A7A8-2B4BEBAD3353}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B02864C4-0C4E-402C-A7A8-2B4BEBAD3353}.Debug|Win32.Build.0 = Debug|Win32
+		{B02864C4-0C4E-402C-A7A8-2B4BEBAD3353}.Release|Win32.ActiveCfg = Release|Win32
+		{B02864C4-0C4E-402C-A7A8-2B4BEBAD3353}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
