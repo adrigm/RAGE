@@ -10,10 +10,11 @@ int main(int argc, char **argv)
 	ra::AssetManager* am = ra::AssetManager::Instance();
 	am->SetPath("Data");
 
-	am->GetSoundBuffer("sonido.ogg");
+	ra::ConfigReader* conf = am->GetConfig("../window.cfg");
 
-	ra::App::Release;
-	anApp = 0;
+	std::cout << conf->GetUint32("window", "width", 0) << std::endl;
+
+	am->Cleanup();
 
 	system("PAUSE");
 

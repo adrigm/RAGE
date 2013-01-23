@@ -65,6 +65,8 @@ public:
 	void DeleteConfig(const std::string& theName);
 	void DeleteConfig(const ra::ConfigReader* theConfig);
 
+	void Cleanup();
+
 private:
 	// Variables
 	///////////////////////////////////////////////////////////////////////////

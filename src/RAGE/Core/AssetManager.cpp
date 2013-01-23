@@ -12,6 +12,12 @@ AssetManager* AssetManager::ms_instance = 0;
 AssetManager::AssetManager()
 	: app(ra::App::Instance())
 	, m_masterDir(app->GetExecutableDir())
+	, m_textures()
+	, m_images()
+	, m_fonts()
+	, m_sounds()
+	, m_music()
+	, m_configs()
 {
 }
 
@@ -477,6 +483,57 @@ void AssetManager::DeleteConfig(const ra::ConfigReader* theConfig)
 	}
 
 	app->log << "AssetManager::DeleteConfig() La dirección no corresponde a una configuración cargada" << std::endl;
+}
+
+void AssetManager::Cleanup()
+{
+	std::map<std::string, sf::Texture*>::const_iterator textIt;
+	for (textIt = m_textures.begin(); textIt != m_textures.end(); textIt++)
+	{
+		delete textIt->second;
+		app->log << "AssetManager::Cleanup() Eliminado archivo " << textIt->first << std::endl;
+	}
+	m_textures.clear();
+
+	std::map<std::string, sf::Image*>::const_iterator imgIt;
+	for (imgIt = m_images.begin(); imgIt != m_images.end(); imgIt++)
+	{
+		delete imgIt->second;
+		app->log << "AssetManager::Cleanup() Eliminado archivo " << imgIt->first << std::endl;
+	}
+	m_images.clear();
+
+	std::map<std::string, sf::Font*>::const_iterator fonIt;
+	for (fonIt = m_fonts.begin(); fonIt != m_fonts.end(); fonIt++)
+	{
+		delete fonIt->second;
+		app->log << "AssetManager::Cleanup() Eliminado archivo " << fonIt->first << std::endl;
+	}
+	m_fonts.clear();
+
+	std::map<std::string, sf::SoundBuffer*>::const_iterator souIT;
+	for (souIT = m_sounds.begin(); souIT != m_sounds.end(); souIT++)
+	{
+		delete souIT->second;
+		app->log << "AssetManager::Cleanup() Eliminado archivo " << souIT->first << std::endl;
+	}
+	m_sounds.clear();
+
+	std::map<std::string, sf::Music*>::const_iterator muIt;
+	for (muIt = m_music.begin(); muIt != m_music.end(); muIt++)
+	{
+		delete muIt->second;
+		app->log << "AssetManager::Cleanup() Eliminado archivo " << muIt->first << std::endl;
+	}
+	m_music.clear();
+
+	std::map<std::string, ra::ConfigReader*>::const_iterator conIt;
+	for (conIt = m_configs.begin(); conIt != m_configs.end(); conIt++)
+	{
+		delete conIt->second;
+		app->log << "AssetManager::Cleanup() Eliminado archivo " << conIt->first << std::endl;
+	}
+	m_configs.clear();
 }
 
 } // namespace ra
