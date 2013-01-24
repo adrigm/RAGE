@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <RAGE/Core/Export.hpp>
 #include <RAGE/Config.hpp>
+#include <RAGE/Core/Core_types.hpp>
 
 namespace ra
 {
@@ -74,6 +75,8 @@ public:
 
 	void SetTitle(const std::string theTitle);
 
+	void SetFirstScene(ra::Scene* theScene);
+
 	/**
 	 * Ejecuta la aplicación, pone en marcha el GameLoop
 	 *
@@ -82,7 +85,13 @@ public:
 	int Run();
 
 protected:
-	 void PreInit();
+	void CreateWindow();
+
+	void Init();
+
+	void GameLoop();
+
+	void Cleanup();
 		 
 private:
 	// Variables
@@ -99,6 +108,12 @@ private:
 	ra::Uint32 m_windowStyle;
 	/// Opciones de video de la ventana
 	sf::VideoMode m_videoMode;
+	/// Puntero al AssetManager
+	ra::AssetManager *m_assetManager;
+	// Puntero al SceneManager
+	ra::SceneManager *m_sceneManager;
+	// Puntero a la escena inicial
+	ra::Scene* m_initialScene;
 
 	/**
 	 * Constructor de la Aplicación su única función es crear el archivo log

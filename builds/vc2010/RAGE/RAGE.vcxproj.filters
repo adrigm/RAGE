@@ -48,6 +48,12 @@
     <ClInclude Include="..\..\..\include\RAGE\Core\AssetManager.hpp">
       <Filter>Archivos de encabezado\Core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\Scene.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\SceneManager.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\RAGE\Core\App.cpp">
@@ -63,6 +69,12 @@
       <Filter>Archivos de código fuente\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\RAGE\Core\AssetManager.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\Scene.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\SceneManager.cpp">
       <Filter>Archivos de código fuente\Core</Filter>
     </ClCompile>
   </ItemGroup>

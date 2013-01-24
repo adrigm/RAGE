@@ -161,60 +161,60 @@ namespace ra
     return anResult;
   }
 
-  bool ConfigReader::LoadFromFile(const std::string theFilename)
-  {
-    bool anResult = false;
-    char anLine[MAX_CHARS];
-    std::string anSection;
-    unsigned long anCount = 1;
+bool ConfigReader::LoadFromFile(const std::string theFilename)
+{
+	bool anResult = false;
+	char anLine[MAX_CHARS];
+	std::string anSection;
+	unsigned long anCount = 1;
 
-    // Let the log know about the file we are about to read in
-    app->log << "ConfigReader:Read(" << theFilename << ") opening..." << std::endl;
+	// Let the log know about the file we are about to read in
+	app->log << "ConfigReader:Read(" << theFilename << ") opening..." << std::endl;
 
-    // Attempt to open the file
-    FILE* anFile = fopen(theFilename.c_str(), "r");
+	// Attempt to open the file
+	FILE* anFile = fopen(theFilename.c_str(), "r");
 
-    // Read from the file if successful
-    if(NULL != anFile)
-    {
-      // Keep reading from configuration file until we reach the end of file marker
-      while(!feof(anFile))
-      {
-        // Get the first line from the file
-        if(fgets(anLine, MAX_CHARS, anFile) == NULL)
-        {
-          // Log the failure to read a line from the file if not at the end of the file
-          if(!feof(anFile))
-          {
-           app->log << "[error] ConfigReader::Read(" << anFile << ") error reading line " << anCount << std::endl;
-          }
-          // Exit our while loop, were done!
-          break;
-        }
-        else
-        {
-          // Parse the line
-          anSection = ParseLine(anLine, anCount, anSection);
-        }
+	// Read from the file if successful
+	if(NULL != anFile)
+	{
+		// Keep reading from configuration file until we reach the end of file marker
+		while(!feof(anFile))
+		{
+			// Get the first line from the file
+			if(fgets(anLine, MAX_CHARS, anFile) == NULL)
+			{
+				// Log the failure to read a line from the file if not at the end of the file
+				if(!feof(anFile))
+				{
+					app->log << "[error] ConfigReader::Read(" << anFile << ") error reading line " << anCount << std::endl;
+				}
+				// Exit our while loop, were done!
+				break;
+			}
+			else
+			{
+				// Parse the line
+				anSection = ParseLine(anLine, anCount, anSection);
+			}
 
-        // Increment our Line counter
-        anCount++;
-      }
+			// Increment our Line counter
+			anCount++;
+		}
 
-      // Don't forget to close the file
-      fclose(anFile);
+		// Don't forget to close the file
+		fclose(anFile);
 
-      // Set success result
-      anResult = true;
-    }
-    else
-    {
-     app->log << "[error] ConfigReader::Read(" << theFilename << ") error opening file" << std::endl;
-    }
+		// Set success result
+		anResult = true;
+	}
+	else
+	{
+		app->log << "[error] ConfigReader::Read(" << theFilename << ") error opening file" << std::endl;
+	}
 
-    // Return anResult of true if successful, false otherwise
-    return anResult;
-  }
+	// Return anResult of true if successful, false otherwise
+	return anResult;
+}
 
   ConfigReader& ConfigReader::operator=(const ConfigReader& theRight)
   {

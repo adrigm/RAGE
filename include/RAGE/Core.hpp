@@ -8,5 +8,7 @@
 #include <RAGE/Core/ConfigCreate.hpp>
 #include <RAGE/Core/AssetManager.hpp>
 #include <RAGE/Core/App.hpp>
+#include <RAGE/Core/Scene.hpp>
+#include <RAGE/Core/SceneManager.hpp>
 
 #endif // RAGE_CORE_HPP

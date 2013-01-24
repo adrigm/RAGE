@@ -31,6 +31,8 @@ enum StatusType {
 class ConfigReader;
 class ConfigCreate;
 class AssetManager;
+class Scene;
+class SceneManager;
 class App;
 
 // Foward declare TmxMap

@@ -22,6 +22,11 @@ public:
 	void PutSection(const std::string& section);
 
 	void PutValue(const std::string& key, const std::string& value);
+	void PutValue(const std::string& key, bool value);
+	void PutValue(const std::string& key, float value);
+	void PutValue(const std::string& key, int value);
+	void PutValue(const std::string& key, unsigned int value);
+	void PutValue(const std::string& key, long value);
 
 	void PutComment(const std::string& comment);
 

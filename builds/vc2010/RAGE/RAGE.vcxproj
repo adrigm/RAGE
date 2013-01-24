@@ -19,6 +19,8 @@
     <ClInclude Include="..\..\..\include\RAGE\Core\ConfigReader.hpp" />
     <ClInclude Include="..\..\..\include\RAGE\Core\Core_types.hpp" />
     <ClInclude Include="..\..\..\include\RAGE\Core\Export.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\Scene.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\SceneManager.hpp" />
     <ClInclude Include="..\..\..\include\RAGE\Core\StringUtil.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -26,6 +28,8 @@
     <ClCompile Include="..\..\..\src\RAGE\Core\AssetManager.cpp" />
     <ClCompile Include="..\..\..\src\RAGE\Core\ConfigCreate.cpp" />
     <ClCompile Include="..\..\..\src\RAGE\Core\ConfigReader.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\Scene.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\SceneManager.cpp" />
     <ClCompile Include="..\..\..\src\RAGE\Core\StringUtil.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

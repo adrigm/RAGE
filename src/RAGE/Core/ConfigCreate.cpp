@@ -32,6 +32,30 @@ void ConfigCreate::PutValue(const std::string& key, const std::string& value)
 	file << key << "=" << value << std::endl;
 }
 
+void ConfigCreate::PutValue(const std::string& key, bool value)
+{
+	file << key << "=" << value << std::endl;
+}
+void ConfigCreate::PutValue(const std::string& key, float value)
+{
+	file << key << "=" << value << std::endl;
+}
+
+void ConfigCreate::PutValue(const std::string& key, int value)
+{
+	file << key << "=" << value << std::endl;
+}
+
+void ConfigCreate::PutValue(const std::string& key, unsigned int value)
+{
+	file << key << "=" << value << std::endl;
+}
+
+void ConfigCreate::PutValue(const std::string& key, long value)
+{
+	file << key << "=" << value << std::endl;
+}
+
 void ConfigCreate::PutComment(const std::string& comment)
 {
 	file << "# " << comment << std::endl;
