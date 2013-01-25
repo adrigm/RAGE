@@ -25,10 +25,10 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/Graphics/Shape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Err.hpp>
+#include <RAGE/Core/Shape.hpp>
 #include <cmath>
 
 
@@ -46,7 +46,7 @@ namespace
 }
 
 
-namespace sf
+namespace ra
 {
 ////////////////////////////////////////////////////////////
 Shape::~Shape()
@@ -154,8 +154,8 @@ m_textureRect     (),
 m_fillColor       (255, 255, 255),
 m_outlineColor    (255, 255, 255),
 m_outlineThickness(0),
-m_vertices        (TrianglesFan),
-m_outlineVertices (TrianglesStrip),
+m_vertices        (sf::TrianglesFan),
+m_outlineVertices (sf::TrianglesStrip),
 m_insideBounds    (),
 m_bounds          ()
 {
@@ -250,17 +250,17 @@ void Shape::updateOutline()
         unsigned int index = i + 1;
 
         // Get the two segments shared by the current point
-        Vector2f p0 = (i == 0) ? m_vertices[count].position : m_vertices[index - 1].position;
-        Vector2f p1 = m_vertices[index].position;
-        Vector2f p2 = m_vertices[index + 1].position;
+        sf::Vector2f p0 = (i == 0) ? m_vertices[count].position : m_vertices[index - 1].position;
+        sf::Vector2f p1 = m_vertices[index].position;
+        sf::Vector2f p2 = m_vertices[index + 1].position;
 
         // Compute their normal
-        Vector2f n1 = computeNormal(p0, p1);
-        Vector2f n2 = computeNormal(p1, p2);
+        sf::Vector2f n1 = computeNormal(p0, p1);
+        sf::Vector2f n2 = computeNormal(p1, p2);
 
         // Combine them to get the extrusion direction
         float factor = 1.f + (n1.x * n2.x + n1.y * n2.y);
-        Vector2f normal = -(n1 + n2) / factor;
+        sf::Vector2f normal = -(n1 + n2) / factor;
 
         // Update the outline points
         m_outlineVertices[i * 2 + 0].position = p1;
