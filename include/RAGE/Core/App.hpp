@@ -78,6 +78,15 @@ public:
 	void SetFirstScene(ra::Scene* theScene);
 
 	/**
+	 * Obtiene el tiempo pasado en cada ciclo del programa.
+	 *
+	 * @return	The update time.
+	 */
+	sf::Time GetUpdateTime(void) const;
+
+	sf::Time GetTotalTime(void) const;
+
+	/**
 	 * Ejecuta la aplicación, pone en marcha el GameLoop
 	 *
 	 * @return Devuelve el código de salida de la aplicación
@@ -114,6 +123,12 @@ private:
 	ra::SceneManager *m_sceneManager;
 	// Puntero a la escena inicial
 	ra::Scene* m_initialScene;
+	/// Reloj que obtiene el tiempo pasado en cada loop
+	sf::Clock m_updateClock;
+	/// Almacena el tiempo pasado en cada bucle
+	sf::Time m_updateTime;
+	/// Almacena el tiempo total de ejecución
+	sf::Time m_totalTime;
 
 	/**
 	 * Constructor de la Aplicación su única función es crear el archivo log

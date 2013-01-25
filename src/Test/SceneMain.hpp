@@ -9,19 +9,25 @@ public:
 	SceneMain(ra::SceneID theID);
 	~SceneMain();
 
-	virtual void Init() ;
+	void Init() ;
 
-	virtual void Update() ;
+	void Update() ;
 
-	virtual void Event(sf::Event theEvent) ;
+	void Event(sf::Event theEvent) ;
 
-	virtual void Resume();
+	void Resume();
 
-	virtual void Pause();
+	void Pause();
+
+	void Draw();
 
 	virtual void Cleanup() ;
 
 private:
+	ra::App* app;
+	ra::SceneManager* sm;
+	ra::AssetManager* am;
+	sf::Sprite sp;
 }; // SceneMain
 
 #endif // SCENE_MAIN

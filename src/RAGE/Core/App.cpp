@@ -24,6 +24,9 @@ App::App()
 	, m_windowStyle(sf::Style::Default)
 	, m_videoMode(DEFAULT_VIDEO_WIDTH, DEFAULT_VIDEO_HEIGHT, DEFAULT_VIDEO_BPP)
 	, m_initialScene(0)
+	, m_updateClock()
+	, m_updateTime()
+	, m_totalTime()
 {
 	// Se crea el archivo de log
 	log.open("rage.log");
@@ -112,6 +115,42 @@ void App::SetFirstScene(ra::Scene* theScene)
 	{
 		log << "[warn]Ya se había establecido una escena inicial" << std::endl;
 	}
+}
+
+sf::Time App::GetUpdateTime() const
+{
+	return m_updateTime;
+}
+
+sf::Time App::GetTotalTime() const
+{
+	return m_totalTime;
+}
+
+int App::Run()
+{
+	// Comprobamos que se ha llamado a RegisterExecutableDir para establecer la ruta del ejecutable
+	if (m_executableDir == "")
+	{
+		log << "[ERROR] No se ha definido la ruta del ejecutable. ";
+		log << "LLamar a App::RegisterExecutableDir() antes que a App::Run()";
+		log << std::endl;
+
+		return ra::StatusAppInitFailed;
+	}
+
+	// Cambiamos los aplicacion a ejecutandose
+	m_running = true;
+
+	CreateWindow();
+
+	Init();
+
+	GameLoop();
+
+	Cleanup();
+
+	return m_exitCode;
 }
 
 void App::CreateWindow()
@@ -219,6 +258,11 @@ void App::GameLoop()
 			} // switch (event.Type)
 		} // while (window.GetEvent(event))
 
+		// Obtenemos el tiempo pasado en cada ciclo
+		m_updateTime = m_updateClock.restart();
+		// Almacenamos el tiempo total
+		m_totalTime += m_updateTime;
+
 		// Llamamos al método Update() de la escena activa
 		m_sceneManager->UpdateScene();
 
@@ -253,32 +297,6 @@ void App::Cleanup()
 	ra::AssetManager::Release();
 
 	log << "App::Cleanup() Completado" << std::endl;
-}
-
-int App::Run()
-{
-	// Comprobamos que se ha llamado a RegisterExecutableDir para establecer la ruta del ejecutable
-	if (m_executableDir == "")
-	{
-		log << "[ERROR] No se ha definido la ruta del ejecutable. ";
-		log << "LLamar a App::RegisterExecutableDir() antes que a App::Run()";
-		log << std::endl;
-
-		return ra::StatusAppInitFailed;
-	}
-
-	// Cambiamos los aplicacion a ejecutandose
-	m_running = true;
-
-	CreateWindow();
-
-	Init();
-
-	GameLoop();
-
-	Cleanup();
-
-	return m_exitCode;
 }
 
 } // namespace ra

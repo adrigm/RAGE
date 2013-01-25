@@ -1,4 +1,3 @@
-#include <iostream> // Quitar
 #include <RAGE/Core.hpp>
 #include "SceneMain.hpp"
 
