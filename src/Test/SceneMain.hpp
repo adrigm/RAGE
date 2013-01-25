@@ -28,6 +28,10 @@ private:
 	ra::SceneManager* sm;
 	ra::AssetManager* am;
 	ra::Sprite sp;
+	ra::Text tx;
+	ra::CircleShape cir;
+	ra::RectangleShape rect;
+	ra::ConvexShape polygon;
 }; // SceneMain
 
 #endif // SCENE_MAIN
