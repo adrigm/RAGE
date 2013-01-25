@@ -54,6 +54,27 @@
     <ClInclude Include="..\..\..\include\RAGE\Core\SceneManager.hpp">
       <Filter>Archivos de encabezado\Core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\CircleShape.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\ConvexShape.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\RectangleShape.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\Shape.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\Sprite.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\Text.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\SceneGraph.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\RAGE\Core\App.cpp">
@@ -75,6 +96,27 @@
       <Filter>Archivos de código fuente\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\RAGE\Core\SceneManager.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\CircleShape.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\ConvexShape.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\RectangleShape.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\Shape.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\Sprite.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\Text.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\SceneGraph.cpp">
       <Filter>Archivos de código fuente\Core</Filter>
     </ClCompile>
   </ItemGroup>

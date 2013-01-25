@@ -34,6 +34,13 @@ class AssetManager;
 class Scene;
 class SceneManager;
 class App;
+class SceneGraph;
+class Sprite;
+class Text;
+class Shape;
+class CircleShape;
+class RectangleShape;
+class ConvexShape;
 
 // Foward declare TmxMap
 

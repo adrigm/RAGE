@@ -27,7 +27,7 @@ private:
 	ra::App* app;
 	ra::SceneManager* sm;
 	ra::AssetManager* am;
-	sf::Sprite sp;
+	ra::Sprite sp;
 }; // SceneMain
 
 #endif // SCENE_MAIN

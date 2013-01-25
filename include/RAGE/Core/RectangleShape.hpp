@@ -1,0 +1,80 @@
+#ifndef RAGE_CORE_RECTANGLESHAPE_HPP
+#define RAGE_CORE_RECTANGLESHAPE_HPP
+
+////////////////////////////////////////////////////////////
+// Headers
+////////////////////////////////////////////////////////////
+#include <RAGE/Core/Export.hpp>
+#include <RAGE/Core/Shape.hpp>
+
+
+namespace ra
+{
+////////////////////////////////////////////////////////////
+/// \brief Specialized shape representing a rectangle
+///
+////////////////////////////////////////////////////////////
+class RAGE_CORE_API RectangleShape : public ra::Shape
+{
+public :
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Default constructor
+    ///
+    /// \param size Size of the rectangle
+    ///
+    ////////////////////////////////////////////////////////////
+    explicit RectangleShape(const sf::Vector2f& size = sf::Vector2f(0, 0));
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Set the size of the rectangle
+    ///
+    /// \param size New size of the rectangle
+    ///
+    /// \see getSize
+    ///
+    ////////////////////////////////////////////////////////////
+    void setSize(const sf::Vector2f& size);
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Get the size of the rectangle
+    ///
+    /// \return Size of the rectangle
+    ///
+    /// \see setSize
+    ///
+    ////////////////////////////////////////////////////////////
+    const sf::Vector2f& getSize() const;
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Get the number of points defining the shape
+    ///
+    /// \return Number of points of the shape
+    ///
+    ////////////////////////////////////////////////////////////
+    virtual unsigned int getPointCount() const;
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Get a point of the shape
+    ///
+    /// The result is undefined if \a index is out of the valid range.
+    ///
+    /// \param index Index of the point to get, in range [0 .. getPointCount() - 1]
+    ///
+    /// \return Index-th point of the shape
+    ///
+    ////////////////////////////////////////////////////////////
+    virtual sf::Vector2f getPoint(unsigned int index) const;
+
+private :
+
+    ////////////////////////////////////////////////////////////
+    // Member data
+    ////////////////////////////////////////////////////////////
+    sf::Vector2f m_size; ///< Size of the rectangle
+};
+
+} // namespace ra
+
+
+#endif // RAGE_CORE_RECTANGLESHAPE_HPP
