@@ -41,6 +41,7 @@ class Shape;
 class CircleShape;
 class RectangleShape;
 class ConvexShape;
+class Camera;
 
 // Foward declare TmxMap
 

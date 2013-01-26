@@ -7,6 +7,7 @@
 #include <RAGE/Core/ConfigCreate.hpp>
 #include <RAGE/Core/SceneManager.hpp>
 #include <RAGE/Core/Scene.hpp>
+#include <RAGE/Core/Camera.hpp>
 #include <RAGE/Core/App.hpp>
 
 namespace ra
@@ -171,10 +172,6 @@ void App::CreateWindow()
 			m_videoMode.width = confFile.GetUint32("window", "width", DEFAULT_VIDEO_WIDTH);
 			m_videoMode.height = confFile.GetUint32("window", "height", DEFAULT_VIDEO_HEIGHT);
 			m_videoMode.bitsPerPixel = confFile.GetUint32("window", "bpp", DEFAULT_VIDEO_BPP);
-			if(!m_videoMode.isValid())
-			{
-				m_videoMode = sf::VideoMode(DEFAULT_VIDEO_WIDTH, DEFAULT_VIDEO_HEIGHT, DEFAULT_VIDEO_BPP);
-			}
 		}
 		vsync = (confFile.GetBool("window", "vsync", true));
 	}
@@ -189,6 +186,7 @@ void App::CreateWindow()
 		conf.PutValue("fullscreen", false);
 		conf.PutValue("vsync", true);
 		conf.Close();
+		vsync = true;
 	}
 
 	window.create(m_videoMode, m_title, m_windowStyle);
@@ -230,6 +228,10 @@ void App::Init()
 		Quit(ra::StatusAppInitFailed);
 	}
 
+	// Creamos la cámara
+	m_camera = ra::Camera::Instance();
+	m_camera->SetDefaultCamera();
+
 	log << "App::Init() Completado" << std::endl;
 }
 
@@ -263,6 +265,10 @@ void App::GameLoop()
 		// Almacenamos el tiempo total
 		m_totalTime += m_updateTime;
 
+		// Actualizamos la cámara
+		m_camera->Update();
+		window.setView(*m_camera);
+
 		// Llamamos al método Update() de la escena activa
 		m_sceneManager->UpdateScene();
 
@@ -277,6 +283,8 @@ void App::GameLoop()
 		{
 			// Cambiamos el puntero de la escena activa
 			m_sceneManager->ChangeScene(m_sceneManager->mNextScene);
+			// Reseteamos la cámara
+			m_camera->SetDefaultCamera();
 		}
 
 	} // while (IsRunning() && window.IsOpened())

@@ -27,6 +27,7 @@ private:
 	ra::App* app;
 	ra::SceneManager* sm;
 	ra::AssetManager* am;
+	ra::Camera* cam;
 	ra::Sprite sp;
 	ra::Text tx;
 	ra::CircleShape cir;

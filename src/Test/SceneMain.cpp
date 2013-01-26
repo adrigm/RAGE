@@ -16,6 +16,7 @@ void SceneMain::Init()
 	app = ra::App::Instance();
 	sm = ra::SceneManager::Instance();
 	am = ra::AssetManager::Instance();
+	cam = ra::Camera::Instance();
 	am->SetPath("Data");
 
 	sp.setTexture(*am->GetTexture("indiana.png"));
@@ -38,18 +39,31 @@ void SceneMain::Init()
 	polygon.setOutlineColor(sf::Color::Magenta);
 	polygon.setOutlineThickness(-5);
 	polygon.setPosition(10, 20);
+
 }
 
 void SceneMain::Update()
 {
-	std::cout << app->GetTotalTime().asSeconds() << std::endl;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	{
+		cam->move(-5.f, 0.f);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	{
+		cam->move(5.f, 0.f);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	{
+		cam->move(0.f, -5.f);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	{
+		cam->move(0.f, 5.f);
+	}
 }
 
 void SceneMain::Event(sf::Event theEvent)
 {
-	if (theEvent.type == sf::Event::KeyPressed && theEvent.key.code == sf::Keyboard::Space)
-	{
-	}
 }
 
 void SceneMain::Resume()
@@ -67,7 +81,14 @@ void SceneMain::Cleanup()
 void SceneMain::Draw()
 {
 	m_app->window.clear(sf::Color(145, 204, 220));
-	m_app->window.draw(sp);
+	if (cam->GetRect().intersects(sp.getLocalBounds()))
+	{
+		m_app->window.draw(sp);
+	}
+	else
+	{
+		std::cout << "No me dibujo\n";
+	}
 	m_app->window.draw(tx);
 	m_app->window.draw(cir);
 	m_app->window.draw(rect);

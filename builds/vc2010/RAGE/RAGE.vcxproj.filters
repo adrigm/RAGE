@@ -75,6 +75,9 @@
     <ClInclude Include="..\..\..\include\RAGE\Core\SceneGraph.hpp">
       <Filter>Archivos de encabezado\Core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\Camera.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\RAGE\Core\App.cpp">
@@ -117,6 +120,9 @@
       <Filter>Archivos de código fuente\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\RAGE\Core\SceneGraph.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\Camera.cpp">
       <Filter>Archivos de código fuente\Core</Filter>
     </ClCompile>
   </ItemGroup>

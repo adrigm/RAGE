@@ -15,6 +15,7 @@
     <ClInclude Include="..\..\..\include\RAGE\Core.hpp" />
     <ClInclude Include="..\..\..\include\RAGE\Core\App.hpp" />
     <ClInclude Include="..\..\..\include\RAGE\Core\AssetManager.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\Camera.hpp" />
     <ClInclude Include="..\..\..\include\RAGE\Core\CircleShape.hpp" />
     <ClInclude Include="..\..\..\include\RAGE\Core\ConfigCreate.hpp" />
     <ClInclude Include="..\..\..\include\RAGE\Core\ConfigReader.hpp" />
@@ -33,6 +34,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\src\RAGE\Core\App.cpp" />
     <ClCompile Include="..\..\..\src\RAGE\Core\AssetManager.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\Camera.cpp" />
     <ClCompile Include="..\..\..\src\RAGE\Core\CircleShape.cpp" />
     <ClCompile Include="..\..\..\src\RAGE\Core\ConfigCreate.cpp" />
     <ClCompile Include="..\..\..\src\RAGE\Core\ConfigReader.cpp" />

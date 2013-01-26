@@ -5,6 +5,7 @@
 #include <RAGE/Core/Export.hpp>
 #include <RAGE/Core/Core_types.hpp>
 #include <RAGE/Core/App.hpp>
+#include <list>
 
 namespace ra
 {
@@ -50,6 +51,14 @@ public:
 
 	virtual void Cleanup() = 0;
 
+	void AddObject(ra::SceneGraph* theGraph);
+	void QuitObject(ra::SceneGraph* theGraph);
+	void DeleteObject(ra::SceneGraph* theGraph);
+
+	void AddObjects(const std::vector<ra::SceneGraph*>& theList);
+	void QuitObjects(const std::vector<ra::SceneGraph*>& theList);
+	void DeleteObjects(const std::vector<ra::SceneGraph*>& theList);
+
 protected:
 	/// Puntero a la aplicación padre
 	ra::App* m_app;
@@ -63,6 +72,8 @@ protected:
 
 
 private:
+	// Puntero a la camara
+	ra::Camera *m_camera;
 	/// Representa el id único de la escena
 	const SceneID m_ID;
 	/// Comprueba si cleanup debe ser llamado
@@ -73,6 +84,8 @@ private:
 	bool m_paused;
 	/// Color de fondo de la escena
 	sf::Color m_colorBack;
+	/// Lista de Actores a dibujar
+	std::list<ra::SceneGraph*> m_sceneGraph;
 
 }; // class Scene
 

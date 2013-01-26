@@ -17,5 +17,6 @@
 #include <RAGE/Core/CircleShape.hpp>
 #include <RAGE/Core/RectangleShape.hpp>
 #include <RAGE/Core/ConvexShape.hpp>
+#include <RAGE/Core/Camera.hpp>
 
 #endif // RAGE_CORE_HPP

@@ -129,6 +129,8 @@ private:
 	sf::Time m_updateTime;
 	/// Almacena el tiempo total de ejecución
 	sf::Time m_totalTime;
+	/// Puntero a la cámara
+	ra::Camera* m_camera;
 
 	/**
 	 * Constructor de la Aplicación su única función es crear el archivo log
