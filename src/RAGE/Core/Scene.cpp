@@ -71,50 +71,23 @@ void Scene::Draw()
 	}
 }
 
-void Scene::AddObject(ra::SceneGraph* theGraph)
+void Scene::AddGraph(ra::SceneGraph& theGraph)
 {
 	std::list<ra::SceneGraph*>::const_iterator it;
-	it = std::find(m_sceneGraph.begin(), m_sceneGraph.end(), theGraph);
+	it = std::find(m_sceneGraph.begin(), m_sceneGraph.end(), &theGraph);
 	if (it == m_sceneGraph.end())
-		m_sceneGraph.push_back(theGraph);
+		m_sceneGraph.push_back(&theGraph);
 }
 
-void Scene::QuitObject(ra::SceneGraph* theGraph)
+void Scene::QuitGraph(ra::SceneGraph& theGraph)
 {
-	m_sceneGraph.remove(theGraph);
+	m_sceneGraph.remove(&theGraph);
 }
 
-void Scene::DeleteObject(ra::SceneGraph* theGraph)
+void Scene::DeleteGraph(ra::SceneGraph& theGraph)
 {
-	m_sceneGraph.remove(theGraph);
-	delete theGraph;
-}
-
-void Scene::AddObjects(const std::vector<ra::SceneGraph*>& theList)
-{
-	std::vector<ra::SceneGraph*>::const_iterator it;
-	for (it = theList.begin(); it != theList.end(); it++)
-	{
-		AddObject(*it);
-	}
-}
-
-void Scene::QuitObjects(const std::vector<ra::SceneGraph*>& theList)
-{
-	std::vector<ra::SceneGraph*>::const_iterator it;
-	for (it = theList.begin(); it != theList.end(); it++)
-	{
-		QuitObject(*it);
-	}
-}
-
-void Scene::DeleteObjects(const std::vector<ra::SceneGraph*>& theList)
-{
-	std::vector<ra::SceneGraph*>::const_iterator it;
-	for (it = theList.begin(); it != theList.end(); it++)
-	{
-		DeleteObject(*it);
-	}
+	m_sceneGraph.remove(&theGraph);
+	delete &theGraph;
 }
 
 

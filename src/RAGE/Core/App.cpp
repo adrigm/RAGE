@@ -304,6 +304,12 @@ void App::Cleanup()
 	// Eliminamos el AssetManager
 	ra::AssetManager::Release();
 
+	// Hacemos visible el cursor
+	window.setMouseCursorVisible(true);
+
+	// Cerramos la ventana
+	window.close();
+
 	log << "App::Cleanup() Completado" << std::endl;
 }
 

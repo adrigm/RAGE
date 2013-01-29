@@ -51,13 +51,9 @@ public:
 
 	virtual void Cleanup() = 0;
 
-	void AddObject(ra::SceneGraph* theGraph);
-	void QuitObject(ra::SceneGraph* theGraph);
-	void DeleteObject(ra::SceneGraph* theGraph);
-
-	void AddObjects(const std::vector<ra::SceneGraph*>& theList);
-	void QuitObjects(const std::vector<ra::SceneGraph*>& theList);
-	void DeleteObjects(const std::vector<ra::SceneGraph*>& theList);
+	void AddGraph(ra::SceneGraph& theGraph);
+	void QuitGraph(ra::SceneGraph& theGraph);
+	void DeleteGraph(ra::SceneGraph& theGraph);
 
 protected:
 	/// Puntero a la aplicación padre

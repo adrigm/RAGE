@@ -105,7 +105,7 @@ sf::Texture* AssetManager::GetTextureFromImage(const std::string& theName, const
 	it = m_textures.find(theName);
 	if (it != m_textures.end())
 	{
-		app->log << "AssetManager::GetTexture() " << theName << " usando archivo existente" << std::endl;
+		app->log << "AssetManager::GetTextureFromImage() " << theName << " usando archivo existente" << std::endl;
 		return it->second;
 	}
 
@@ -113,7 +113,7 @@ sf::Texture* AssetManager::GetTextureFromImage(const std::string& theName, const
 	sf::Texture *texture = new sf::Texture();
 	if(!texture->loadFromImage(*theImage, theRect))
 	{
-		app->log << "[error] AssetManager::GetTexture() " << theName << " no se ha podido cargar" << std::endl;
+		app->log << "[error] AssetManager::GetTextureFromImage() " << theName << " no se ha podido cargar" << std::endl;
 		texture->create(1, 1);
 		return texture;
 	}

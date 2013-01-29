@@ -52,35 +52,6 @@ public:
 	 */
 	void RemoveAllInactiveScene();
 
-	/**
-	 * Llama el método Event() de la escena activa
-	 *
-	 * @param theEvent representa a un evento del sistema
-	 */
-	void EventScene(sf::Event theEvent);
-
-	/**
-	 * Llama el método Draw() de la escena activa
-	 */
-	void DrawScene();
-
-	/**
-	 * Llama al método Update() de la escena activa
-	 */
-	void UpdateScene();
-
-	/**
-	 * Llama al método Resume de la escena activa
-	 */
-	void ResumeScene();
-
-	/**
-	 * Llama al método Pause de la escena activa
-	 */
-	void PauseScene();
-
-	bool HandleChangeScene(); 
-
 protected:
 	// Puntero a la aplicación
 	ra::App* m_app;
@@ -110,6 +81,35 @@ private:
 	 * a los métodos Cleanup() de las escenas y de eleminarlas de la memoria
 	 */
 	void RemoveAllScene();
+
+	/**
+	 * Llama el método Event() de la escena activa
+	 *
+	 * @param theEvent representa a un evento del sistema
+	 */
+	void EventScene(sf::Event theEvent);
+
+	/**
+	 * Llama el método Draw() de la escena activa
+	 */
+	void DrawScene();
+
+	/**
+	 * Llama al método Update() de la escena activa
+	 */
+	void UpdateScene();
+
+	/**
+	 * Llama al método Resume de la escena activa
+	 */
+	void ResumeScene();
+
+	/**
+	 * Llama al método Pause de la escena activa
+	 */
+	void PauseScene();
+
+	bool HandleChangeScene(); 
 
 	SceneManager();
 	~SceneManager();

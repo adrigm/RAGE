@@ -21,9 +21,15 @@
     <ClCompile Include="..\..\..\src\Test\SceneMain.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\Test\SceneMenu.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\Test\SceneMain.hpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Test\SceneMenu.hpp">
       <Filter>Archivos de código fuente</Filter>
     </ClInclude>
   </ItemGroup>

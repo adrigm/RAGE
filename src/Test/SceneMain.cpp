@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "SceneMain.hpp"
+#include "SceneMenu.hpp"
 #include <iostream> // Quitar
 
 SceneMain::SceneMain(ra::SceneID theID) :
@@ -18,6 +19,8 @@ void SceneMain::Init()
 	am = ra::AssetManager::Instance();
 	cam = ra::Camera::Instance();
 	am->SetPath("Data");
+
+	this->SetBackgroundColor(sf::Color(180, 200, 255));
 
 	sp.setTexture(*am->GetTexture("indiana.png"));
 	tx.setFont(*am->GetFont("segoeui.ttf"));
@@ -40,6 +43,16 @@ void SceneMain::Init()
 	polygon.setOutlineThickness(-5);
 	polygon.setPosition(10, 20);
 
+	this->AddGraph(sp);
+	this->AddGraph(tx);
+	this->AddGraph(cir);
+	this->AddGraph(rect);
+	this->AddGraph(polygon);
+
+	sp.SetZOrder(5);
+	polygon.SetZOrder(4);
+
+	sm->AddScene(new SceneMenu("Menu"));
 }
 
 void SceneMain::Update()
@@ -64,6 +77,10 @@ void SceneMain::Update()
 
 void SceneMain::Event(sf::Event theEvent)
 {
+	/*if (theEvent.type == sf::Event::KeyPressed && theEvent.key.code == sf::Keyboard::Space)
+	{
+		sm->SetActiveScene("Menu");
+	}*/
 }
 
 void SceneMain::Resume()
@@ -72,25 +89,12 @@ void SceneMain::Resume()
 
 void SceneMain::Pause()
 {
+	std::cout << "Pausa" << std::endl;
+	sf::Image *i = new sf::Image(app->window.capture());
+	am->GetTextureFromImage("captura", i);
+	sm->SetActiveScene("Menu");
 }
 
 void SceneMain::Cleanup()
 {
-}
-
-void SceneMain::Draw()
-{
-	m_app->window.clear(sf::Color(145, 204, 220));
-	if (cam->GetRect().intersects(sp.getLocalBounds()))
-	{
-		m_app->window.draw(sp);
-	}
-	else
-	{
-		std::cout << "No me dibujo\n";
-	}
-	m_app->window.draw(tx);
-	m_app->window.draw(cir);
-	m_app->window.draw(rect);
-	m_app->window.draw(polygon);
 }

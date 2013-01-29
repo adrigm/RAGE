@@ -1,13 +1,13 @@
-#ifndef SCENE_MAIN
-#define SCENE_MAIN
+#ifndef SCENE_MENU
+#define SCENE_MENU
 
 #include <RAGE\Core.hpp>
 
-class SceneMain : public ra::Scene
+class SceneMenu : public ra::Scene
 {
 public:
-	SceneMain(ra::SceneID theID);
-	~SceneMain();
+	SceneMenu(ra::SceneID theID);
+	~SceneMenu();
 
 	void Init() ;
 
@@ -26,11 +26,8 @@ private:
 	ra::SceneManager* sm;
 	ra::AssetManager* am;
 	ra::Camera* cam;
-	ra::Sprite sp;
-	ra::Text tx;
-	ra::CircleShape cir;
-	ra::RectangleShape rect;
-	ra::ConvexShape polygon;
+
+	ra::Sprite back;
 }; // SceneMain
 
-#endif // SCENE_MAIN
+#endif // SCENE_MENU
