@@ -14,6 +14,8 @@ SceneMain::~SceneMain()
 
 void SceneMain::Init()
 {
+	Scene::Init();
+
 	app = ra::App::Instance();
 	sm = ra::SceneManager::Instance();
 	am = ra::AssetManager::Instance();
@@ -22,42 +24,45 @@ void SceneMain::Init()
 
 	this->SetBackgroundColor(sf::Color(180, 200, 255));
 
-	sp.setTexture(*am->GetTexture("indiana.png"));
-	tx.setFont(*am->GetFont("segoeui.ttf"));
-	tx.setCharacterSize(20);
-	tx.setString("RAGE App");
-	tx.setColor(sf::Color(255, 255, 220));
-	tx.setPosition(100, 200);
-	cir.setRadius(40);
-	cir.setPosition(200, 300);
-	cir.setFillColor(sf::Color(255, 0, 0));
-	cir.setOutlineColor(sf::Color(0, 255, 0));
-	cir.setOutlineThickness(4);
-	rect.setPosition(254, 458);
-	rect.setSize(sf::Vector2f(100, 40));
-	polygon.setPointCount(3);
-	polygon.setPoint(0, sf::Vector2f(0, 0));
-	polygon.setPoint(1, sf::Vector2f(0, 10));
-	polygon.setPoint(2, sf::Vector2f(25, 5));
-	polygon.setOutlineColor(sf::Color::Magenta);
-	polygon.setOutlineThickness(-5);
-	polygon.setPosition(10, 20);
+	a.setPosition(100, 100);
+	a.setRadius(50);
+	a.setFillColor(sf::Color(255, 0, 0));
 
-	this->AddGraph(sp);
-	this->AddGraph(tx);
-	this->AddGraph(cir);
-	this->AddGraph(rect);
-	this->AddGraph(polygon);
+	b.setPosition(100, 250);
+	b.setRadius(50);
+	b.setFillColor(sf::Color(0, 0, 255));
 
-	sp.SetZOrder(5);
-	polygon.SetZOrder(4);
+	c.setRadius(50);
+	c.setOrigin(c.getRadius(), c.getRadius());
+	c.setPosition(0, 0);
+	c.setFillColor(sf::Color(0, 255, 0));
+
+	this->AddGraph(a);
+	this->AddGraph(b);
+	this->AddGraph(c);
+
+	time = 0.0f;
 
 	sm->AddScene(new SceneMenu("Menu"));
 }
 
+void SceneMain::Active()
+{
+}
+
 void SceneMain::Update()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	time += app->GetUpdateTime().asSeconds();
+
+	std::cout << time << std::endl;
+	
+	if (time <= 10.0f)
+	{
+		a.move(200*app->GetUpdateTime().asSeconds(), 0);
+		b.move(200*app->GetUpdateTime().asSeconds(), 0);
+	}
+
+	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
 		cam->move(-5.f, 0.f);
 	}
@@ -72,27 +77,37 @@ void SceneMain::Update()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
 		cam->move(0.f, 5.f);
-	}
+	}*/
 }
 
 void SceneMain::Event(sf::Event theEvent)
 {
-	/*if (theEvent.type == sf::Event::KeyPressed && theEvent.key.code == sf::Keyboard::Space)
+	if (theEvent.type == sf::Event::KeyPressed && theEvent.key.code == sf::Keyboard::Space)
 	{
-		sm->SetActiveScene("Menu");
-	}*/
+		this->Pause();
+	}
 }
 
 void SceneMain::Resume()
 {
+	std::cout << "Resume" << std::endl;
 }
 
 void SceneMain::Pause()
 {
 	std::cout << "Pausa" << std::endl;
-	sf::Image *i = new sf::Image(app->window.capture());
-	am->GetTextureFromImage("captura", i);
 	sm->SetActiveScene("Menu");
+
+	sf::Texture *t = new sf::Texture();
+	t->create(app->window.getSize().x, app->window.getSize().y); 
+	t->update(app->window);
+
+	am->DeleteTexture("captura");
+	am->GetTexture("captura", t);
+
+	/*am->DeleteTexture("captura");
+	sf::Image *cap_img = new sf::Image(app->window.capture());
+	am->GetTextureFromImage("captura", cap_img);*/
 }
 
 void SceneMain::Cleanup()

@@ -34,6 +34,7 @@ public:
 	void SetPath(const std::string& thePath);
 
 	sf::Texture* GetTexture(const std::string& theName);
+	sf::Texture* GetTexture(const std::string& theName, sf::Texture* theTexture);
 	sf::Texture* GetTextureFromImage(const std::string& theName, const sf::Image* theImage, const sf::IntRect& theRect = sf::IntRect());
 
 	void DeleteTexture(const std::string& theName);

@@ -98,6 +98,28 @@ sf::Texture* AssetManager::GetTexture(const std::string& theName)
 	return texture;
 }
 
+sf::Texture* AssetManager::GetTexture(const std::string& theName, sf::Texture* theTexture)
+{
+	// Comprobamos si ya esta cargada
+	std::map<std::string, sf::Texture*>::const_iterator it;
+	it = m_textures.find(theName);
+	if (it != m_textures.end())
+	{
+		app->log << "AssetManager::GetTexture() " << theName << " usando textura existente" << std::endl;
+		return it->second;
+	}
+
+	sf::Texture* texture = new sf::Texture(*theTexture);
+
+	app->log << "AssetManager::GetTexture() " << theName << " cargado" << std::endl;
+
+	// La añadimos a la lista
+	m_textures[theName] = texture;
+
+	// Devolvemos el puntero
+	return texture;
+}
+
 sf::Texture* AssetManager::GetTextureFromImage(const std::string& theName, const sf::Image* theImage, const sf::IntRect& theRect)
 {
 	// Comprobamos si ya esta cargada
@@ -134,11 +156,11 @@ void AssetManager::DeleteTexture(const std::string& theName)
 	{
 		delete it->second;
 		m_textures.erase(it);
-		app->log << "AssetManager::DeleteTexture() " << theName << "archivo eliminado" << std::endl;
+		app->log << "AssetManager::DeleteTexture() " << theName << " archivo eliminado" << std::endl;
 		return;
 	}
 
-	app->log << "AssetManager::DeleteTexture() " << theName << "no está cargado" << std::endl;
+	app->log << "AssetManager::DeleteTexture() " << theName << " no está cargado" << std::endl;
 }
 
 void AssetManager::DeleteTexture(const sf::Texture* theTexture)
@@ -149,7 +171,7 @@ void AssetManager::DeleteTexture(const sf::Texture* theTexture)
 		if (theTexture == it->second)
 		{
 			delete it->second;
-			app->log << "AssetManager::DeleteTexture() " << it->first << "archivo eliminado" << std::endl;
+			app->log << "AssetManager::DeleteTexture() " << it->first << " archivo eliminado" << std::endl;
 			m_textures.erase(it);
 			return;
 		}

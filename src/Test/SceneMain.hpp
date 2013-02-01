@@ -9,7 +9,9 @@ public:
 	SceneMain(ra::SceneID theID);
 	~SceneMain();
 
-	void Init() ;
+	void Init();
+
+	void Active();
 
 	void Update() ;
 
@@ -26,11 +28,11 @@ private:
 	ra::SceneManager* sm;
 	ra::AssetManager* am;
 	ra::Camera* cam;
-	ra::Sprite sp;
-	ra::Text tx;
-	ra::CircleShape cir;
-	ra::RectangleShape rect;
-	ra::ConvexShape polygon;
+	ra::CircleShape a;
+	ra::CircleShape b;
+	ra::CircleShape c;
+
+	float time;
 }; // SceneMain
 
 #endif // SCENE_MAIN

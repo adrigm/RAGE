@@ -240,6 +240,24 @@ void App::GameLoop()
 	// Bucle mientras se esté ejecutando y la ventana esté abierta
 	while (IsRunning() && window.isOpen())
 	{
+		// Obtenemos el tiempo pasado en cada ciclo
+		m_updateTime = m_updateClock.restart();
+		// Almacenamos el tiempo total
+		m_totalTime += m_updateTime;
+
+		// Actualizamos la cámara
+		m_camera->Update();
+		window.setView(*m_camera);
+
+		// Llamamos al método Update() de la escena activa
+		m_sceneManager->UpdateScene();
+
+		// Llamamos al método Draw() de la escena activa
+		m_sceneManager->DrawScene();
+
+		// Actualizamos la ventana
+		window.display();
+
 		// Manejamos los eventos de la ventana
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -259,24 +277,6 @@ void App::GameLoop()
 				m_sceneManager->EventScene(event);
 			} // switch (event.Type)
 		} // while (window.GetEvent(event))
-
-		// Obtenemos el tiempo pasado en cada ciclo
-		m_updateTime = m_updateClock.restart();
-		// Almacenamos el tiempo total
-		m_totalTime += m_updateTime;
-
-		// Actualizamos la cámara
-		m_camera->Update();
-		window.setView(*m_camera);
-
-		// Llamamos al método Update() de la escena activa
-		m_sceneManager->UpdateScene();
-
-		// Llamamos al método Draw() de la escena activa
-		m_sceneManager->DrawScene();
-
-		// Actualizamos la ventana
-		window.display();
 
 		// Comprobamos cambios de escena
 		if (m_sceneManager->HandleChangeScene())

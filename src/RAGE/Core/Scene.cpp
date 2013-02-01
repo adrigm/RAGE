@@ -50,6 +50,11 @@ void Scene::SetBackgroundColor(const sf::Color &theColor)
 	m_colorBack = theColor;
 }
 
+void Scene::Init()
+{
+	this->m_init = true;
+}
+
 void Scene::Draw()
 {
 	// Establecemos el color de fondo

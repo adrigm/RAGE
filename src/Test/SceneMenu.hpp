@@ -11,6 +11,8 @@ public:
 
 	void Init() ;
 
+	void Active();
+
 	void Update() ;
 
 	void Event(sf::Event theEvent) ;
@@ -26,7 +28,7 @@ private:
 	ra::SceneManager* sm;
 	ra::AssetManager* am;
 	ra::Camera* cam;
-
+	ra::Text pause;
 	ra::Sprite back;
 }; // SceneMain
 
