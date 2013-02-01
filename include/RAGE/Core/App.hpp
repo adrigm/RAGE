@@ -86,6 +86,8 @@ public:
 
 	sf::Time GetTotalTime(void) const;
 
+	void EnableQuit(bool value);
+
 	/**
 	 * Ejecuta la aplicación, pone en marcha el GameLoop
 	 *
@@ -131,6 +133,8 @@ private:
 	sf::Time m_totalTime;
 	/// Puntero a la cámara
 	ra::Camera* m_camera;
+	/// Controla si la aplicación gestiona eventos de cierre
+	bool m_quit;
 
 	/**
 	 * Constructor de la Aplicación su única función es crear el archivo log

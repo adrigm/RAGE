@@ -28,6 +28,7 @@ App::App()
 	, m_updateClock()
 	, m_updateTime()
 	, m_totalTime()
+	, m_quit(true)
 {
 	// Se crea el archivo de log
 	log.open("rage.log");
@@ -126,6 +127,11 @@ sf::Time App::GetUpdateTime() const
 sf::Time App::GetTotalTime() const
 {
 	return m_totalTime;
+}
+
+void App::EnableQuit(bool value)
+{
+	m_quit = value;
 }
 
 int App::Run()
@@ -265,7 +271,10 @@ void App::GameLoop()
 			switch (event.type)
 			{
 			case sf::Event::Closed:			// La ventana es cerrada
-				Quit(StatusAppOK);
+				if (m_quit)
+					Quit(StatusAppOK);
+				else
+					m_sceneManager->EventScene(event);
 				break;
 			case sf::Event::GainedFocus:	// La ventana obtiene el foco
 				m_sceneManager->ResumeScene();
