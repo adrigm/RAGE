@@ -1,4 +1,7 @@
 #include <RAGE/Core/Camera.hpp>
+#include <RAGE/Core/SceneGraph.hpp>
+#include <RAGE/Core/App.hpp>
+#include <iostream> // Quitar
 
 namespace ra
 {
@@ -35,6 +38,10 @@ Camera::~Camera()
 
 void Camera::Update()
 {
+	if (m_conectToGraph)
+	{
+		this->setCenter(m_graph->getPosition());
+	}
 }
 
 void Camera::ConnectToGraph(ra::SceneGraph& theGraph)

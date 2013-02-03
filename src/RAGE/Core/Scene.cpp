@@ -1,6 +1,7 @@
 #include <RAGE/Core/Scene.hpp>
 #include <RAGE/Core/SceneGraph.hpp>
 #include <RAGE/Core/Camera.hpp>
+#include <iostream> // Quitar
 
 namespace ra
 {
@@ -67,11 +68,9 @@ void Scene::Draw()
 	std::list<ra::SceneGraph*>::const_iterator element;
 	for(element = m_sceneGraph.begin(); element != m_sceneGraph.end(); element++)
 	{
-		ra::SceneGraph* object = *element;
-
-		if (object->IsVisible() && m_camera->GetRect().intersects(object->getGlobalBounds()))
+		if ((*element)->IsVisible() && m_camera->GetRect().intersects((*element)->getGlobalBounds()))
 		{
-			m_app->window.draw(*object);
+			m_app->window.draw(**element);
 		}
 	}
 }

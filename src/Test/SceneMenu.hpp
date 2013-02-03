@@ -30,6 +30,6 @@ private:
 	ra::Camera* cam;
 	ra::Text pause;
 	ra::Sprite back;
-}; // SceneMain
+}; // SceneMenu
 
 #endif // SCENE_MENU

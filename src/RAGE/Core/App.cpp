@@ -214,6 +214,10 @@ void App::Init()
 	// Creamos el Asset Manager
 	m_assetManager = ra::AssetManager::Instance();
 
+	// Creamos la cámara
+	m_camera = ra::Camera::Instance();
+	m_camera->SetDefaultCamera();
+
 	// Creamos el Scene Manager
 	m_sceneManager = ra::SceneManager::Instance();
 
@@ -234,10 +238,6 @@ void App::Init()
 		Quit(ra::StatusAppInitFailed);
 	}
 
-	// Creamos la cámara
-	m_camera = ra::Camera::Instance();
-	m_camera->SetDefaultCamera();
-
 	log << "App::Init() Completado" << std::endl;
 }
 
@@ -251,12 +251,12 @@ void App::GameLoop()
 		// Almacenamos el tiempo total
 		m_totalTime += m_updateTime;
 
+		// Llamamos al método Update() de la escena activa
+		m_sceneManager->UpdateScene();
+
 		// Actualizamos la cámara
 		m_camera->Update();
 		window.setView(*m_camera);
-
-		// Llamamos al método Update() de la escena activa
-		m_sceneManager->UpdateScene();
 
 		// Llamamos al método Draw() de la escena activa
 		m_sceneManager->DrawScene();

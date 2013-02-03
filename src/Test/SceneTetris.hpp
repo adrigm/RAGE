@@ -1,15 +1,15 @@
-#ifndef SCENE_MAIN
-#define SCENE_MAIN
+#ifndef SCENE_TETRIS
+#define SCENE_TETRIS
 
 #include <RAGE\Core.hpp>
 
-class SceneMain : public ra::Scene
+class SceneTetris : public ra::Scene
 {
 public:
-	SceneMain(ra::SceneID theID);
-	~SceneMain();
+	SceneTetris(ra::SceneID theID);
+	~SceneTetris();
 
-	void Init();
+	void Init() ;
 
 	void Active();
 
@@ -28,13 +28,7 @@ private:
 	ra::SceneManager* sm;
 	ra::AssetManager* am;
 	ra::Camera* cam;
-	ra::CircleShape a;
-	ra::CircleShape b;
-	ra::CircleShape c;
 
-	ra::RectangleShape j;
-
-	float time;
 }; // SceneMain
 
-#endif // SCENE_MAIN
+#endif // SCENE_TETRIS

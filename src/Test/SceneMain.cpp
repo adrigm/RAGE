@@ -37,9 +37,15 @@ void SceneMain::Init()
 	c.setPosition(0, 0);
 	c.setFillColor(sf::Color(0, 255, 0));
 
+	j.setSize(sf::Vector2f(40.f, 40.f));
+	j.setOrigin(j.getLocalBounds().width/2.f, j.getLocalBounds().height/2.f);
+	j.setPosition(app->window.getSize().x/2.f, app->window.getSize().y/2.f);
+	j.setFillColor(sf::Color::Black);
+
 	this->AddGraph(a);
 	this->AddGraph(b);
 	this->AddGraph(c);
+	this->AddGraph(j);
 
 	time = 0.0f;
 
@@ -48,13 +54,14 @@ void SceneMain::Init()
 
 void SceneMain::Active()
 {
+	cam->ConnectToGraph(j);
 }
 
 void SceneMain::Update()
 {
 	time += app->GetUpdateTime().asSeconds();
 
-	std::cout << time << std::endl;
+	std::cout << j.getPosition().x << std::endl;
 	
 	if (time <= 10.0f)
 	{
@@ -62,22 +69,22 @@ void SceneMain::Update()
 		b.move(200*app->GetUpdateTime().asSeconds(), 0);
 	}
 
-	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		cam->move(-5.f, 0.f);
+		j.move(-5.f, 0.f);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		cam->move(5.f, 0.f);
+		j.move(5.f, 0.f);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
-		cam->move(0.f, -5.f);
+		j.move(0.f, -5.f);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
-		cam->move(0.f, 5.f);
-	}*/
+		j.move(0.f, 5.f);
+	}
 }
 
 void SceneMain::Event(sf::Event theEvent)
