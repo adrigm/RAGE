@@ -1,6 +1,7 @@
 #include <RAGE/Core/Scene.hpp>
 #include <RAGE/Core/App.hpp>
 #include <RAGE/Core/SceneObject.hpp>
+#include <iostream> // Quitar
 
 namespace ra
 {
@@ -49,7 +50,7 @@ void Scene::draw()
 	// Recorremos la lista de Actores de la escena para dibujarla
 	for(m_objectsIter = m_sceneObjects.begin(); m_objectsIter != m_sceneObjects.end(); m_objectsIter++)
 	{
-		if ((*m_objectsIter)->IsVisible() /*&& m_app->getCamera().GetRect().intersects((*m_objectsIter)->getGlobalBounds())*/)
+		if ((*m_objectsIter)->IsVisible() && m_app->getCamera().getRect().intersects((*m_objectsIter)->getGlobalBounds()))
 		{
 			m_app->getWindow().draw(**m_objectsIter);
 		}

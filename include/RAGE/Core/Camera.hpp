@@ -17,6 +17,8 @@ public:
 	void update();
 	void setDefaultCamera();
 
+	sf::FloatRect getRect() const;
+
 private:
 	friend class App;
 	App* m_app;

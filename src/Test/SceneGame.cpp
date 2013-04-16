@@ -30,7 +30,6 @@ void SceneGame::init()
 
 	ra::Tmx::Map map;
 	map.ParseFile("Data/pueblo.tmx");
-	std::cout << map.GetLayer(0)->GetTile(0, 0).id << std::endl;
 }
 
 void SceneGame::active()
@@ -51,6 +50,10 @@ void SceneGame::update()
 		getApp()->getCamera().move(0, -5);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		getApp()->getCamera().move(0, 5);
+
+	sf::FloatRect r = getApp()->getCamera().getRect();
+	//std::cout << r.left << ", " << r.top << ", " << r.width << ", " << r.height << std::endl;
+	//std::cout << r.intersects(sp.getGlobalBounds()) << std::endl;
 }
 
 void SceneGame::event(sf::Event theEvent)
