@@ -28,19 +28,19 @@ enum StatusType {
 
 
 // Forward declare RAGE Core classes provided
+class App;
 class ConfigReader;
 class ConfigCreate;
-class AssetManager;
 class Scene;
 class SceneManager;
-class App;
-class SceneGraph;
+class AssetManager;
+class SceneObject;
 class Sprite;
 class Text;
 class Shape;
 class CircleShape;
-class RectangleShape;
 class ConvexShape;
+class RectangleShape;
 class Camera;
 
 // Foward declare TmxMap

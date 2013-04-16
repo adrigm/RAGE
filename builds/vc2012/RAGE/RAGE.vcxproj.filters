@@ -1,0 +1,339 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Archivos de código fuente">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Archivos de encabezado">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Archivos de recursos">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Core">
+      <UniqueIdentifier>{2c83eab3-46aa-43f6-bc67-122add3503bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Core">
+      <UniqueIdentifier>{93b11ecc-d297-49f4-ae74-73e7659a18fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Core\utils">
+      <UniqueIdentifier>{b4cea53c-1162-4ede-a525-9f964ea3d2ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Core\utils\base64">
+      <UniqueIdentifier>{bdfe655e-ff17-49c1-a423-c743b5720662}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Core\utils\tinyxml">
+      <UniqueIdentifier>{f3717227-251d-45b3-a4d9-8d8120efadd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Core\utils\zlib">
+      <UniqueIdentifier>{1aeeb87b-a2f6-41a1-914c-e583475abe23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Core\tmx">
+      <UniqueIdentifier>{727e0df7-14e6-448f-a5fc-d36bd4f5f369}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Core\tmx">
+      <UniqueIdentifier>{e487c353-0bea-409a-8d2a-5b72099600e6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\RAGE\Core.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Config.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\App.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\Core_types.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\Export.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\ConfigCreate.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\ConfigReader.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\StringUtil.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\Scene.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\SceneManager.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\AssetManager.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\SceneObject.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\CircleShape.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\ConvexShape.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\RectangleShape.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\Shape.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\Sprite.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\Text.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\Camera.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\base64\base64.h">
+      <Filter>Archivos de código fuente\Core\utils\base64</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\crc32.h">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\deflate.h">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\gzguts.h">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\inffast.h">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\inffixed.h">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\inflate.h">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\inftrees.h">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\trees.h">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\zconf.h">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\zlib.h">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\zutil.h">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\tinyxml\tinystr.h">
+      <Filter>Archivos de código fuente\Core\utils\tinyxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\tinyxml\tinyxml.h">
+      <Filter>Archivos de código fuente\Core\utils\tinyxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\Tmx.hpp">
+      <Filter>Archivos de encabezado\Core\tmx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxEllipse.hpp">
+      <Filter>Archivos de encabezado\Core\tmx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxImage.hpp">
+      <Filter>Archivos de encabezado\Core\tmx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxImageLayer.hpp">
+      <Filter>Archivos de encabezado\Core\tmx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxLayer.hpp">
+      <Filter>Archivos de encabezado\Core\tmx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxMap.hpp">
+      <Filter>Archivos de encabezado\Core\tmx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxMapTile.hpp">
+      <Filter>Archivos de encabezado\Core\tmx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxObject.hpp">
+      <Filter>Archivos de encabezado\Core\tmx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxObjectGroup.hpp">
+      <Filter>Archivos de encabezado\Core\tmx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxPoint.hpp">
+      <Filter>Archivos de encabezado\Core\tmx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxPolygon.hpp">
+      <Filter>Archivos de encabezado\Core\tmx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxPolyline.hpp">
+      <Filter>Archivos de encabezado\Core\tmx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxPropertySet.hpp">
+      <Filter>Archivos de encabezado\Core\tmx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxTile.hpp">
+      <Filter>Archivos de encabezado\Core\tmx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxTileset.hpp">
+      <Filter>Archivos de encabezado\Core\tmx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxUtil.hpp">
+      <Filter>Archivos de encabezado\Core\tmx</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\RAGE\Core\App.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\ConfigCreate.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\ConfigReader.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\StringUtil.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\Scene.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\SceneManager.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\AssetManager.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\SceneObject.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\CircleShape.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\ConvexShape.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\RectangleShape.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\Shape.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\Sprite.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\Text.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\Camera.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxEllipse.cpp">
+      <Filter>Archivos de código fuente\Core\tmx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxImage.cpp">
+      <Filter>Archivos de código fuente\Core\tmx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxImageLayer.cpp">
+      <Filter>Archivos de código fuente\Core\tmx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxLayer.cpp">
+      <Filter>Archivos de código fuente\Core\tmx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxMap.cpp">
+      <Filter>Archivos de código fuente\Core\tmx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxObject.cpp">
+      <Filter>Archivos de código fuente\Core\tmx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxObjectGroup.cpp">
+      <Filter>Archivos de código fuente\Core\tmx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxPolygon.cpp">
+      <Filter>Archivos de código fuente\Core\tmx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxPolyline.cpp">
+      <Filter>Archivos de código fuente\Core\tmx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxPropertySet.cpp">
+      <Filter>Archivos de código fuente\Core\tmx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxTile.cpp">
+      <Filter>Archivos de código fuente\Core\tmx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxTileset.cpp">
+      <Filter>Archivos de código fuente\Core\tmx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxUtil.cpp">
+      <Filter>Archivos de código fuente\Core\tmx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\base64\base64.cpp">
+      <Filter>Archivos de código fuente\Core\utils\base64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\adler32.c">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\compress.c">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\crc32.c">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\deflate.c">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\gzclose.c">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\gzlib.c">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\gzread.c">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\gzwrite.c">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\infback.c">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\inffast.c">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\inflate.c">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\inftrees.c">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\trees.c">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\uncompr.c">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\zutil.c">
+      <Filter>Archivos de código fuente\Core\utils\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\tinyxml\tinystr.cpp">
+      <Filter>Archivos de código fuente\Core\utils\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\tinyxml\tinyxml.cpp">
+      <Filter>Archivos de código fuente\Core\utils\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\tinyxml\tinyxmlerror.cpp">
+      <Filter>Archivos de código fuente\Core\utils\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\tinyxml\tinyxmlparser.cpp">
+      <Filter>Archivos de código fuente\Core\utils\tinyxml</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

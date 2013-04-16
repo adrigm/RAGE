@@ -1,3 +1,27 @@
+////////////////////////////////////////////////////////////
+//
+// SFML - Simple and Fast Multimedia Library
+// Copyright (C) 2007-2012 Laurent Gomila (laurent.gom@gmail.com)
+//
+// This software is provided 'as-is', without any express or implied warranty.
+// In no event will the authors be held liable for any damages arising from the use of this software.
+//
+// Permission is granted to anyone to use this software for any purpose,
+// including commercial applications, and to alter it and redistribute it freely,
+// subject to the following restrictions:
+//
+// 1. The origin of this software must not be misrepresented;
+//    you must not claim that you wrote the original software.
+//    If you use this software in a product, an acknowledgment
+//    in the product documentation would be appreciated but is not required.
+//
+// 2. Altered source versions must be plainly marked as such,
+//    and must not be misrepresented as being the original software.
+//
+// 3. This notice may not be removed or altered from any source distribution.
+//
+////////////////////////////////////////////////////////////
+
 #ifndef RAGE_CORE_SHAPE_HPP
 #define RAGE_CORE_SHAPE_HPP
 
@@ -7,7 +31,7 @@
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <RAGE/Core/Export.hpp>
-#include <RAGE/Core/SceneGraph.hpp>
+#include <RAGE/Core/SceneObject.hpp>
 
 
 namespace ra
@@ -16,7 +40,7 @@ namespace ra
 /// \brief Base class for textured shapes with outline
 ///
 ////////////////////////////////////////////////////////////
-class RAGE_CORE_API Shape : public ra::SceneGraph
+class RAGE_CORE_API Shape : public SceneObject
 {
 public :
 
@@ -285,3 +309,36 @@ private :
 
 
 #endif // RAGE_CORE_SHAPE_HPP
+
+
+////////////////////////////////////////////////////////////
+/// \class ra::Shape
+/// \ingroup graphics
+///
+/// sf::Shape is a drawable class that allows to define and
+/// display a custom convex shape on a render target.
+/// It's only an abstract base, it needs to be specialized for
+/// concrete types of shapes (circle, rectangle, convex polygon,
+/// star, ...).
+///
+/// In addition to the attributes provided by the specialized
+/// shape classes, a shape always has the following attributes:
+/// \li a texture
+/// \li a texture rectangle
+/// \li a fill color
+/// \li an outline color
+/// \li an outline thickness
+///
+/// Each feature is optional, and can be disabled easily:
+/// \li the texture can be null
+/// \li the fill/outline colors can be sf::Color::Transparent
+/// \li the outline thickness can be zero
+///
+/// You can write your own derived shape class, there are only
+/// two virtual functions to override:
+/// \li getPointCount must return the number of points of the shape
+/// \li getPoint must return the points of the shape
+///
+/// \see sf::RectangleShape, sf::CircleShape, sf::ConvexShape, sf::Transformable
+///
+////////////////////////////////////////////////////////////

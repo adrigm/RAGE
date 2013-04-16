@@ -1,192 +1,169 @@
 #include <RAGE/Core/SceneManager.hpp>
 #include <RAGE/Core/App.hpp>
-#include <RAGE/Core/Scene.hpp>
-
 
 namespace ra
 {
 
-SceneManager* SceneManager::ms_instance = 0;
-
 SceneManager::SceneManager() :
 	m_app(NULL),
-	mActiveScene(NULL),
-	mInactivesScenes(),
-	mNextScene("")
+	m_activeScene(NULL),
+	m_inactivesScenes(),
+	m_nextScene("")
 {
-	m_app = ra::App::Instance();
-	m_app->log << "SceneManager::ctor()" << std::endl;
+	m_app = App::instance();
+	m_app->getLog() << "SceneManager::ctor()" << std::endl;
 }
 
 SceneManager::~SceneManager()
 {
-	m_app->log << "SceneManager::dtor()" << std::endl;
+	m_app->getLog() << "SceneManager::dtor()" << std::endl;
 }
 
-SceneManager* SceneManager::Instance()
+void SceneManager::addScene(Scene* theScene)
 {
-	if(ms_instance == 0)
-	{
-		ms_instance = new SceneManager();
-	}
-	return ms_instance;
-}
-
-void SceneManager::Release()
-{
-	if(ms_instance)
-	{
-		delete ms_instance;
-	}
-	ms_instance = 0;
-}
-
-
-void SceneManager::AddScene(Scene* theScene)
-{
-	std::map<SceneID, Scene*>::const_iterator it = mInactivesScenes.find(theScene->GetID());
-	if (it != mInactivesScenes.end())
+	std::map<SceneID, Scene*>::const_iterator it = m_inactivesScenes.find(theScene->getID());
+	if (it != m_inactivesScenes.end())
 	{
 		// Si ya existe la escena salimos
-			m_app->log << "SceneManager::AddScene() ya existe una escena con ID=" 
-				<< theScene->GetID() << std::endl; 
+			m_app->getLog() << "SceneManager::AddScene() ya existe una escena con ID=" 
+				<< theScene->getID() << std::endl; 
 			return;
 	}
 
 	// Si no existe la añadimos a la lista
-	mInactivesScenes[theScene->GetID()] = theScene;
+	m_inactivesScenes[theScene->getID()] = theScene;
 
-	m_app->log << "SceneManager::AddScene() Añadida escena con ID=" 
-		<< theScene->GetID() << std::endl;
+	// Inicializamos la escena
+	theScene->init();
+
+	m_app->getLog() << "SceneManager::AddScene() Añadida escena con ID=" 
+		<< theScene->getID() << std::endl;
 }
 
-void SceneManager::SetActiveScene(SceneID theSceneID)
+void SceneManager::setActiveScene(SceneID theSceneID)
 {
-	std::map<SceneID, Scene*>::const_iterator it = mInactivesScenes.find(theSceneID);
-	if (it != mInactivesScenes.end())
+	std::map<SceneID, Scene*>::const_iterator it = m_inactivesScenes.find(theSceneID);
+	if (it != m_inactivesScenes.end())
 	{
-		mNextScene = theSceneID;
+		m_nextScene = theSceneID;
 		return;
 	}
 
-	if (theSceneID == mActiveScene->GetID())
+	if (theSceneID == m_activeScene->getID())
 	{
-		m_app->log << "SceneManager::SetActiveScene() la escena con ID=" <<  mActiveScene->GetID()
+		m_app->getLog() << "SceneManager::SetActiveScene() la escena con ID=" <<  m_activeScene->getID()
 			<< "ya esta activa" << std::endl;
 		return;
 	}
 
-	m_app->log << "SceneManager::SetActiveScene() No existe ninguna escena con ID=" 
+	m_app->getLog() << "SceneManager::SetActiveScene() No existe ninguna escena con ID=" 
 		<< theSceneID << std::endl;
 }
 
-void SceneManager::ChangeScene(SceneID theSceneID)
+void SceneManager::changeScene(SceneID theSceneID)
 {
 
-	mNextScene = "";
-	if (mActiveScene != NULL)
-		mInactivesScenes[mActiveScene->GetID()] = mActiveScene;
-	mActiveScene = mInactivesScenes[theSceneID];
-	mInactivesScenes.erase(theSceneID);
-
-	// Inicializamos la escena si no lo esta
-	if (!mActiveScene->IsInitComplete())
+	m_nextScene = "";
+	if (m_activeScene != NULL)
 	{
-		mActiveScene->Init();
+		m_activeScene->desactive();
+		m_inactivesScenes[m_activeScene->getID()] = m_activeScene;
 	}
+	m_activeScene = m_inactivesScenes[theSceneID];
+	m_inactivesScenes.erase(theSceneID);
 
-	mActiveScene->Active();
+	m_activeScene->active();
 
-	m_app->log << "SceneManager::ChangeScene() Activa escena con ID=" << theSceneID << std::endl;
+	m_app->getLog() << "SceneManager::ChangeScene() Activa escena con ID=" << theSceneID << std::endl;
 }
 
-void SceneManager::RemoveScene(SceneID theSceneID)
+void SceneManager::removeScene(SceneID theSceneID)
 {
 	// Buscamos en la lista de escenas inactivas
-	std::map<SceneID, Scene*>::iterator it = mInactivesScenes.find(theSceneID);
-	if (it != mInactivesScenes.end())
+	std::map<SceneID, Scene*>::iterator it = m_inactivesScenes.find(theSceneID);
+	if (it != m_inactivesScenes.end())
 	{
-		m_app->log << "SceneManager::RemoveScene() Eliminada escena con ID=" 
+		m_app->getLog() << "SceneManager::RemoveScene() Eliminada escena con ID=" 
 			<< it->first << std::endl;
-		it->second->Cleanup();
+		it->second->cleanup();
 		delete it->second;
-		mInactivesScenes.erase(it);
+		m_inactivesScenes.erase(it);
 		return;
 	}
 
-	if (theSceneID == mActiveScene->GetID())
+	if (theSceneID == m_activeScene->getID())
 	{
-		m_app->log << "SceneManager::RemoveScene() la escena con ID=" << mActiveScene->GetID() 
+		m_app->getLog() << "SceneManager::RemoveScene() la escena con ID=" << m_activeScene->getID() 
 			<< "esta activa y no se puede eliminar" << std::endl;
 		return;
 	}
 
-	m_app->log << "SceneManager::RemoveScene() No existe ninguna escena con ID=" 
+	m_app->getLog() << "SceneManager::RemoveScene() No existe ninguna escena con ID=" 
 		<< theSceneID << std::endl;
 }
 
-void SceneManager::RemoveAllInactiveScene()
+void SceneManager::removeAllInactiveScene()
 {
 	// Recorremos la lista de escenas inactivas
-	std::map<SceneID, Scene*>::iterator it = mInactivesScenes.begin();
-	while(it != mInactivesScenes.end())
+	std::map<SceneID, Scene*>::iterator it = m_inactivesScenes.begin();
+	while(it != m_inactivesScenes.end())
 	{
-		m_app->log << "SceneManager::RemoveAllInactiveScene() Eliminada escena con ID=" 
+		m_app->getLog() << "SceneManager::RemoveAllInactiveScene() Eliminada escena con ID=" 
 			<< it->first << std::endl;
-		it->second->Cleanup();
+		it->second->cleanup();
 		delete it->second;
-		mInactivesScenes.erase(it++);
+		m_inactivesScenes.erase(it++);
 	}
 }
 
-void SceneManager::RemoveAllScene()
+void SceneManager::removeAllScene()
 {
 	// Eliminamos todas las escenas inactivas
-	RemoveAllInactiveScene();
+	removeAllInactiveScene();
 
-	if (mActiveScene != NULL)
+	if (m_activeScene != NULL)
 	{
 		// Eliminamos la escena activa
-		m_app->log << "SceneManager::RemoveAllScene() Eliminada escena con ID=" 
-			<< mActiveScene->GetID() << std::endl;
-		mActiveScene->Cleanup();
-		delete mActiveScene;
-		mActiveScene = NULL;
+		m_app->getLog() << "SceneManager::RemoveAllScene() Eliminada escena con ID=" 
+			<< m_activeScene->getID() << std::endl;
+		m_activeScene->cleanup();
+		delete m_activeScene;
+		m_activeScene = NULL;
 	}
 }
 
-void SceneManager::EventScene(sf::Event theEvent)
+void SceneManager::eventScene(sf::Event theEvent)
 {
-	mActiveScene->Event(theEvent);
+	m_activeScene->event(theEvent);
 }
 
-void SceneManager::UpdateScene()
+void SceneManager::updateScene()
 {
-	mActiveScene->Update();
+	m_activeScene->update();
 }
 
-void SceneManager::DrawScene()
+void SceneManager::drawScene()
 {
-	mActiveScene->Draw();
+	m_activeScene->draw();
 }
 
-void SceneManager::ResumeScene()
+void SceneManager::resumeScene()
 {
-	mActiveScene->Resume();
+	m_activeScene->resume();
 }
 
-void SceneManager::PauseScene()
+void SceneManager::pauseScene()
 {
-	mActiveScene->Pause();
+	m_activeScene->pause();
 }
 
-bool SceneManager::HandleChangeScene()
+bool SceneManager::handleChangeScene()
 {
-	if (mNextScene == "")
+	if (m_nextScene == "")
 	{
 		return false;
 	}
 	return true;
 }
 
-} // Namespace GGE
+} // namespace ra

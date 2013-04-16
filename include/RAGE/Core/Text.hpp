@@ -1,18 +1,41 @@
+////////////////////////////////////////////////////////////
+//
+// SFML - Simple and Fast Multimedia Library
+// Copyright (C) 2007-2012 Laurent Gomila (laurent.gom@gmail.com)
+//
+// This software is provided 'as-is', without any express or implied warranty.
+// In no event will the authors be held liable for any damages arising from the use of this software.
+//
+// Permission is granted to anyone to use this software for any purpose,
+// including commercial applications, and to alter it and redistribute it freely,
+// subject to the following restrictions:
+//
+// 1. The origin of this software must not be misrepresented;
+//    you must not claim that you wrote the original software.
+//    If you use this software in a product, an acknowledgment
+//    in the product documentation would be appreciated but is not required.
+//
+// 2. Altered source versions must be plainly marked as such,
+//    and must not be misrepresented as being the original software.
+//
+// 3. This notice may not be removed or altered from any source distribution.
+//
+////////////////////////////////////////////////////////////
+
 #ifndef RAGE_CORE_TEXT_HPP
 #define RAGE_CORE_TEXT_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <string>
-#include <vector>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/System/String.hpp>
+#include <string>
+#include <vector>
 #include <RAGE/Core/Export.hpp>
-#include <RAGE/Core/Core_types.hpp>
-#include <RAGE/Core/SceneGraph.hpp>
+#include <RAGE/Core/SceneObject.hpp>
 
 
 namespace ra
@@ -21,7 +44,7 @@ namespace ra
 /// \brief Graphical text that can be drawn to a render target
 ///
 ////////////////////////////////////////////////////////////
-class RAGE_CORE_API Text : public ra::SceneGraph
+class RAGE_CORE_API Text : public SceneObject
 {
 public :
 
@@ -53,7 +76,7 @@ public :
     /// \param characterSize  Base size of characters, in pixels
     ///
     ////////////////////////////////////////////////////////////
-    explicit Text(const sf::String& string, const sf::Font& font, unsigned int characterSize = 30);
+    Text(const sf::String& string, const sf::Font& font, unsigned int characterSize = 30);
 
     ////////////////////////////////////////////////////////////
     /// \brief Set the text's string
@@ -272,3 +295,56 @@ private :
 
 
 #endif // RAGE_CORE_TEXT_HPP
+
+
+////////////////////////////////////////////////////////////
+/// \class ra::Text
+/// \ingroup graphics
+///
+/// sf::Text is a drawable class that allows to easily display
+/// some text with custom style and color on a render target.
+///
+/// It inherits all the functions from sf::Transformable:
+/// position, rotation, scale, origin. It also adds text-specific
+/// properties such as the font to use, the character size,
+/// the font style (bold, italic, underlined), the global color
+/// and the text to display of course.
+/// It also provides convenience functions to calculate the
+/// graphical size of the text, or to get the global position
+/// of a given character.
+///
+/// sf::Text works in combination with the sf::Font class, which
+/// loads and provides the glyphs (visual characters) of a given font.
+///
+/// The separation of sf::Font and sf::Text allows more flexibility
+/// and better performances: indeed a sf::Font is a heavy resource,
+/// and any operation on it is slow (often too slow for real-time
+/// applications). On the other side, a sf::Text is a lightweight
+/// object which can combine the glyphs data and metrics of a sf::Font
+/// to display any text on a render target.
+///
+/// It is important to note that the sf::Text instance doesn't
+/// copy the font that it uses, it only keeps a reference to it.
+/// Thus, a sf::Font must not be destructed while it is
+/// used by a sf::Text (i.e. never write a function that
+/// uses a local sf::Font instance for creating a text).
+///
+/// Usage example:
+/// \code
+/// // Declare and load a font
+/// sf::Font font;
+/// font.loadFromFile("arial.ttf");
+/// 
+/// // Create a text
+/// sf::Text text("hello", font);
+/// text.setCharacterSize(30);
+/// text.setStyle(sf::Text::Bold);
+/// text.setColor(sf::Color::Red);
+///
+/// // Draw it
+/// window.draw(text);
+/// \endcode
+///
+/// \see sf::Font, sf::Transformable
+///
+////////////////////////////////////////////////////////////

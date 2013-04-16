@@ -1,164 +1,92 @@
 #ifndef RAGE_CORE_APP_HPP
 #define RAGE_CORE_APP_HPP
 
-#include <string>
 #include <fstream>
+#include <string>
 #include <SFML/Graphics.hpp>
 #include <RAGE/Core/Export.hpp>
-#include <RAGE/Config.hpp>
 #include <RAGE/Core/Core_types.hpp>
+#include <RAGE/Core/Camera.hpp>
 
 namespace ra
 {
 
 class RAGE_CORE_API App
 {
-	static App* ms_instance;
+	static App* m_instance;
 
 public:
-	// Constantes
-	///////////////////////////////////////////////////////////////////////////
 	static const unsigned int DEFAULT_VIDEO_WIDTH = 640;
 	static const unsigned int DEFAULT_VIDEO_HEIGHT = 480;
 	static const unsigned int DEFAULT_VIDEO_BPP = 32;
 
-	// Variables
-	///////////////////////////////////////////////////////////////////////////
-	/// Log del Engine
-	std::ofstream log;
-	/// Ventana de la aplicación
-	sf::RenderWindow window;
+	static App* instance();
 
-	/**
-	 * Devuelve un puntero a la instancia única de la clase si existe,
-	 * si no, la crea y duevuelve el puntero.
-	 * 
-	 * @return Puntero a la instancia única de App
-	 */
-	static App* Instance();
-	 
-	/**
-	 * Elimina la instancia única de la aplicación.
-	 */
-	static void Release();
+	static void release();
 
-	/**
-	 * Establece la ruta del ejecutable de la aplicación
-	 * 
-	 * @param argc Número de parámetros
-	 * @param argv[] Lista de parámetros
-	 */
-	void RegisterExecutableDir(int argc, char** argv);
+	bool isRunning() const;
 
-	/**
-	 * Devuelve la ruta del ejecutable de la aplicación
-	 *
-	 * @return string con la ruta de la aplicación
-	 */
-	std::string GetExecutableDir() const;
+	void quit(int theExitCode);
 
-	/**
-	 * Devuelve verdadero si la aplicación se está ejecutando
-	 *
-	 * @return true si la apicación se está ejecutando
-	 */
-	bool IsRunning(void) const;
+	std::string getTitle() const;
 
-	/**
-	 * Detiene la aplicacion con el código de salida indicado
-	 *
-	 * @param the_exit_code Código de salida de la aplicación
-	 */
-	void Quit(int the_exit_code);
+	void setTitle(const std::string& theTitle);
 
-	std::string GetTitle() const;
+	std::ofstream& getLog();
 
-	void SetTitle(const std::string theTitle);
+	sf::RenderWindow& getWindow();
 
-	void SetFirstScene(ra::Scene* theScene);
+	SceneManager* getSceneManager();
 
-	/**
-	 * Obtiene el tiempo pasado en cada ciclo del programa.
-	 *
-	 * @return	The update time.
-	 */
-	sf::Time GetUpdateTime(void) const;
+	AssetManager* getAssetManager();
 
-	sf::Time GetTotalTime(void) const;
+	Camera& getCamera();
 
-	void EnableQuit(bool value);
+	void registerExecutableDir(int argc, char **argv);
 
-	/**
-	 * Ejecuta la aplicación, pone en marcha el GameLoop
-	 *
-	 * @return Devuelve el código de salida de la aplicación
-	*/
-	int Run();
+	std::string getExecutableDir() const;
 
-protected:
-	void CreateWindow();
+	const sf::Time& getUpdateTime() const;
 
-	void Init();
+	const sf::Time& getTotalTime() const;
 
-	void GameLoop();
+	void enableQuit(bool value);
 
-	void Cleanup();
-		 
+	void setFirstScene(Scene* scene);
+
+	int run();
+
 private:
-	// Variables
-	///////////////////////////////////////////////////////////////////////////
-	/// Almacena la ruta del ejecutable
-	std::string m_executableDir;
-	/// Comprueba si está activa o no la Aplicación
 	bool m_running;
-	/// Código de salida de la aplicación
-	int m_exitCode;
-	/// Nombre de la aplicación
-	std::string m_title;
-	/// Bandera para el estilo de la ventana
-	ra::Uint32 m_windowStyle;
-	/// Opciones de video de la ventana
-	sf::VideoMode m_videoMode;
-	/// Puntero al AssetManager
-	ra::AssetManager *m_assetManager;
-	// Puntero al SceneManager
-	ra::SceneManager *m_sceneManager;
-	// Puntero a la escena inicial
-	ra::Scene* m_initialScene;
-	/// Reloj que obtiene el tiempo pasado en cada loop
-	sf::Clock m_updateClock;
-	/// Almacena el tiempo pasado en cada bucle
-	sf::Time m_updateTime;
-	/// Almacena el tiempo total de ejecución
-	sf::Time m_totalTime;
-	/// Puntero a la cámara
-	ra::Camera* m_camera;
-	/// Controla si la aplicación gestiona eventos de cierre
 	bool m_quit;
+	Int16 m_exitCode;
+	std::string m_title;
+	std::string m_executableDir;
+	std::ofstream m_log;
+	sf::RenderWindow m_window;
+	sf::Clock m_updateClock;
+	sf::Time m_updateTime;
+	sf::Time m_totalTime;
+	SceneManager *m_sceneManager;
+	Scene* m_initialScene;
+	AssetManager* m_assetManager;
+	Camera* m_camera;
 
-	/**
-	 * Constructor de la Aplicación su única función es crear el archivo log
-	 */
+	void createWindow();
+
+	void init();
+
+	void gameLoop();
+
+	void cleanup();
+
 	App();
 
-	/**
-	 * Destructor de la aplicación. Cierra el archivo de log.
-	 */
-	virtual ~App();
+	~App();
 
-	/**
-	 * App copy constructor is private because we do not allow copies of
-	 * our Singleton class
-	*/
-	App(const App&);               // Intentionally undefined
+	App(const App&);
 
-	/**
-	 * Our assignment operator is private because we do not allow copies
-	 * of our Singleton class
-	 */
-	App& operator=(const App&);    // Intentionally undefined
-
-
+	App& operator=(const App&);
 }; // class App
 
 } // namespace ra

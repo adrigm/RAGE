@@ -1,31 +1,23 @@
-#ifndef RAGE_CORE_SCENE_MANAGER_HPP
-#define RAGE_CORE_SCENE_MANAGER_HPP
+#ifndef RAGE_CORE_SCENEMANAGER_HPP
+#define RAGE_CORE_SCENEMANAGER_HPP
 
-#include <map>
-#include <SFML/Window.hpp>
 #include <RAGE/Core/Export.hpp>
-#include <RAGE/Core/Core_types.hpp>
+#include <RAGE/Core/Scene.hpp>
 
 namespace ra
 {
 
 class RAGE_CORE_API SceneManager
 {
-	static SceneManager* ms_instance;
-
 public:
-	static SceneManager* Instance();
-
-	static void Release();
-
-/**
+	/**
 	 * Añade una escena a la pila de escenas inactivas
 	 *
 	 * Solo añade una escena a la pila, no la inicializa
 	 *
 	 * @param theScene Puntero a la escena que vamos a añadir
 	 */
-	void AddScene(Scene* theScene);
+	void addScene(Scene* theScene);
 
 
 	/**
@@ -36,7 +28,7 @@ public:
 	 *
 	 * @param theSceneID Cadena única que identifica a la escena
 	 */
-	void SetActiveScene(SceneID theSceneID);
+	void setActiveScene(SceneID theSceneID);
 
 	/**
 	 * Elimina una escena de la pila, no puede ser la escena activa
@@ -45,26 +37,28 @@ public:
 	 *
 	 * @param theSceneID Cadena única que identifica a la escena
 	 */
-	void RemoveScene(SceneID theSceneID);
+	void removeScene(SceneID theSceneID);
 
 	/**
 	 * Elimina todas las escenas inactivas
 	 */
-	void RemoveAllInactiveScene();
-
-protected:
-	// Puntero a la aplicación
-	ra::App* m_app;
+	void removeAllInactiveScene();
 
 private:
+	App* m_app;
 	// Declaramos la clase App friend
-	friend class ra::App;
+	friend class App;
 	/// Escena actualmente activa
-	Scene* mActiveScene;
+	Scene* m_activeScene;
 	/// Próxima escena activa
-	SceneID mNextScene;
+	SceneID m_nextScene;
 	// Lista de escenas inacticas
-	std::map<SceneID, Scene*> mInactivesScenes;
+	std::map<SceneID, Scene*> m_inactivesScenes;
+
+	SceneManager();
+	SceneManager(const SceneManager&);
+	SceneManager& operator=(const SceneManager&);
+	~SceneManager();
 
 	/**
 	 * Cambia la escena activa inmediatamente. USAR SetActiveScene() para
@@ -72,7 +66,7 @@ private:
 	 *
 	 * @param id_scene ID de la escena a cambiar
 	 */
-	void ChangeScene(SceneID theSceneID);
+	void changeScene(SceneID theSceneID);
 
 	/**
 	 * Elimina todas las escenas de la pila.
@@ -80,42 +74,39 @@ private:
 	 * Elimina todas las escenas incluso la escena activa, se encarga de llamar
 	 * a los métodos Cleanup() de las escenas y de eleminarlas de la memoria
 	 */
-	void RemoveAllScene();
+	void removeAllScene();
 
 	/**
 	 * Llama el método Event() de la escena activa
 	 *
 	 * @param theEvent representa a un evento del sistema
 	 */
-	void EventScene(sf::Event theEvent);
+	void eventScene(sf::Event theEvent);
 
 	/**
 	 * Llama el método Draw() de la escena activa
 	 */
-	void DrawScene();
+	void drawScene();
 
 	/**
 	 * Llama al método Update() de la escena activa
 	 */
-	void UpdateScene();
+	void updateScene();
 
 	/**
 	 * Llama al método Resume de la escena activa
 	 */
-	void ResumeScene();
+	void resumeScene();
 
 	/**
 	 * Llama al método Pause de la escena activa
 	 */
-	void PauseScene();
+	void pauseScene();
 
-	bool HandleChangeScene(); 
-
-	SceneManager();
-	~SceneManager();
+	bool handleChangeScene();
 
 }; // class SceneManager
 
 } // namespace ra
 
-#endif // RAGE_CORE_SCENE_MANAGER_HPP
+#endif // RAGE_CORE_SCENEMANAGER_HPP

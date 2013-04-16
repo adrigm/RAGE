@@ -1,98 +1,77 @@
 #include <RAGE/Core/Scene.hpp>
-#include <RAGE/Core/SceneGraph.hpp>
-#include <RAGE/Core/Camera.hpp>
-#include <iostream> // Quitar
+#include <RAGE/Core/App.hpp>
+#include <RAGE/Core/SceneObject.hpp>
 
 namespace ra
 {
 
 struct ObjectZComparator
 {
-	bool operator()(const ra::SceneGraph* o1, const ra::SceneGraph* o2) const
+	bool operator()(const ra::SceneObject* o1, const ra::SceneObject* o2) const
     {
 		return o1->GetZOrder() < o2->GetZOrder();
     }
 };
 
-Scene::Scene(SceneID theID)
-	: m_ID(theID)
-	, m_init(false)
-	, m_paused(false)
-	, m_cleanup(false)
-	, m_colorBack(0, 0, 0)
-	, m_camera(ra::Camera::Instance())
+Scene::Scene(SceneID ID)
 {
-	m_app = ra::App::Instance();
-	m_app->log << "Scene::ctor() con ID: " << theID << " creada" << std::endl;
+	m_app = App::instance();
+	m_ID = ID;
 }
 
 Scene::~Scene()
 {
-	m_app->log << "Scene::dtor() con ID: " << GetID() << " eliminada" << std::endl;
 }
 
-const SceneID Scene::GetID() const
+const SceneID& Scene::getID() const
 {
 	return m_ID;
 }
 
-const bool Scene::IsInitComplete() const
+void Scene::setBackgroundColor(const sf::Color &color)
 {
-	return m_init;
+	m_colorBack = color;
 }
 
-const bool Scene::IsPaused() const
+App* Scene::getApp()
 {
-	return m_paused;
+	return m_app;
 }
 
-void Scene::SetBackgroundColor(const sf::Color &theColor)
-{
-	m_colorBack = theColor;
-}
-
-void Scene::Init()
-{
-	this->m_init = true;
-}
-
-void Scene::Draw()
+void Scene::draw()
 {
 	// Establecemos el color de fondo
-	m_app->window.clear(m_colorBack);
+	m_app->getWindow().clear(m_colorBack);
 
 	// Ordenamos la lista de objetos en base a su Z
-	m_sceneGraph.sort(ObjectZComparator());
+	m_sceneObjects.sort(ObjectZComparator());
 
 	// Recorremos la lista de Actores de la escena para dibujarla
-	std::list<ra::SceneGraph*>::const_iterator element;
-	for(element = m_sceneGraph.begin(); element != m_sceneGraph.end(); element++)
+	for(m_objectsIter = m_sceneObjects.begin(); m_objectsIter != m_sceneObjects.end(); m_objectsIter++)
 	{
-		if ((*element)->IsVisible() && m_camera->GetRect().intersects((*element)->getGlobalBounds()))
+		if ((*m_objectsIter)->IsVisible() /*&& m_app->getCamera().GetRect().intersects((*m_objectsIter)->getGlobalBounds())*/)
 		{
-			m_app->window.draw(**element);
+			m_app->getWindow().draw(**m_objectsIter);
 		}
 	}
 }
 
-void Scene::AddGraph(ra::SceneGraph& theGraph)
+void Scene::addObject(SceneObject& object)
 {
-	std::list<ra::SceneGraph*>::const_iterator it;
-	it = std::find(m_sceneGraph.begin(), m_sceneGraph.end(), &theGraph);
-	if (it == m_sceneGraph.end())
-		m_sceneGraph.push_back(&theGraph);
+	m_objectsIter = std::find(m_sceneObjects.begin(), m_sceneObjects.end(), &object);
+	if (m_objectsIter == m_sceneObjects.end())
+		m_sceneObjects.push_back(&object);
 }
 
-void Scene::QuitGraph(ra::SceneGraph& theGraph)
+void Scene::quitObject(SceneObject& object)
 {
-	m_sceneGraph.remove(&theGraph);
+	m_sceneObjects.remove(&object);
 }
 
-void Scene::DeleteGraph(ra::SceneGraph& theGraph)
+void Scene::deleteObject(SceneObject& object)
 {
-	m_sceneGraph.remove(&theGraph);
-	delete &theGraph;
+	m_sceneObjects.remove(&object);
+	delete &object;
 }
 
-
-}; // namespace ra
+}

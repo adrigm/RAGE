@@ -15,22 +15,22 @@ public:
 
 	~ConfigCreate();
 
-	void Open(const std::string& filename);
+	void open(const std::string& filename);
 
-	void Close();
+	void close();
 
-	void PutSection(const std::string& section);
+	void putSection(const std::string& section);
 
-	void PutValue(const std::string& key, const std::string& value);
-	void PutValue(const std::string& key, bool value);
-	void PutValue(const std::string& key, float value);
-	void PutValue(const std::string& key, int value);
-	void PutValue(const std::string& key, unsigned int value);
-	void PutValue(const std::string& key, long value);
+	void putValue(const std::string& key, const std::string& value);
+	void putValue(const std::string& key, bool value);
+	void putValue(const std::string& key, float value);
+	void putValue(const std::string& key, int value);
+	void putValue(const std::string& key, unsigned int value);
+	void putValue(const std::string& key, long value);
 
-	void PutComment(const std::string& comment);
+	void putComment(const std::string& comment);
 
-	void PutBlankLine();
+	void putBlankLine();
 
 private:
 	std::ofstream file;

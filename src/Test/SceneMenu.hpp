@@ -1,35 +1,33 @@
-#ifndef SCENE_MENU
-#define SCENE_MENU
+#ifndef SCENE_MENU_HPP
+#define SCENE_MENU_HPP
 
-#include <RAGE\Core.hpp>
+#include <SFML/Window.hpp>
+#include <RAGE/Core.hpp>
 
 class SceneMenu : public ra::Scene
 {
 public:
-	SceneMenu(ra::SceneID theID);
+	SceneMenu(ra::SceneID ID);
 	~SceneMenu();
 
-	void Init() ;
+	void init();
 
-	void Active();
+	void active();
 
-	void Update() ;
+	void desactive();
 
-	void Event(sf::Event theEvent) ;
+	void update();
 
-	void Resume();
+	void event(sf::Event theEvent);
 
-	void Pause();
+	void resume();
 
-	virtual void Cleanup() ;
+	void pause() ;
+
+	void cleanup();
 
 private:
-	ra::App* app;
-	ra::SceneManager* sm;
-	ra::AssetManager* am;
-	ra::Camera* cam;
-	ra::Text pause;
-	ra::Sprite back;
-}; // SceneMenu
 
-#endif // SCENE_MENU
+}; // class SceneMenu
+
+#endif // SCENE_MENU_HPP

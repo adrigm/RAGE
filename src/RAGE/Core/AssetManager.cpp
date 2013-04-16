@@ -1,81 +1,62 @@
-#include <boost/filesystem.hpp>
-#include <RAGE/Core/App.hpp>
 #include <RAGE/Core/AssetManager.hpp>
-
-namespace fs = boost::filesystem;
+#include <RAGE/Core/App.hpp>
+#include <boost/filesystem.hpp>
+#include <string>
 
 namespace ra
 {
 
-AssetManager* AssetManager::ms_instance = 0;
-
 AssetManager::AssetManager()
-	: app(ra::App::Instance())
-	, m_masterDir(app->GetExecutableDir())
-	, m_textures()
+	: m_textures()
 	, m_images()
 	, m_fonts()
 	, m_sounds()
 	, m_music()
 	, m_configs()
 {
+	m_app = App::instance();
+	m_masterDir = m_app->getExecutableDir();
+	m_app->getLog() << "AssetManager::ctor()" << std::endl;
 }
 
 AssetManager::~AssetManager()
 {
+	m_app->getLog() << "AssetManager::dtor()" << std::endl;
 }
 
-AssetManager* AssetManager::Instance()
+void AssetManager::setPath(const std::string& thePath)
 {
-	if(ms_instance == 0)
+	boost::filesystem::path path = m_app->getExecutableDir() + thePath;
+
+	path = boost::filesystem::system_complete(path);
+
+	if (boost::filesystem::exists(path) && boost::filesystem::is_directory(path))
 	{
-		ms_instance = new AssetManager();
-	}
-	return ms_instance;
-}
-
-void AssetManager::Release()
-{
-	if(ms_instance)
-	{
-		delete ms_instance;
-	}
-	ms_instance = 0;
-}
-
-void AssetManager::SetPath(const std::string& thePath)
-{
-	fs::path path = app->GetExecutableDir() + thePath;
-
-	path = fs::system_complete(path);
-
-	if (fs::exists(path) && fs::is_directory(path))
-	{
-		path = fs::canonical(path);
+		path = boost::filesystem::canonical(path);
 		path = path.generic_string();
 		std::string path_s = path.string();
 		path_s.append("/");
 
 		m_masterDir = path_s;
 
-		app->log << "Path de recursos dir=\"" << path_s << "\"" << std::endl;
+		m_app->getLog() << "Path de recursos dir=\"" << path_s << "\"" << std::endl;
 	}
 	else
 	{
 
-		app->log << "[error] AssetManager::SetPath() no existe dir=\"" 
+		m_app->getLog() << "[error] AssetManager::SetPath() no existe dir=\"" 
 			<< path.string() << "\"" << std::endl;
 	}
 }
 
-sf::Texture* AssetManager::GetTexture(const std::string& theName)
+sf::Texture* AssetManager::getTexture(const std::string& theName)
 {
 	// Comprobamos si ya esta cargada
 	std::map<std::string, sf::Texture*>::const_iterator it;
 	it = m_textures.find(theName);
 	if (it != m_textures.end())
 	{
-		app->log << "AssetManager::GetImage() " << theName << " usando archivo existente" << std::endl;
+		m_app->getLog() << "AssetManager::getImage() " << theName << " usando archivo existente" << std::endl;
 		return it->second;
 	}
 
@@ -84,12 +65,12 @@ sf::Texture* AssetManager::GetTexture(const std::string& theName)
 
 	if(!texture->loadFromFile(m_masterDir + theName))
 	{
-		app->log << "[error] AssetManager::GetImage() " << theName << " no se ha podido cargar" << std::endl;
+		m_app->getLog() << "[error] AssetManager::getImage() " << theName << " no se ha podido cargar" << std::endl;
 		texture->create(1, 1);
 		return texture;
 	}
 
-	app->log << "AssetManager::GetTexture() " << theName << " cargado" << std::endl;
+	m_app->getLog() << "AssetManager::getTexture() " << theName << " cargado" << std::endl;
 
 	// La añadimos a la lista
 	m_textures[theName] = texture;
@@ -98,20 +79,20 @@ sf::Texture* AssetManager::GetTexture(const std::string& theName)
 	return texture;
 }
 
-sf::Texture* AssetManager::GetTexture(const std::string& theName, sf::Texture* theTexture)
+sf::Texture* AssetManager::getTexture(const std::string& theName, sf::Texture* theTexture)
 {
 	// Comprobamos si ya esta cargada
 	std::map<std::string, sf::Texture*>::const_iterator it;
 	it = m_textures.find(theName);
 	if (it != m_textures.end())
 	{
-		app->log << "AssetManager::GetTexture() " << theName << " usando textura existente" << std::endl;
+		m_app->getLog() << "AssetManager::getTexture() " << theName << " usando textura existente" << std::endl;
 		return it->second;
 	}
 
 	sf::Texture* texture = new sf::Texture(*theTexture);
 
-	app->log << "AssetManager::GetTexture() " << theName << " cargado" << std::endl;
+	m_app->getLog() << "AssetManager::getTexture() " << theName << " cargado" << std::endl;
 
 	// La añadimos a la lista
 	m_textures[theName] = texture;
@@ -120,14 +101,14 @@ sf::Texture* AssetManager::GetTexture(const std::string& theName, sf::Texture* t
 	return texture;
 }
 
-sf::Texture* AssetManager::GetTextureFromImage(const std::string& theName, const sf::Image* theImage, const sf::IntRect& theRect)
+sf::Texture* AssetManager::getTextureFromImage(const std::string& theName, const sf::Image* theImage, const sf::IntRect& theRect)
 {
 	// Comprobamos si ya esta cargada
 	std::map<std::string, sf::Texture*>::const_iterator it;
 	it = m_textures.find(theName);
 	if (it != m_textures.end())
 	{
-		app->log << "AssetManager::GetTextureFromImage() " << theName << " usando archivo existente" << std::endl;
+		m_app->getLog() << "AssetManager::getTextureFromImage() " << theName << " usando archivo existente" << std::endl;
 		return it->second;
 	}
 
@@ -135,12 +116,12 @@ sf::Texture* AssetManager::GetTextureFromImage(const std::string& theName, const
 	sf::Texture *texture = new sf::Texture();
 	if(!texture->loadFromImage(*theImage, theRect))
 	{
-		app->log << "[error] AssetManager::GetTextureFromImage() " << theName << " no se ha podido cargar" << std::endl;
+		m_app->getLog() << "[error] AssetManager::getTextureFromImage() " << theName << " no se ha podido cargar" << std::endl;
 		texture->create(1, 1);
 		return texture;
 	}
 
-	app->log << "AssetManager::GetTextureFromImage() " << theName << " cargado" << std::endl;
+	m_app->getLog() << "AssetManager::getTextureFromImage() " << theName << " cargado" << std::endl;
 
 	// La añadimos a la lista
 	m_textures[theName] = texture;
@@ -149,21 +130,21 @@ sf::Texture* AssetManager::GetTextureFromImage(const std::string& theName, const
 	return texture;
 }
 
-void AssetManager::DeleteTexture(const std::string& theName)
+void AssetManager::deleteTexture(const std::string& theName)
 {
 	std::map<std::string, sf::Texture*>::const_iterator it = m_textures.find(theName);
 	if (it != m_textures.end())
 	{
 		delete it->second;
 		m_textures.erase(it);
-		app->log << "AssetManager::DeleteTexture() " << theName << " archivo eliminado" << std::endl;
+		m_app->getLog() << "AssetManager::deleteTexture() " << theName << " archivo eliminado" << std::endl;
 		return;
 	}
 
-	app->log << "AssetManager::DeleteTexture() " << theName << " no está cargado" << std::endl;
+	m_app->getLog() << "AssetManager::deleteTexture() " << theName << " no está cargado" << std::endl;
 }
 
-void AssetManager::DeleteTexture(const sf::Texture* theTexture)
+void AssetManager::deleteTexture(const sf::Texture* theTexture)
 {
 	std::map<std::string, sf::Texture*>::const_iterator it;
 	for (it = m_textures.begin(); it != m_textures.end(); it++)
@@ -171,23 +152,23 @@ void AssetManager::DeleteTexture(const sf::Texture* theTexture)
 		if (theTexture == it->second)
 		{
 			delete it->second;
-			app->log << "AssetManager::DeleteTexture() " << it->first << " archivo eliminado" << std::endl;
+			m_app->getLog() << "AssetManager::deleteTexture() " << it->first << " archivo eliminado" << std::endl;
 			m_textures.erase(it);
 			return;
 		}
 	}
 
-	app->log << "AssetManager::DeleteTexture() La dirección no corresponde a una textura cargada" << std::endl;
+	m_app->getLog() << "AssetManager::deleteTexture() La dirección no corresponde a una textura cargada" << std::endl;
 }
 
-sf::Image* AssetManager::GetImage(const std::string& theName)
+sf::Image* AssetManager::getImage(const std::string& theName)
 {
 	// Comprobamos si ya esta cargada
 	std::map<std::string, sf::Image*>::const_iterator it;
 	it = m_images.find(theName);
 	if (it != m_images.end())
 	{
-		app->log << "AssetManager::GetImage() " << theName << " usando archivo existente" << std::endl;
+		m_app->getLog() << "AssetManager::getImage() " << theName << " usando archivo existente" << std::endl;
 		return it->second;
 	}
 
@@ -196,12 +177,12 @@ sf::Image* AssetManager::GetImage(const std::string& theName)
 
 	if(!image->loadFromFile(m_masterDir + theName))
 	{
-		app->log << "[error] AssetManager::GetImage() " << theName << " no se ha podido cargar" << std::endl;
+		m_app->getLog() << "[error] AssetManager::getImage() " << theName << " no se ha podido cargar" << std::endl;
 		image->create(1, 1);
 		return image;
 	}
 
-	app->log << "AssetManager::GetImage() " << theName << " cargado" << std::endl;
+	m_app->getLog() << "AssetManager::getImage() " << theName << " cargado" << std::endl;
 
 	// La añadimos a la lista
 	m_images[theName] = image;
@@ -210,14 +191,14 @@ sf::Image* AssetManager::GetImage(const std::string& theName)
 	return image;
 }
 
-sf::Image* AssetManager::GetImageFromTexture(const std::string& theName, const sf::Texture* theTexture)
+sf::Image* AssetManager::getImageFromTexture(const std::string& theName, const sf::Texture* theTexture)
 {
 	// Comprobamos si ya esta cargada
 	std::map<std::string, sf::Image*>::const_iterator it;
 	it = m_images.find(theName);
 	if (it != m_images.end())
 	{
-		app->log << "AssetManager::GetImageFromTexture() " << theName << " usando archivo existente" << std::endl;
+		m_app->getLog() << "AssetManager::getImageFromTexture() " << theName << " usando archivo existente" << std::endl;
 		return it->second;
 	}
 
@@ -225,9 +206,9 @@ sf::Image* AssetManager::GetImageFromTexture(const std::string& theName, const s
 	sf::Image *image = new sf::Image();
 	*image = theTexture->copyToImage();
 
-	app->log << "AssetManager::GetImageFromTexture() " << theName << " imagen creada a partir de textura" << std::endl;
+	m_app->getLog() << "AssetManager::getImageFromTexture() " << theName << " imagen creada a partir de textura" << std::endl;
 
-	app->log << "AssetManager::GetImageFromTexture() " << theName << " cargado" << std::endl;
+	m_app->getLog() << "AssetManager::getImageFromTexture() " << theName << " cargado" << std::endl;
 
 	// La añadimos a la lista
 	m_images[theName] = image;
@@ -236,21 +217,21 @@ sf::Image* AssetManager::GetImageFromTexture(const std::string& theName, const s
 	return image;
 }
 
-void AssetManager::DeleteImage(const std::string& theName)
+void AssetManager::deleteImage(const std::string& theName)
 {
 	std::map<std::string, sf::Image*>::const_iterator it = m_images.find(theName);
 	if (it != m_images.end())
 	{
 		delete it->second;
 		m_images.erase(it);
-		app->log << "AssetManager::DeleteImage() " << theName << "archivo eliminado" << std::endl;
+		m_app->getLog() << "AssetManager::deleteImage() " << theName << "archivo eliminado" << std::endl;
 		return;
 	}
 
-	app->log << "AssetManager::DeleteImage() " << theName << "no está cargado" << std::endl;
+	m_app->getLog() << "AssetManager::deleteImage() " << theName << "no está cargado" << std::endl;
 }
 
-void AssetManager::DeleteImage(const sf::Image* theImage)
+void AssetManager::deleteImage(const sf::Image* theImage)
 {
 	std::map<std::string, sf::Image*>::const_iterator it;
 	for (it = m_images.begin(); it != m_images.end(); it++)
@@ -258,23 +239,23 @@ void AssetManager::DeleteImage(const sf::Image* theImage)
 		if (theImage == it->second)
 		{
 			delete it->second;
-			app->log << "AssetManager::DeleteImage() " << it->first << "archivo eliminado" << std::endl;
+			m_app->getLog() << "AssetManager::deleteImage() " << it->first << "archivo eliminado" << std::endl;
 			m_images.erase(it);
 			return;
 		}
 	}
 
-	app->log << "AssetManager::DeleteImage() La dirección no corresponde a una imagen cargada" << std::endl;
+	m_app->getLog() << "AssetManager::deleteImage() La dirección no corresponde a una imagen cargada" << std::endl;
 }
 
-sf::Font* AssetManager::GetFont(const std::string& theName)
+sf::Font* AssetManager::getFont(const std::string& theName)
 {
 	// Comprobamos si ya esta cargada
 	std::map<std::string, sf::Font*>::const_iterator it;
 	it = m_fonts.find(theName);
 	if (it != m_fonts.end())
 	{
-		app->log << "AssetManager::GetFont() " << theName << " usando archivo existente" << std::endl;
+		m_app->getLog() << "AssetManager::getFont() " << theName << " usando archivo existente" << std::endl;
 		return it->second;
 	}
 
@@ -283,11 +264,11 @@ sf::Font* AssetManager::GetFont(const std::string& theName)
 
 	if(!font->loadFromFile(m_masterDir + theName))
 	{
-		app->log << "[error] AssetManager::GetFont() " << theName << " no se ha podido cargar" << std::endl;
+		m_app->getLog() << "[error] AssetManager::getFont() " << theName << " no se ha podido cargar" << std::endl;
 		return font;
 	}
 
-	app->log << "AssetManager::GetFont() " << theName << " cargado" << std::endl;
+	m_app->getLog() << "AssetManager::getFont() " << theName << " cargado" << std::endl;
 
 	// La añadimos a la lista
 	m_fonts[theName] = font;
@@ -296,21 +277,21 @@ sf::Font* AssetManager::GetFont(const std::string& theName)
 	return font;
 }
 
-void AssetManager::DeleteFont(const std::string& theName)
+void AssetManager::deleteFont(const std::string& theName)
 {
 	std::map<std::string, sf::Font*>::const_iterator it = m_fonts.find(theName);
 	if (it != m_fonts.end())
 	{
 		delete it->second;
 		m_fonts.erase(it);
-		app->log << "AssetManager::DeleteFont() " << theName << "archivo eliminado" << std::endl;
+		m_app->getLog() << "AssetManager::deleteFont() " << theName << "archivo eliminado" << std::endl;
 		return;
 	}
 
-	app->log << "AssetManager::DeleteFont() " << theName << "no está cargado" << std::endl;
+	m_app->getLog() << "AssetManager::deleteFont() " << theName << "no está cargado" << std::endl;
 }
 
-void AssetManager::DeleteFont(const sf::Font* theFont)
+void AssetManager::deleteFont(const sf::Font* theFont)
 {
 	std::map<std::string, sf::Font*>::const_iterator it;
 	for (it = m_fonts.begin(); it != m_fonts.end(); it++)
@@ -318,23 +299,23 @@ void AssetManager::DeleteFont(const sf::Font* theFont)
 		if (theFont == it->second)
 		{
 			delete it->second;
-			app->log << "AssetManager::DeleteFont() " << it->first << "archivo eliminado" << std::endl;
+			m_app->getLog() << "AssetManager::deleteFont() " << it->first << "archivo eliminado" << std::endl;
 			m_fonts.erase(it);
 			return;
 		}
 	}
 
-	app->log << "AssetManager::DeleteFont() La dirección no corresponde a una fuente cargada" << std::endl;
+	m_app->getLog() << "AssetManager::deleteFont() La dirección no corresponde a una fuente cargada" << std::endl;
 }
 
-sf::SoundBuffer* AssetManager::GetSoundBuffer(const std::string& theName)
+sf::SoundBuffer* AssetManager::getSoundBuffer(const std::string& theName)
 {
 	// Comprobamos si ya esta cargada
 	std::map<std::string, sf::SoundBuffer*>::const_iterator it;
 	it = m_sounds.find(theName);
 	if (it != m_sounds.end())
 	{
-		app->log << "AssetManager::GetSoundBuffer() " << theName << " usando archivo existente" << std::endl;
+		m_app->getLog() << "AssetManager::getSoundBuffer() " << theName << " usando archivo existente" << std::endl;
 		return it->second;
 	}
 
@@ -343,11 +324,11 @@ sf::SoundBuffer* AssetManager::GetSoundBuffer(const std::string& theName)
 
 	if(!sound->loadFromFile(m_masterDir + theName))
 	{
-		app->log << "[error] AssetManager::GetSoundBuffer() " << theName << " no se ha podido cargar" << std::endl;
+		m_app->getLog() << "[error] AssetManager::getSoundBuffer() " << theName << " no se ha podido cargar" << std::endl;
 		return sound;
 	}
 
-	app->log << "AssetManager::GetSoundBuffer() " << theName << " cargado" << std::endl;
+	m_app->getLog() << "AssetManager::getSoundBuffer() " << theName << " cargado" << std::endl;
 
 	// La añadimos a la lista
 	m_sounds[theName] = sound;
@@ -356,21 +337,21 @@ sf::SoundBuffer* AssetManager::GetSoundBuffer(const std::string& theName)
 	return sound;
 }
 
-void AssetManager::DeleteSoundBuffer(const std::string& theName)
+void AssetManager::deleteSoundBuffer(const std::string& theName)
 {
 	std::map<std::string, sf::SoundBuffer*>::const_iterator it = m_sounds.find(theName);
 	if (it != m_sounds.end())
 	{
 		delete it->second;
 		m_sounds.erase(it);
-		app->log << "AssetManager::DeleteSoundBuffer() " << theName << "archivo eliminado" << std::endl;
+		m_app->getLog() << "AssetManager::deleteSoundBuffer() " << theName << "archivo eliminado" << std::endl;
 		return;
 	}
 
-	app->log << "AssetManager::DeleteSoundBuffer() " << theName << "no está cargado" << std::endl;
+	m_app->getLog() << "AssetManager::deleteSoundBuffer() " << theName << "no está cargado" << std::endl;
 }
 
-void AssetManager::DeleteSoundBuffer(const sf::SoundBuffer* theSoundBuffer)
+void AssetManager::deleteSoundBuffer(const sf::SoundBuffer* theSoundBuffer)
 {
 	std::map<std::string, sf::SoundBuffer*>::const_iterator it;
 	for (it = m_sounds.begin(); it != m_sounds.end(); it++)
@@ -378,23 +359,23 @@ void AssetManager::DeleteSoundBuffer(const sf::SoundBuffer* theSoundBuffer)
 		if (theSoundBuffer == it->second)
 		{
 			delete it->second;
-			app->log << "AssetManager::DeleteSoundBuffer() " << it->first << "archivo eliminado" << std::endl;
+			m_app->getLog() << "AssetManager::deleteSoundBuffer() " << it->first << "archivo eliminado" << std::endl;
 			m_sounds.erase(it);
 			return;
 		}
 	}
 
-	app->log << "AssetManager::DeleteSoundBuffer() La dirección no corresponde a un sonido cargado" << std::endl;
+	m_app->getLog() << "AssetManager::deleteSoundBuffer() La dirección no corresponde a un sonido cargado" << std::endl;
 }
 
-sf::Music* AssetManager::GetMusic(const std::string& theName)
+sf::Music* AssetManager::getMusic(const std::string& theName)
 {
 	// Comprobamos si ya esta cargada
 	std::map<std::string, sf::Music*>::const_iterator it;
 	it = m_music.find(theName);
 	if (it != m_music.end())
 	{
-		app->log << "AssetManager::GetMusic() " << theName << " usando archivo existente" << std::endl;
+		m_app->getLog() << "AssetManager::getMusic() " << theName << " usando archivo existente" << std::endl;
 		return it->second;
 	}
 
@@ -403,11 +384,11 @@ sf::Music* AssetManager::GetMusic(const std::string& theName)
 
 	if(!music->openFromFile(m_masterDir + theName))
 	{
-		app->log << "[error] AssetManager::GetMusic() " << theName << " no se ha podido cargar" << std::endl;
+		m_app->getLog() << "[error] AssetManager::getMusic() " << theName << " no se ha podido cargar" << std::endl;
 		return music;
 	}
 
-	app->log << "AssetManager::GetMusic() " << theName << " cargado" << std::endl;
+	m_app->getLog() << "AssetManager::getMusic() " << theName << " cargado" << std::endl;
 
 	// La añadimos a la lista
 	m_music[theName] = music;
@@ -416,21 +397,21 @@ sf::Music* AssetManager::GetMusic(const std::string& theName)
 	return music;
 }
 
-void AssetManager::DeleteMusic(const std::string& theName)
+void AssetManager::deleteMusic(const std::string& theName)
 {
 	std::map<std::string, sf::Music*>::const_iterator it = m_music.find(theName);
 	if (it != m_music.end())
 	{
 		delete it->second;
 		m_music.erase(it);
-		app->log << "AssetManager::DeleteMusic() " << theName << "archivo eliminado" << std::endl;
+		m_app->getLog() << "AssetManager::deleteMusic() " << theName << "archivo eliminado" << std::endl;
 		return;
 	}
 
-	app->log << "AssetManager::DeleteMusic() " << theName << "no está cargado" << std::endl;
+	m_app->getLog() << "AssetManager::deleteMusic() " << theName << "no está cargado" << std::endl;
 }
 
-void AssetManager::DeleteMusic(const sf::Music* theMusic)
+void AssetManager::deleteMusic(const sf::Music* theMusic)
 {
 	std::map<std::string, sf::Music*>::const_iterator it;
 	for (it = m_music.begin(); it != m_music.end(); it++)
@@ -438,36 +419,36 @@ void AssetManager::DeleteMusic(const sf::Music* theMusic)
 		if (theMusic == it->second)
 		{
 			delete it->second;
-			app->log << "AssetManager::DeleteMusic() " << it->first << "archivo eliminado" << std::endl;
+			m_app->getLog() << "AssetManager::deleteMusic() " << it->first << "archivo eliminado" << std::endl;
 			m_music.erase(it);
 			return;
 		}
 	}
 
-	app->log << "AssetManager::DeleteMusic() La dirección no corresponde a una música cargada" << std::endl;
+	m_app->getLog() << "AssetManager::deleteMusic() La dirección no corresponde a una música cargada" << std::endl;
 }
 
-ra::ConfigReader* AssetManager::GetConfig(const std::string& theName)
+ra::ConfigReader* AssetManager::getConfig(const std::string& theName)
 {
 	// Comprobamos si ya esta cargada
 	std::map<std::string, ra::ConfigReader*>::const_iterator it;
 	it = m_configs.find(theName);
 	if (it != m_configs.end())
 	{
-		app->log << "AssetManager::GetConfig() " << theName << " usando archivo existente" << std::endl;
+		m_app->getLog() << "AssetManager::getConfig() " << theName << " usando archivo existente" << std::endl;
 		return it->second;
 	}
 
 	// Si no lo está, la intentamos cargar
 	ra::ConfigReader *config = new ra::ConfigReader();
 
-	if(!config->LoadFromFile(m_masterDir + theName))
+	if(!config->loadFromFile(m_masterDir + theName))
 	{
-		app->log << "[error] AssetManager::GetConfig() " << theName << " no se ha podido cargar" << std::endl;
+		m_app->getLog() << "[error] AssetManager::getConfig() " << theName << " no se ha podido cargar" << std::endl;
 		return config;
 	}
 
-	app->log << "AssetManager::GetConfig() " << theName << " cargado" << std::endl;
+	m_app->getLog() << "AssetManager::getConfig() " << theName << " cargado" << std::endl;
 
 	// La añadimos a la lista
 	m_configs[theName] = config;
@@ -476,21 +457,21 @@ ra::ConfigReader* AssetManager::GetConfig(const std::string& theName)
 	return config;
 }
 
-void AssetManager::DeleteConfig(const std::string& theName)
+void AssetManager::deleteConfig(const std::string& theName)
 {
 	std::map<std::string, ra::ConfigReader*>::const_iterator it = m_configs.find(theName);
 	if (it != m_configs.end())
 	{
 		delete it->second;
 		m_configs.erase(it);
-		app->log << "AssetManager::DeleteConfig() " << theName << "archivo eliminado" << std::endl;
+		m_app->getLog() << "AssetManager::deleteConfig() " << theName << "archivo eliminado" << std::endl;
 		return;
 	}
 
-	app->log << "AssetManager::DeleteConfig() " << theName << "no está cargado" << std::endl;
+	m_app->getLog() << "AssetManager::deleteConfig() " << theName << "no está cargado" << std::endl;
 }
 
-void AssetManager::DeleteConfig(const ra::ConfigReader* theConfig)
+void AssetManager::deleteConfig(const ra::ConfigReader* theConfig)
 {
 	std::map<std::string, ra::ConfigReader*>::const_iterator it;
 	for (it = m_configs.begin(); it != m_configs.end(); it++)
@@ -498,22 +479,22 @@ void AssetManager::DeleteConfig(const ra::ConfigReader* theConfig)
 		if (theConfig == it->second)
 		{
 			delete it->second;
-			app->log << "AssetManager::DeleteConfig() " << it->first << "archivo eliminado" << std::endl;
+			m_app->getLog() << "AssetManager::deleteConfig() " << it->first << "archivo eliminado" << std::endl;
 			m_configs.erase(it);
 			return;
 		}
 	}
 
-	app->log << "AssetManager::DeleteConfig() La dirección no corresponde a una configuración cargada" << std::endl;
+	m_app->getLog() << "AssetManager::deleteConfig() La dirección no corresponde a una configuración cargada" << std::endl;
 }
 
-void AssetManager::Cleanup()
+void AssetManager::cleanup()
 {
 	std::map<std::string, sf::Texture*>::const_iterator textIt;
 	for (textIt = m_textures.begin(); textIt != m_textures.end(); textIt++)
 	{
 		delete textIt->second;
-		app->log << "AssetManager::Cleanup() Eliminado archivo " << textIt->first << std::endl;
+		m_app->getLog() << "AssetManager::Cleanup() Eliminado archivo " << textIt->first << std::endl;
 	}
 	m_textures.clear();
 
@@ -521,7 +502,7 @@ void AssetManager::Cleanup()
 	for (imgIt = m_images.begin(); imgIt != m_images.end(); imgIt++)
 	{
 		delete imgIt->second;
-		app->log << "AssetManager::Cleanup() Eliminado archivo " << imgIt->first << std::endl;
+		m_app->getLog() << "AssetManager::Cleanup() Eliminado archivo " << imgIt->first << std::endl;
 	}
 	m_images.clear();
 
@@ -529,7 +510,7 @@ void AssetManager::Cleanup()
 	for (fonIt = m_fonts.begin(); fonIt != m_fonts.end(); fonIt++)
 	{
 		delete fonIt->second;
-		app->log << "AssetManager::Cleanup() Eliminado archivo " << fonIt->first << std::endl;
+		m_app->getLog() << "AssetManager::Cleanup() Eliminado archivo " << fonIt->first << std::endl;
 	}
 	m_fonts.clear();
 
@@ -537,7 +518,7 @@ void AssetManager::Cleanup()
 	for (souIT = m_sounds.begin(); souIT != m_sounds.end(); souIT++)
 	{
 		delete souIT->second;
-		app->log << "AssetManager::Cleanup() Eliminado archivo " << souIT->first << std::endl;
+		m_app->getLog() << "AssetManager::Cleanup() Eliminado archivo " << souIT->first << std::endl;
 	}
 	m_sounds.clear();
 
@@ -545,7 +526,7 @@ void AssetManager::Cleanup()
 	for (muIt = m_music.begin(); muIt != m_music.end(); muIt++)
 	{
 		delete muIt->second;
-		app->log << "AssetManager::Cleanup() Eliminado archivo " << muIt->first << std::endl;
+		m_app->getLog() << "AssetManager::Cleanup() Eliminado archivo " << muIt->first << std::endl;
 	}
 	m_music.clear();
 
@@ -553,7 +534,7 @@ void AssetManager::Cleanup()
 	for (conIt = m_configs.begin(); conIt != m_configs.end(); conIt++)
 	{
 		delete conIt->second;
-		app->log << "AssetManager::Cleanup() Eliminado archivo " << conIt->first << std::endl;
+		m_app->getLog() << "AssetManager::Cleanup() Eliminado archivo " << conIt->first << std::endl;
 	}
 	m_configs.clear();
 }

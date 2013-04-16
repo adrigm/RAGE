@@ -36,10 +36,10 @@ public:
     * @param[in] theSection to check
     * @return true if theSection provided exists
     */
-    bool IsSectionEmpty(const std::string theSection) const;
+    bool isSectionEmpty(const std::string theSection) const;
 
     /**
-    * GetBool will return the boolean value for theSection and theName
+    * getBool will return the boolean value for theSection and theName
     * specified or theDefault(false) if the section or name does not
     * exist.  The value must be one of the following to return either
     * true or false (0,1,on,off,true,false).
@@ -48,11 +48,11 @@ public:
     * @param[in] theDefault to use if the value is not found (optional)
     * @return the value found or theDefault if not found or correct
     */
-    bool GetBool(const std::string theSection, const std::string theName,
+    bool getBool(const std::string theSection, const std::string theName,
         const bool theDefault = false) const;
 
     /**
-    * GetFloat will return a floating point number for theSection and
+    * getFloat will return a floating point number for theSection and
     * theName specified or theDefault(0.f) if theSection or theName does not
     * exist.
     * @param[in] theSection to use for finding theName
@@ -60,22 +60,22 @@ public:
     * @param[in] theDefault to use if the value is not found (optional)
     * @return the value found or theDefault if not found or correct
     */
-    float GetFloat(const std::string theSection, const std::string theName,
+    float getFloat(const std::string theSection, const std::string theName,
         const float theDefault = 0.f) const;
 
     /**
-    * GetString will return the string value for theSection and theName
+    * getString will return the string value for theSection and theName
     * specified or theDefault("") if the section or name does not exist.
     * @param[in] theSection to use for finding theName
     * @param[in] theName to use for finding the value to return
     * @param[in] theDefault to use if the value is not found (optional)
     * @return the value found or theDefault if not found
     */
-    std::string GetString(const std::string theSection,
+    std::string getString(const std::string theSection,
         const std::string theName, const std::string theDefault = "") const;
 
     /**
-    * GetUint32 will return an unsigned 32 bit number for theSection and
+    * getUint32 will return an unsigned 32 bit number for theSection and
     * theName specified or theDefault(0) if theSection or theName does not
     * exist.
     * @param[in] theSection to use for finding theName
@@ -83,16 +83,16 @@ public:
     * @param[in] theDefault to use if the value is not found (optional)
     * @return the value found or theDefault if not found
     */
-    Uint32 GetUint32(const std::string theSection, const std::string theName,
+    Uint32 getUint32(const std::string theSection, const std::string theName,
         const Uint32 theDefault = 0) const;
 
     /**
     * LoadFromFile will open and read the configuration file specified into
-    * internal maps that can be later retrieved using the Get* options above.
+    * internal maps that can be later retrieved using the get* options above.
     * @param[in] theFilename to use as the configuration file to read
     * @result true if theFilename was found and opened successfully
     */
-    bool LoadFromFile(const std::string theFilename);
+    bool loadFromFile(const std::string theFilename);
 
     /**
     * Assignment operator will duplicate the information found in theRight
@@ -110,9 +110,9 @@ private:
     // Variables
     ///////////////////////////////////////////////////////////////////////////
     /// Point to app
-	ra::App *app;
+	ra::App *m_app;
     /// Map to store all the sections and their corresponding name=value pairs
-    std::map<const std::string, typeNameValue*> mSections;
+    std::map<const std::string, typeNameValue*> m_sections;
 
     /**
     * ParseLine will parse the line provided by the Read method above.
@@ -121,7 +121,7 @@ private:
     * @param theSection to be used if name, value pair is parsed
     * @return string representing the new section name if section name was parsed
     */
-    std::string ParseLine(const char* theLine, const unsigned long theCount,
+    std::string parseLine(const char* theLine, const unsigned long theCount,
         const std::string theSection);
 
     /**
@@ -131,7 +131,7 @@ private:
     * @param theName to be stored as the key for theValue below
     * @param theValue to be stored in the current section name
     */
-    void StoreNameValue(const std::string theSection,
+    void storeNameValue(const std::string theSection,
         const std::string theName, const std::string theValue);
 
 }; // class ConfigReader

@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{14B88709-AAA6-4FE3-A6DA-09485B384B25}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>RAGE</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)..\..\lib</OutDir>
+    <TargetName>rage-d</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)..\..\lib</OutDir>
+    <TargetName>rage</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions);SFML_STATIC</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;$(SolutionDir)..\..\extlibs\headers;$(SolutionDir)..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>sfml-system-s-d.lib;sfml-window-s-d.lib;sfml-graphics-s-d.lib;sfml-audio-s-d.lib;libboost_system-vc110-mt-gd-1_53.lib;libboost_filesystem-vc110-mt-gd-1_53.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\extlibs\libs-msvc-2012\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions);SFML_STATIC</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;$(SolutionDir)..\..\extlibs\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>sfml-main-s.lib;sfml-system-s.lib;sfml-window-s.lib;sfml-graphics-s.lib;sfml-audio-s.lib;libboost_system-vc110-mt-1_53.lib;libboost_filesystem-vc110-mt-1_53.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\extlibs\libs-msvc-2012\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\RAGE\Config.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\App.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\AssetManager.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\Camera.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\CircleShape.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\ConfigCreate.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\ConfigReader.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\ConvexShape.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\Core_types.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\Export.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\RectangleShape.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\Scene.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\SceneManager.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\SceneObject.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\Shape.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\Sprite.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\StringUtil.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\Text.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\Tmx.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxEllipse.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxImage.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxImageLayer.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxLayer.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxMap.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxMapTile.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxObject.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxObjectGroup.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxPoint.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxPolygon.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxPolyline.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxPropertySet.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxTile.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxTileset.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxUtil.hpp" />
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\base64\base64.h" />
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\tinyxml\tinystr.h" />
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\tinyxml\tinyxml.h" />
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\crc32.h" />
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\deflate.h" />
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\gzguts.h" />
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\inffast.h" />
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\inffixed.h" />
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\inflate.h" />
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\inftrees.h" />
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\trees.h" />
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\zconf.h" />
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\zlib.h" />
+    <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\zutil.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\RAGE\Core\App.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\AssetManager.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\Camera.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\CircleShape.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\ConfigCreate.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\ConfigReader.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\ConvexShape.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\RectangleShape.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\Scene.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\SceneManager.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\SceneObject.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\Shape.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\Sprite.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\StringUtil.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\Text.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxEllipse.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxImage.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxImageLayer.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxLayer.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxMap.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxObject.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxObjectGroup.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxPolygon.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxPolyline.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxPropertySet.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxTile.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxTileset.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\tmx\TmxUtil.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\base64\base64.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\tinyxml\tinystr.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\adler32.c" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\compress.c" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\crc32.c" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\deflate.c" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\gzclose.c" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\gzlib.c" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\gzread.c" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\gzwrite.c" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\infback.c" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\inffast.c" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\inflate.c" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\inftrees.c" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\trees.c" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\uncompr.c" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\utils\zlib\zutil.c" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

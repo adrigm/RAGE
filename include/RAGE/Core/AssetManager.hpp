@@ -1,78 +1,63 @@
-#ifndef RAGE_CORE_ASSET_MANAGER_HPP
-#define RAGE_CORE_ASSET_MANAGER_HPP
+#ifndef RAGE_CORE_ASSETMANAGER_HPP
+#define RAGE_CORE_ASSETMANAGER_HPP
 
 #include <map>
 #include <string>
-#include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include <RAGE/Core/Export.hpp>
+#include <RAGE/Core/Core_types.hpp>
 #include <RAGE/Core/ConfigReader.hpp>
-#include <RAGE/Core/AssetManager.hpp>
+#include <RAGE/Core/Export.hpp>
 
 namespace ra
 {
 
 class RAGE_CORE_API AssetManager
 {
-	static AssetManager* ms_instance;
-
 public:
-	/**
-	 * Devuelve un puntero a la instancia única de la clase si existe,
-	 * si no, la crea y duevuelve el puntero.
-	 * 
-	 * @return Puntero a la instancia única de AssetManager
-	 */
-	static AssetManager* Instance();
-	 
-	/**
-	 * Elimina la instancia única de la clase.
-	 */
-	static void Release();
+	void setPath(const std::string& thePath);
 
-	void SetPath(const std::string& thePath);
+	sf::Texture* getTexture(const std::string& theName);
+	sf::Texture* getTexture(const std::string& theName, sf::Texture* theTexture);
+	sf::Texture* getTextureFromImage(const std::string& theName, const sf::Image* theImage, const sf::IntRect& theRect = sf::IntRect());
 
-	sf::Texture* GetTexture(const std::string& theName);
-	sf::Texture* GetTexture(const std::string& theName, sf::Texture* theTexture);
-	sf::Texture* GetTextureFromImage(const std::string& theName, const sf::Image* theImage, const sf::IntRect& theRect = sf::IntRect());
+	void deleteTexture(const std::string& theName);
+	void deleteTexture(const sf::Texture* theTexture);
 
-	void DeleteTexture(const std::string& theName);
-	void DeleteTexture(const sf::Texture* theTexture);
+	sf::Image* getImage(const std::string& theName);
+	sf::Image* getImageFromTexture(const std::string& theName, const sf::Texture* theTexture);
 
-	sf::Image* GetImage(const std::string& theName);
-	sf::Image* GetImageFromTexture(const std::string& theName, const sf::Texture* theTexture);
+	void deleteImage(const std::string& theName);
+	void deleteImage(const sf::Image* theImage);
 
-	void DeleteImage(const std::string& theName);
-	void DeleteImage(const sf::Image* theImage);
+	sf::Font* getFont(const std::string& theName);
 
-	sf::Font* GetFont(const std::string& theName);
+	void deleteFont(const std::string& theName);
+	void deleteFont(const sf::Font* theFont);
 
-	void DeleteFont(const std::string& theName);
-	void DeleteFont(const sf::Font* theFont);
+	sf::SoundBuffer* getSoundBuffer(const std::string& theName);
 
-	sf::SoundBuffer* GetSoundBuffer(const std::string& theName);
+	void deleteSoundBuffer(const std::string& theName);
+	void deleteSoundBuffer(const sf::SoundBuffer* theSoundBuffer);
 
-	void DeleteSoundBuffer(const std::string& theName);
-	void DeleteSoundBuffer(const sf::SoundBuffer* theSoundBuffer);
+	sf::Music* getMusic(const std::string& theName);
 
-	sf::Music* GetMusic(const std::string& theName);
+	void deleteMusic(const std::string& theName);
+	void deleteMusic(const sf::Music* theMusic);
 
-	void DeleteMusic(const std::string& theName);
-	void DeleteMusic(const sf::Music* theMusic);
+	ra::ConfigReader* getConfig(const std::string& theName);
 
-	ra::ConfigReader* GetConfig(const std::string& theName);
+	void deleteConfig(const std::string& theName);
+	void deleteConfig(const ra::ConfigReader* theConfig);
 
-	void DeleteConfig(const std::string& theName);
-	void DeleteConfig(const ra::ConfigReader* theConfig);
-
-	void Cleanup();
+	void cleanup();
 
 private:
 	// Variables
 	///////////////////////////////////////////////////////////////////////////
 	/// Puntero a app
-	App* app;
+	App* m_app;
+	friend class App;
 	/// Directorio maestro donde buscar recursos
 	std::string m_masterDir;
 	/// Mapa de registro de todas las texturas
@@ -90,23 +75,13 @@ private:
 	/// Mapa de registro de todos los Tmx Maps
 	//std::map<std::string, ra::TmxMap*> m_maps;
 
+
 	AssetManager();
-
-	virtual ~AssetManager();
-
-	/**
-	 * AssetManager copy constructor is private because we do not allow copies of
-	 * our Singleton class
-	*/
-	AssetManager(const AssetManager&);               // Intentionally undefined
-
-	/**
-	 * Our assignment operator is private because we do not allow copies
-	 * of our Singleton class
-	 */
-	AssetManager& operator=(const AssetManager&);    // Intentionally undefined
+	AssetManager(const AssetManager&);
+	AssetManager& operator=(const AssetManager&);
+	~AssetManager();
 }; // class AssetManager
 
 } // namespace ra
 
-#endif // RAGE_CORE_ASSET_MANAGER_HPP
+#endif // RAGE_CORE_ASSETMANAGER_HPP

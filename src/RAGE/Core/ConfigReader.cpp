@@ -9,38 +9,38 @@ namespace ra
 
   ConfigReader::ConfigReader()
   {
-	  app = ra::App::Instance();
-	  app->log << "ConfigReader::ctor()" << std::endl;
+	  m_app = ra::App::instance();
+	  m_app->getLog() << "ConfigReader::ctor()" << std::endl;
   }
 
   ConfigReader::ConfigReader(const ConfigReader& theCopy) :
-    mSections(theCopy.mSections)
+    m_sections(theCopy.m_sections)
   {
   }
 
   ConfigReader::~ConfigReader()
   {
-    app->log << "ConfigReader::dtor()" << std::endl;
+    m_app->getLog() << "ConfigReader::dtor()" << std::endl;
 
     // Delete all section name, value maps
     std::map<const std::string, typeNameValue*>::iterator iter;
-    iter = mSections.begin();
-    while(iter != mSections.end())
+    iter = m_sections.begin();
+    while(iter != m_sections.end())
     {
       typeNameValue* anMap = iter->second;
-      mSections.erase(iter++);
+      m_sections.erase(iter++);
       delete anMap;
     }
   }
 
-  bool ConfigReader::IsSectionEmpty(const std::string theSection) const
+  bool ConfigReader::isSectionEmpty(const std::string theSection) const
   {
     bool anResult = false;
 
     // Check if theSection really exists
     std::map<const std::string, typeNameValue*>::const_iterator iter;
-    iter = mSections.find(theSection);
-    if(iter != mSections.end())
+    iter = m_sections.find(theSection);
+    if(iter != m_sections.end())
     {
       typeNameValue* anMap = iter->second;
       if(NULL != anMap)
@@ -53,15 +53,15 @@ namespace ra
     return anResult;
   }
 
-  bool ConfigReader::GetBool(const std::string theSection,
+  bool ConfigReader::getBool(const std::string theSection,
       const std::string theName, const bool theDefault) const
   {
     bool anResult = theDefault;
 
     // Check if theSection really exists
     std::map<const std::string, typeNameValue*>::const_iterator iter;
-    iter = mSections.find(theSection);
-    if(iter != mSections.end())
+    iter = m_sections.find(theSection);
+    if(iter != m_sections.end())
     {
       // Try to obtain the name, value pair
       typeNameValue* anMap = iter->second;
@@ -80,15 +80,15 @@ namespace ra
     return anResult;
   }
 
-  float ConfigReader::GetFloat(const std::string theSection,
+  float ConfigReader::getFloat(const std::string theSection,
       const std::string theName, const float theDefault) const
   {
     float anResult = theDefault;
 
     // Check if theSection really exists
     std::map<const std::string, typeNameValue*>::const_iterator iter;
-    iter = mSections.find(theSection);
-    if(iter != mSections.end())
+    iter = m_sections.find(theSection);
+    if(iter != m_sections.end())
     {
       // Try to obtain the name, value pair
       typeNameValue* anMap = iter->second;
@@ -107,15 +107,15 @@ namespace ra
     return anResult;
   }
 
-  std::string ConfigReader::GetString(const std::string theSection,
+  std::string ConfigReader::getString(const std::string theSection,
       const std::string theName, const std::string theDefault) const
   {
     std::string anResult = theDefault;
 
     // Check if theSection really exists
     std::map<const std::string, typeNameValue*>::const_iterator iter;
-    iter = mSections.find(theSection);
-    if(iter != mSections.end())
+    iter = m_sections.find(theSection);
+    if(iter != m_sections.end())
     {
       // Try to obtain the name, value pair
       typeNameValue* anMap = iter->second;
@@ -134,15 +134,15 @@ namespace ra
     return anResult;
   }
 
-  Uint32 ConfigReader::GetUint32(const std::string theSection,
+  Uint32 ConfigReader::getUint32(const std::string theSection,
       const std::string theName, const Uint32 theDefault) const
   {
     Uint32 anResult = theDefault;
 
     // Check if theSection really exists
     std::map<const std::string, typeNameValue*>::const_iterator iter;
-    iter = mSections.find(theSection);
-    if(iter != mSections.end())
+    iter = m_sections.find(theSection);
+    if(iter != m_sections.end())
     {
       // Try to obtain the name, value pair
       typeNameValue* anMap = iter->second;
@@ -161,7 +161,7 @@ namespace ra
     return anResult;
   }
 
-bool ConfigReader::LoadFromFile(const std::string theFilename)
+bool ConfigReader::loadFromFile(const std::string theFilename)
 {
 	bool anResult = false;
 	char anLine[MAX_CHARS];
@@ -169,7 +169,7 @@ bool ConfigReader::LoadFromFile(const std::string theFilename)
 	unsigned long anCount = 1;
 
 	// Let the log know about the file we are about to read in
-	app->log << "ConfigReader:Read(" << theFilename << ") opening..." << std::endl;
+	m_app->getLog() << "ConfigReader:Read(" << theFilename << ") opening..." << std::endl;
 
 	// Attempt to open the file
 	FILE* anFile = fopen(theFilename.c_str(), "r");
@@ -180,13 +180,13 @@ bool ConfigReader::LoadFromFile(const std::string theFilename)
 		// Keep reading from configuration file until we reach the end of file marker
 		while(!feof(anFile))
 		{
-			// Get the first line from the file
+			// get the first line from the file
 			if(fgets(anLine, MAX_CHARS, anFile) == NULL)
 			{
 				// Log the failure to read a line from the file if not at the end of the file
 				if(!feof(anFile))
 				{
-					app->log << "[error] ConfigReader::Read(" << anFile << ") error reading line " << anCount << std::endl;
+					m_app->getLog() << "[error] ConfigReader::Read(" << anFile << ") error reading line " << anCount << std::endl;
 				}
 				// Exit our while loop, were done!
 				break;
@@ -194,7 +194,7 @@ bool ConfigReader::LoadFromFile(const std::string theFilename)
 			else
 			{
 				// Parse the line
-				anSection = ParseLine(anLine, anCount, anSection);
+				anSection = parseLine(anLine, anCount, anSection);
 			}
 
 			// Increment our Line counter
@@ -209,7 +209,7 @@ bool ConfigReader::LoadFromFile(const std::string theFilename)
 	}
 	else
 	{
-		app->log << "[error] ConfigReader::Read(" << theFilename << ") error opening file" << std::endl;
+		m_app->getLog() << "[error] ConfigReader::Read(" << theFilename << ") error opening file" << std::endl;
 	}
 
 	// Return anResult of true if successful, false otherwise
@@ -222,13 +222,13 @@ bool ConfigReader::LoadFromFile(const std::string theFilename)
     ConfigReader temp(theRight);
 
     // Now swap my local copy with the copy from theRight
-    std::swap(mSections, temp.mSections);
+    std::swap(m_sections, temp.m_sections);
 
     // Return my pointer
     return *this;
   }
 
-  std::string ConfigReader::ParseLine(const char* theLine,
+  std::string ConfigReader::parseLine(const char* theLine,
       const unsigned long theCount, const std::string theSection)
   {
     std::string anResult = theSection;
@@ -286,7 +286,7 @@ bool ConfigReader::LoadFromFile(const std::string theFilename)
           }
           else
           {
-           app->log << "[error] ConfigReader::ParseLine(" << theCount << ") missing section end marker ']'" << std::endl;
+           m_app->getLog() << "[error] ConfigReader::ParseLine(" << theCount << ") missing section end marker ']'" << std::endl;
           }
         }
         // Just read the name=value pair into the current section
@@ -355,11 +355,11 @@ bool ConfigReader::LoadFromFile(const std::string theFilename)
             }
 
             // Store the name,value pair obtained into the current section
-            StoreNameValue(theSection,anName,anValue);
+            storeNameValue(theSection,anName,anValue);
           }
           else
           {
-           app->log << "[error] ConfigReader::ParseLine(" << theCount << ") missing name or value delimiter of '=' or ':'" << std::endl;
+           m_app->getLog() << "[error] ConfigReader::ParseLine(" << theCount << ") missing name or value delimiter of '=' or ':'" << std::endl;
           }
         }
       } // if(theLine[anOffset] != '#' && theLine[anOffset] != ';') // Not a comment
@@ -369,13 +369,13 @@ bool ConfigReader::LoadFromFile(const std::string theFilename)
     return anResult;
   }
 
-  void ConfigReader::StoreNameValue(const std::string theSection,
+  void ConfigReader::storeNameValue(const std::string theSection,
       const std::string theName, const std::string theValue)
   {
     // Check if the name, value map already exists for theSection
     std::map<const std::string, typeNameValue*>::iterator iterSection;
-    iterSection = mSections.find(theSection);
-    if(iterSection == mSections.end())
+    iterSection = m_sections.find(theSection);
+    if(iterSection == m_sections.end())
     {
       // First try to create a new name, value pair map for this new section
       typeNameValue* anMap = new(std::nothrow) typeNameValue;
@@ -383,17 +383,17 @@ bool ConfigReader::LoadFromFile(const std::string theFilename)
       // Make sure we were able to create the map ok
       if(NULL != anMap)
       {
-        app->log << "ConfigReader::StoreNameValue(" << theSection << ") adding (" << theName << "," << theValue << ")" << std::endl;
+        m_app->getLog() << "ConfigReader::StoreNameValue(" << theSection << ") adding (" << theName << "," << theValue << ")" << std::endl;
 
         // Add the new name, value pair to this map
         anMap->insert(std::pair<const std::string, const std::string>(theName,theValue));
 
         // Add the new name, value pair map for this new section
-        mSections.insert(std::pair<const std::string, typeNameValue*>(theSection, anMap));
+        m_sections.insert(std::pair<const std::string, typeNameValue*>(theSection, anMap));
       }
       else
       {
-       app->log << "[error] ConfigReader::StoreNameValue(" << theSection << ") unable to add (" << theName << "," << theValue << ") out of memory!" << std::endl;
+       m_app->getLog() << "[error] ConfigReader::StoreNameValue(" << theSection << ") unable to add (" << theName << "," << theValue << ") out of memory!" << std::endl;
       }
     }
     else
@@ -409,17 +409,17 @@ bool ConfigReader::LoadFromFile(const std::string theFilename)
         iterNameValue = anMap->find(theName);
         if(iterNameValue == anMap->end())
         {
-          app->log << "ConfigReader::StoreNameValue(" << theSection << ") adding (" << theName << "," << theValue << ")" << std::endl;
+          m_app->getLog() << "ConfigReader::StoreNameValue(" << theSection << ") adding (" << theName << "," << theValue << ")" << std::endl;
 
           // Add the new name, value pair to this map
           anMap->insert(std::pair<const std::string, const std::string>(theName,theValue));
         }
         else
         {
-         app->log << "[warn] ConfigReader::StoreNameValue(" << theSection << ") unable to add (" << theName << "," << theValue << ") already exists!" << std::endl;
+         m_app->getLog() << "[warn] ConfigReader::StoreNameValue(" << theSection << ") unable to add (" << theName << "," << theValue << ") already exists!" << std::endl;
         }
       }
-    } // else(iterSection == mSections.end())
+    } // else(iterSection == m_sections.end())
   }
 
 } // namespace ra

@@ -1,66 +1,99 @@
-#include <iostream> // Quitar
-#include <sstream>
 #include <boost/filesystem.hpp>
 #include <RAGE/Core/Core_types.hpp>
-#include <RAGE/Core/AssetManager.hpp>
+#include <RAGE/Core/App.hpp>
 #include <RAGE/Core/ConfigReader.hpp>
 #include <RAGE/Core/ConfigCreate.hpp>
-#include <RAGE/Core/SceneManager.hpp>
 #include <RAGE/Core/Scene.hpp>
-#include <RAGE/Core/Camera.hpp>
-#include <RAGE/Core/App.hpp>
+#include <RAGE/Core/SceneManager.hpp>
+#include <RAGE/Core/AssetManager.hpp>
 
 namespace ra
 {
 
-App* App::ms_instance = 0;
+App* App::m_instance = 0;
+
+App* App::instance()
+{
+	if (m_instance == 0)
+		m_instance = new App();
+	return m_instance;
+}
+
+void App::release()
+{
+	if(m_instance)
+		delete m_instance;
+	m_instance = 0;
+}
 
 App::App()
-	: window()
-	, log()
-	, m_executableDir("")
-	, m_running(false)
+	: m_running(false)
 	, m_exitCode(ra::StatusNoError)
 	, m_title("RAGE Application")
-	, m_windowStyle(sf::Style::Default)
-	, m_videoMode(DEFAULT_VIDEO_WIDTH, DEFAULT_VIDEO_HEIGHT, DEFAULT_VIDEO_BPP)
-	, m_initialScene(0)
-	, m_updateClock()
-	, m_updateTime()
-	, m_totalTime()
+	, m_executableDir("")
 	, m_quit(true)
+	, m_initialScene(0)
+	, m_sceneManager(0)
+	, m_assetManager(0)
+	, m_camera(0)
 {
-	// Se crea el archivo de log
-	log.open("rage.log");
-	// Se escribe nombre del archivo
-	log << "LogFile: rage.log" << std::endl;
+	getLog().open("rage.log");
+	getLog() << "LogFile: rage.log" << std::endl;
 }
 
 App::~App()
 {
-	// Se cierra el log
-	log.close();
+	m_log.close();
 }
 
-App* App::Instance()
+bool App::isRunning() const
 {
-	if(ms_instance == 0)
-	{
-		ms_instance = new App();
-	}
-	return ms_instance;
+	return m_running;
 }
 
-void App::Release()
+void App::quit(int theExitCode)
 {
-	if(ms_instance)
-	{
-		delete ms_instance;
-	}
-	ms_instance = 0;
+	m_exitCode = theExitCode; 
+	m_running = false;
 }
 
-void App::RegisterExecutableDir(int argc, char **argv)
+std::string App::getTitle() const
+{
+	return m_title;
+}
+
+void App::setTitle(const std::string& theTitle)
+{
+	m_title = theTitle;
+	m_window.setTitle(m_title);
+}
+
+std::ofstream& App::getLog()
+{
+	return m_log;
+}
+
+sf::RenderWindow& App::getWindow()
+{
+	return m_window;
+}
+
+SceneManager* App::getSceneManager()
+{
+	return m_sceneManager;
+}
+
+AssetManager* App::getAssetManager()
+{
+	return m_assetManager;
+}
+
+Camera& App::getCamera()
+{
+	return *m_camera;
+}
+
+void App::registerExecutableDir(int argc, char **argv)
 {
 	if (argc > 0)
 	{
@@ -73,178 +106,141 @@ void App::RegisterExecutableDir(int argc, char **argv)
 #else
 		m_executableDir.append("/");
 #endif
-		log << "App Path: " << m_executableDir << std::endl;
+		m_log << "App Path: " << m_executableDir << std::endl;
 	}
 }
 
-std::string App::GetExecutableDir() const
+std::string App::getExecutableDir() const
 {
 	return m_executableDir;
 }
 
-bool App::IsRunning() const
-{
-	return m_running;
-}
-
-void App::Quit(int the_exit_code)
-{
-	m_exitCode = the_exit_code;
-	m_running = false;
-}
-
-std::string App::GetTitle() const
-{
-	return m_title;
-}
-
-void App::SetTitle(const std::string theTitle)
-{
-	m_title = theTitle;
-	window.setTitle(theTitle);
-
-	log << "App::SetTitle() Titulo cambiado a: " << theTitle << std::endl;
-}
-
-void App::SetFirstScene(ra::Scene* theScene)
-{
-	if (m_initialScene == 0)
-	{
-		m_initialScene = theScene;
-		log << "Establecida escena inicial: " << theScene->GetID() << std::endl;
-	}
-	else
-	{
-		log << "[warn]Ya se había establecido una escena inicial" << std::endl;
-	}
-}
-
-sf::Time App::GetUpdateTime() const
+const sf::Time& App::getUpdateTime() const
 {
 	return m_updateTime;
 }
 
-sf::Time App::GetTotalTime() const
+const sf::Time& App::getTotalTime() const
 {
 	return m_totalTime;
 }
 
-void App::EnableQuit(bool value)
+void App::enableQuit(bool value)
 {
 	m_quit = value;
 }
 
-int App::Run()
+void App::setFirstScene(ra::Scene* scene)
 {
-	// Comprobamos que se ha llamado a RegisterExecutableDir para establecer la ruta del ejecutable
-	if (m_executableDir == "")
+	if (m_initialScene == 0)
 	{
-		log << "[ERROR] No se ha definido la ruta del ejecutable. ";
-		log << "LLamar a App::RegisterExecutableDir() antes que a App::Run()";
-		log << std::endl;
-
-		return ra::StatusAppInitFailed;
+		m_initialScene = scene;
+		m_log << "Establecida escena inicial: " << scene->getID() << std::endl;
 	}
+	else
+	{
+		m_log << "[warn]Ya se había establecido una escena inicial" << std::endl;
+	}
+}
 
-	// Cambiamos los aplicacion a ejecutandose
+int App::run()
+{
 	m_running = true;
 
-	CreateWindow();
+	createWindow();
 
-	Init();
+	init();
 
-	GameLoop();
+	gameLoop();
 
-	Cleanup();
+	cleanup();
 
 	return m_exitCode;
 }
 
-void App::CreateWindow()
+void App::createWindow()
 {
-	ra::ConfigReader confFile;
-	bool vsync;
+	sf::VideoMode videoMode(DEFAULT_VIDEO_WIDTH, DEFAULT_VIDEO_HEIGHT, DEFAULT_VIDEO_BPP);
+	ra::Int32 style = sf::Style::Default;
+	bool vsync = true;
+	bool resize = true;
+	bool fullscreen = false;
 
-	if (confFile.LoadFromFile(GetExecutableDir() + "window.cfg"))
+	ra::ConfigReader confFile;
+	if (confFile.loadFromFile(getExecutableDir() + "window.cfg"))
 	{
 		// Si está activado fullScreen obtenemos la resolución del escritorio
-		if (confFile.GetBool("window", "fullscreen", 0))
+		if (confFile.getBool("window", "fullscreen", false))
 		{
-			m_videoMode = sf::VideoMode::getDesktopMode();
-			m_windowStyle = sf::Style::Fullscreen;
+			fullscreen = true;
+			videoMode = sf::VideoMode::getDesktopMode();
+			style = sf::Style::Fullscreen;
 		}
 		else
 		{
-			m_videoMode.width = confFile.GetUint32("window", "width", DEFAULT_VIDEO_WIDTH);
-			m_videoMode.height = confFile.GetUint32("window", "height", DEFAULT_VIDEO_HEIGHT);
-			m_videoMode.bitsPerPixel = confFile.GetUint32("window", "bpp", DEFAULT_VIDEO_BPP);
+			videoMode.width = confFile.getUint32("window", "width", DEFAULT_VIDEO_WIDTH);
+			videoMode.height = confFile.getUint32("window", "height", DEFAULT_VIDEO_HEIGHT);
+			videoMode.bitsPerPixel = confFile.getUint32("window", "bpp", DEFAULT_VIDEO_BPP);
+			if (!confFile.getBool("window", "resize", true))
+			{
+				resize = false;
+				style = sf::Style::Close | sf::Style::Titlebar;
+			}
 		}
-		vsync = (confFile.GetBool("window", "vsync", true));
-	}
-	else
-	{
-		ra::ConfigCreate conf;
-		conf.Open(GetExecutableDir() + "window.cfg");
-		conf.PutSection("window");
-		conf.PutValue("width", DEFAULT_VIDEO_WIDTH);
-		conf.PutValue("height", DEFAULT_VIDEO_HEIGHT);
-		conf.PutValue("bpp", DEFAULT_VIDEO_BPP);
-		conf.PutValue("fullscreen", false);
-		conf.PutValue("vsync", true);
-		conf.Close();
-		vsync = true;
+
+		vsync = (confFile.getBool("m_window", "vsync", true));
 	}
 
-	window.create(m_videoMode, m_title, m_windowStyle);
+	m_window.create(videoMode, getTitle(), style);
+	m_window.setVerticalSyncEnabled(vsync);
 
-	log << "App::CreateWindow() ventana creada resolución (" << m_videoMode.width 
-		<< ", " << m_videoMode.height << ", " << m_videoMode.bitsPerPixel << ")" 
-		<< std::endl;
-
-	if (vsync)
-	{
-		window.setVerticalSyncEnabled(vsync);
-	}
-
-	log << "App::CreateWindow() Completado" << std::endl;
+	ra::ConfigCreate conf;
+	conf.open(getExecutableDir() + "window.cfg");
+	conf.putSection("window");
+	conf.putValue("width", videoMode.width);
+	conf.putValue("height", videoMode.height);
+	conf.putValue("bpp", videoMode.bitsPerPixel);
+	conf.putValue("fullscreen", fullscreen);
+	conf.putValue("resize", resize);
+	conf.putValue("vsync", vsync);
 }
 
-void App::Init()
+void App::init()
 {
-	// Creamos el Asset Manager
-	m_assetManager = ra::AssetManager::Instance();
+	// Creamos el AssetManager();
+	m_assetManager = new AssetManager();
 
 	// Creamos la cámara
-	m_camera = ra::Camera::Instance();
-	m_camera->SetDefaultCamera();
+	m_camera = new Camera();
+	m_camera->setDefaultCamera();
 
-	// Creamos el Scene Manager
-	m_sceneManager = ra::SceneManager::Instance();
+	// Creamos el SceneManager
+	m_sceneManager = new SceneManager();
 
 	// Establecemos la escene inicial
 	if (m_initialScene != 0)
 	{
 		// Añadimos la primera escena
-		m_sceneManager->AddScene(m_initialScene);
+		m_sceneManager->addScene(m_initialScene);
 		// La establecemos como escena activa
-		m_sceneManager->SetActiveScene(m_initialScene->GetID());
-		m_sceneManager->ChangeScene(m_sceneManager->mNextScene);
+		m_sceneManager->setActiveScene(m_initialScene->getID());
+		m_sceneManager->changeScene(m_sceneManager->m_nextScene);
 	}
 	else
 	{
-		log << "[error] App::Init() No se ha establecido escena inicial. LLamar a App::SetFirstScene() primero" 
+		m_log << "[error] App::Init() No se ha establecido escena inicial. LLamar a App::SetFirstScene() primero" 
 			<< std::endl;
 		// Salimos con código -2
-		Quit(ra::StatusAppInitFailed);
+		quit(ra::StatusAppInitFailed);
 	}
 
-	log << "App::Init() Completado" << std::endl;
+	m_log << "App::Init() Completado" << std::endl;
 }
 
-void App::GameLoop()
+void App::gameLoop()
 {
 	// Bucle mientras se esté ejecutando y la ventana esté abierta
-	while (IsRunning() && window.isOpen())
+	while (isRunning() && m_window.isOpen())
 	{
 		// Obtenemos el tiempo pasado en cada ciclo
 		m_updateTime = m_updateClock.restart();
@@ -252,74 +248,71 @@ void App::GameLoop()
 		m_totalTime += m_updateTime;
 
 		// Llamamos al método Update() de la escena activa
-		m_sceneManager->UpdateScene();
+		m_sceneManager->updateScene();
 
 		// Actualizamos la cámara
-		m_camera->Update();
-		window.setView(*m_camera);
+		m_camera->update();
+		m_window.setView(*m_camera);
 
 		// Llamamos al método Draw() de la escena activa
-		m_sceneManager->DrawScene();
+		m_sceneManager->drawScene();
 
 		// Actualizamos la ventana
-		window.display();
+		m_window.display();
 
 		// Manejamos los eventos de la ventana
 		sf::Event event;
-		while (window.pollEvent(event))
+		while (m_window.pollEvent(event))
 		{
 			switch (event.type)
 			{
 			case sf::Event::Closed:			// La ventana es cerrada
 				if (m_quit)
-					Quit(StatusAppOK);
+					quit(StatusAppOK);
 				else
-					m_sceneManager->EventScene(event);
+					m_sceneManager->eventScene(event);
 				break;
 			case sf::Event::GainedFocus:	// La ventana obtiene el foco
-				m_sceneManager->ResumeScene();
+				m_sceneManager->resumeScene();
 				break;
 			case sf::Event::LostFocus:		// La ventana pierde el foco
-				m_sceneManager->PauseScene();
+				m_sceneManager->pauseScene();
 				break;
 			default:	// Otros eventos se los pasamos a la ecena activa
-				m_sceneManager->EventScene(event);
+				m_sceneManager->eventScene(event);
 			} // switch (event.Type)
-		} // while (window.GetEvent(event))
+		} // while (m_window.GetEvent(event))
 
 		// Comprobamos cambios de escena
-		if (m_sceneManager->HandleChangeScene())
+		if (m_sceneManager->handleChangeScene())
 		{
 			// Cambiamos el puntero de la escena activa
-			m_sceneManager->ChangeScene(m_sceneManager->mNextScene);
+			m_sceneManager->changeScene(m_sceneManager->m_nextScene);
 			// Reseteamos la cámara
-			m_camera->SetDefaultCamera();
+			m_camera->setDefaultCamera();
 		}
-
-	} // while (IsRunning() && window.IsOpened())
+	} // while (IsRunning() && m_window.IsOpened())
 }
 
-void App::Cleanup()
+void App::cleanup()
 {
-	// Eliminamos todas las escenas
-	m_sceneManager->RemoveAllScene();
+	// Eliminamos las escenas
+	m_sceneManager->removeAllScene();
 
 	// Eliminamos el SceneManager
-	ra::SceneManager::Release();
+	delete m_sceneManager;
+	m_sceneManager = 0;
 
-	// Eliminamos todos los recursos
-	m_assetManager->Cleanup();
+	// Eliminamos la camara
+	delete m_camera;
+	m_camera = 0;
+
+	// Liberamos todos los recursos
+	m_assetManager->cleanup();
 
 	// Eliminamos el AssetManager
-	ra::AssetManager::Release();
-
-	// Hacemos visible el cursor
-	window.setMouseCursorVisible(true);
-
-	// Cerramos la ventana
-	window.close();
-
-	log << "App::Cleanup() Completado" << std::endl;
+	delete m_assetManager;
+	m_assetManager = 0;
 }
 
 } // namespace ra

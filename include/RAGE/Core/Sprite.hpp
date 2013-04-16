@@ -1,3 +1,27 @@
+////////////////////////////////////////////////////////////
+//
+// SFML - Simple and Fast Multimedia Library
+// Copyright (C) 2007-2012 Laurent Gomila (laurent.gom@gmail.com)
+//
+// This software is provided 'as-is', without any express or implied warranty.
+// In no event will the authors be held liable for any damages arising from the use of this software.
+//
+// Permission is granted to anyone to use this software for any purpose,
+// including commercial applications, and to alter it and redistribute it freely,
+// subject to the following restrictions:
+//
+// 1. The origin of this software must not be misrepresented;
+//    you must not claim that you wrote the original software.
+//    If you use this software in a product, an acknowledgment
+//    in the product documentation would be appreciated but is not required.
+//
+// 2. Altered source versions must be plainly marked as such,
+//    and must not be misrepresented as being the original software.
+//
+// 3. This notice may not be removed or altered from any source distribution.
+//
+////////////////////////////////////////////////////////////
+
 #ifndef RAGE_CORE_SPRITE_HPP
 #define RAGE_CORE_SPRITE_HPP
 
@@ -7,22 +31,19 @@
 #include <SFML/Graphics/Vertex.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <RAGE/Core/Export.hpp>
-#include <RAGE/Core/SceneGraph.hpp>
+#include <RAGE/Core/SceneObject.hpp>
 
-namespace sf
-{
-	class Texture;
-}
 
 namespace ra
 {
+class Texture;
 
 ////////////////////////////////////////////////////////////
 /// \brief Drawable representation of a texture, with its
 ///        own transformations, color, etc.
 ///
 ////////////////////////////////////////////////////////////
-class RAGE_CORE_API Sprite : public ra::SceneGraph
+class RAGE_CORE_API Sprite : public SceneObject
 {
 public :
 
@@ -202,3 +223,54 @@ private :
 
 
 #endif // RAGE_CORE_SPRITE_HPP
+
+
+////////////////////////////////////////////////////////////
+/// \class ra::Sprite
+/// \ingroup graphics
+///
+/// sf::Sprite is a drawable class that allows to easily display
+/// a texture (or a part of it) on a render target.
+///
+/// It inherits all the functions from sf::Transformable:
+/// position, rotation, scale, origin. It also adds sprite-specific
+/// properties such as the texture to use, the part of it to display,
+/// and some convenience functions to change the overall color of the
+/// sprite, or to get its bounding rectangle.
+///
+/// sf::Sprite works in combination with the sf::Texture class, which
+/// loads and provides the pixel data of a given texture.
+///
+/// The separation of sf::Sprite and sf::Texture allows more flexibility
+/// and better performances: indeed a sf::Texture is a heavy resource,
+/// and any operation on it is slow (often too slow for real-time
+/// applications). On the other side, a sf::Sprite is a lightweight
+/// object which can use the pixel data of a sf::Texture and draw
+/// it with its own transformation/color/blending attributes.
+///
+/// It is important to note that the sf::Sprite instance doesn't
+/// copy the texture that it uses, it only keeps a reference to it.
+/// Thus, a sf::Texture must not be destroyed while it is
+/// used by a sf::Sprite (i.e. never write a function that
+/// uses a local sf::Texture instance for creating a sprite).
+///
+/// Usage example:
+/// \code
+/// // Declare and load a texture
+/// sf::Texture texture;
+/// texture.loadFromFile("texture.png");
+/// 
+/// // Create a sprite
+/// sf::Sprite sprite;
+/// sprite.setTexture(texture);
+/// sprite.setTextureRect(sf::IntRect(10, 10, 50, 30));
+/// sprite.setColor(sf::Color(255, 255, 255, 200));
+/// sprite.setPosition(100, 25);
+///
+/// // Draw it
+/// window.draw(sprite);
+/// \endcode
+///
+/// \see sf::Texture, sf::Transformable
+///
+////////////////////////////////////////////////////////////
