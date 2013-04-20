@@ -7,6 +7,7 @@
 #include <SFML/Audio.hpp>
 #include <RAGE/Core/Core_types.hpp>
 #include <RAGE/Core/ConfigReader.hpp>
+#include <RAGE/Core/tmx/Tmx.hpp>
 #include <RAGE/Core/Export.hpp>
 
 namespace ra
@@ -50,6 +51,11 @@ public:
 	void deleteConfig(const std::string& theName);
 	void deleteConfig(const ra::ConfigReader* theConfig);
 
+	ra::Tmx::Map* getTmxMap(const std::string& theName);
+
+	void deleteTmxMap(const std::string& theName);
+	void deleteTmxMap(const ra::Tmx::Map* theMap);
+
 	void cleanup();
 
 private:
@@ -73,7 +79,7 @@ private:
 	/// Mapa de registro de todos los archivos de configuraciones
 	std::map<std::string, ra::ConfigReader*> m_configs;
 	/// Mapa de registro de todos los Tmx Maps
-	//std::map<std::string, ra::TmxMap*> m_maps;
+	std::map<std::string, ra::Tmx::Map*> m_maps;
 
 
 	AssetManager();

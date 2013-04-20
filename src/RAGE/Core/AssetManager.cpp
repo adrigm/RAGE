@@ -488,6 +488,66 @@ void AssetManager::deleteConfig(const ra::ConfigReader* theConfig)
 	m_app->getLog() << "AssetManager::deleteConfig() La dirección no corresponde a una configuración cargada" << std::endl;
 }
 
+ra::Tmx::Map* AssetManager::getTmxMap(const std::string& theName)
+{
+	// Comprobamos si ya esta cargada
+	std::map<std::string, ra::Tmx::Map*>::const_iterator it;
+	it = m_maps.find(theName);
+	if (it != m_maps.end())
+	{
+		m_app->getLog() << "AssetManager::getTmxMap() " << theName << " usando archivo existente" << std::endl;
+		return it->second;
+	}
+
+	// Si no lo está, la intentamos cargar
+	ra::Tmx::Map *map = new ra::Tmx::Map();
+	map->ParseFile(m_masterDir + theName);
+	if(map->HasError())
+	{
+		m_app->getLog() << "[error] AssetManager::getTmxMap() " << theName << " no se ha podido cargar" << std::endl;
+		return map;
+	}
+
+	m_app->getLog() << "AssetManager::getTmxMap() " << theName << " cargado" << std::endl;
+
+	// La añadimos a la lista
+	m_maps[theName] = map;
+
+	// Devolvemos el puntero
+	return map;
+}
+
+void AssetManager::deleteTmxMap(const std::string& theName)
+{
+	std::map<std::string, ra::Tmx::Map*>::const_iterator it = m_maps.find(theName);
+	if (it != m_maps.end())
+	{
+		delete it->second;
+		m_maps.erase(it);
+		m_app->getLog() << "AssetManager::deleteTmxMap() " << theName << "archivo eliminado" << std::endl;
+		return;
+	}
+
+	m_app->getLog() << "AssetManager::deleteTmxMap() " << theName << "no está cargado" << std::endl;
+}
+
+void AssetManager::deleteTmxMap(const ra::Tmx::Map* theMap)
+{
+	std::map<std::string, ra::Tmx::Map*>::const_iterator it;
+	for (it = m_maps.begin(); it != m_maps.end(); it++)
+	{
+		if (theMap == it->second)
+		{
+			delete it->second;
+			m_app->getLog() << "AssetManager::deleteTmxMap() " << it->first << "archivo eliminado" << std::endl;
+			m_maps.erase(it);
+			return;
+		}
+	}
+
+	m_app->getLog() << "AssetManager::deleteTmxMap() La dirección no corresponde a una configuración cargada" << std::endl;
+}
+
 void AssetManager::cleanup()
 {
 	std::map<std::string, sf::Texture*>::const_iterator textIt;
@@ -535,6 +595,14 @@ void AssetManager::cleanup()
 	{
 		delete conIt->second;
 		m_app->getLog() << "AssetManager::Cleanup() Eliminado archivo " << conIt->first << std::endl;
+	}
+	m_configs.clear();
+
+	std::map<std::string, ra::Tmx::Map*>::const_iterator mapIt;
+	for (mapIt = m_maps.begin(); mapIt != m_maps.end(); mapIt++)
+	{
+		delete mapIt->second;
+		m_app->getLog() << "AssetManager::Cleanup() Eliminado archivo " << mapIt->first << std::endl;
 	}
 	m_configs.clear();
 }

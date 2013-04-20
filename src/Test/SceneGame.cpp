@@ -28,8 +28,8 @@ void SceneGame::init()
 	int a = f->getUint32("window", "bpp", 0);
 
 
-	ra::Tmx::Map map;
-	map.ParseFile("Data/pueblo.tmx");
+	ra::Tmx::Map *map = am->getTmxMap("pueblo.tmx");
+	std::cout << map->GetTileHeight() << std::endl; 
 }
 
 void SceneGame::active()
