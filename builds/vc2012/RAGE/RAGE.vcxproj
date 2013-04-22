@@ -72,11 +72,12 @@
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions);SFML_STATIC</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;$(SolutionDir)..\..\extlibs\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\src;$(SolutionDir)..\..\include;$(SolutionDir)..\..\extlibs\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -85,7 +86,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>sfml-main-s.lib;sfml-system-s.lib;sfml-window-s.lib;sfml-graphics-s.lib;sfml-audio-s.lib;libboost_system-vc110-mt-1_53.lib;libboost_filesystem-vc110-mt-1_53.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main.lib;sfml-system-s.lib;sfml-window-s.lib;sfml-graphics-s.lib;sfml-audio-s.lib;libboost_system-vc110-mt-1_53.lib;libboost_filesystem-vc110-mt-1_53.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)..\..\extlibs\libs-msvc-2012\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -97,6 +98,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\include\RAGE\Config.hpp" />
     <ClInclude Include="..\..\..\include\RAGE\Core.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\Actor.hpp" />
+    <ClInclude Include="..\..\..\include\RAGE\Core\Animation.hpp" />
     <ClInclude Include="..\..\..\include\RAGE\Core\App.hpp" />
     <ClInclude Include="..\..\..\include\RAGE\Core\AssetManager.hpp" />
     <ClInclude Include="..\..\..\include\RAGE\Core\Camera.hpp" />
@@ -146,6 +149,8 @@
     <ClInclude Include="..\..\..\src\RAGE\Core\utils\zlib\zutil.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\RAGE\Core\Actor.cpp" />
+    <ClCompile Include="..\..\..\src\RAGE\Core\Animation.cpp" />
     <ClCompile Include="..\..\..\src\RAGE\Core\App.cpp" />
     <ClCompile Include="..\..\..\src\RAGE\Core\AssetManager.cpp" />
     <ClCompile Include="..\..\..\src\RAGE\Core\Camera.cpp" />

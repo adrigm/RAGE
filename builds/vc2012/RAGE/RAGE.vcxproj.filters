@@ -189,6 +189,12 @@
     <ClInclude Include="..\..\..\include\RAGE\Core\tmx\TmxUtil.hpp">
       <Filter>Archivos de encabezado\Core\tmx</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\Actor.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\RAGE\Core\Animation.hpp">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\RAGE\Core\App.cpp">
@@ -334,6 +340,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\RAGE\Core\utils\tinyxml\tinyxmlparser.cpp">
       <Filter>Archivos de código fuente\Core\utils\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\Actor.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RAGE\Core\Animation.cpp">
+      <Filter>Archivos de código fuente\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

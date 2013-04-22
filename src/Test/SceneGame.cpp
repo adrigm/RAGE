@@ -15,21 +15,12 @@ void SceneGame::init()
 {
 	this->setBackgroundColor(sf::Color(180, 200, 255));
 
-	ra::SceneManager* sm = getApp()->getSceneManager();
-	ra::AssetManager* am = getApp()->getAssetManager();
+	sm = ra::SceneManager::instance();
+	am = ra::AssetManager::instance();
 
-	am->setPath("Data");
 	sm->addScene(new SceneMenu("Menu"));
 
-	sp.setTexture(*am->getTexture("sprite.png"));
-	this->addObject(sp);
-
-	ra::ConfigReader *f = am->getConfig("../window.cfg");
-	int a = f->getUint32("window", "bpp", 0);
-
-
-	ra::Tmx::Map *map = am->getTmxMap("pueblo.tmx");
-	std::cout << map->GetTileHeight() << std::endl; 
+	this->addObject(player);
 }
 
 void SceneGame::active()
@@ -42,14 +33,21 @@ void SceneGame::desactive()
 
 void SceneGame::update()
 {
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		getApp()->getCamera().move(-5, 0);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		getApp()->getCamera().move(5, 0);
+	{
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	{
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		getApp()->getCamera().move(0, -5);
+	{
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		getApp()->getCamera().move(0, 5);
+	{
+	}
+
+	player.update();
 
 	sf::FloatRect r = getApp()->getCamera().getRect();
 	//std::cout << r.left << ", " << r.top << ", " << r.width << ", " << r.height << std::endl;
@@ -63,7 +61,7 @@ void SceneGame::event(sf::Event theEvent)
 		switch (theEvent.key.code)
 		{
 		case sf::Keyboard::Space:
-			getApp()->getSceneManager()->setActiveScene("Menu");
+			sm->setActiveScene("Menu");
 			break;
 		case sf::Keyboard::Subtract:
 			//tx.SetZOrder(tx.GetZOrder() - 1);

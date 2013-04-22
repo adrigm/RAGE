@@ -33,6 +33,18 @@ namespace ra
     }
   }
 
+std::vector<std::string> ConfigReader::getAllNameSections() const
+{
+	std::vector<std::string> v;
+
+	std::map<const std::string, typeNameValue*>::const_iterator iter;
+	for (iter = m_sections.begin(); iter != m_sections.end(); iter++)
+	{
+		v.push_back(iter->first);
+	}
+	return v;
+}
+
   bool ConfigReader::isSectionEmpty(const std::string theSection) const
   {
     bool anResult = false;

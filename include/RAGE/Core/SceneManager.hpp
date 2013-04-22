@@ -9,7 +9,13 @@ namespace ra
 
 class RAGE_CORE_API SceneManager
 {
+	static SceneManager* m_instance;
+
 public:
+	static SceneManager* instance();
+
+	static void release();
+
 	/**
 	 * Añade una escena a la pila de escenas inactivas
 	 *

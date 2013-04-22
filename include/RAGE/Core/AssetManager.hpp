@@ -15,7 +15,13 @@ namespace ra
 
 class RAGE_CORE_API AssetManager
 {
+	static AssetManager* m_instance;
+
 public:
+	static AssetManager* instance();
+
+	static void release();
+
 	void setPath(const std::string& thePath);
 
 	sf::Texture* getTexture(const std::string& theName);
@@ -63,7 +69,6 @@ private:
 	///////////////////////////////////////////////////////////////////////////
 	/// Puntero a app
 	App* m_app;
-	friend class App;
 	/// Directorio maestro donde buscar recursos
 	std::string m_masterDir;
 	/// Mapa de registro de todas las texturas

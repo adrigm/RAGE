@@ -31,7 +31,7 @@ void SceneMenu::event(sf::Event theEvent)
 {
 	if (theEvent.KeyPressed && theEvent.key.code == sf::Keyboard::A)
 	{
-		getApp()->getSceneManager()->setActiveScene("Game");
+		ra::SceneManager::instance()->setActiveScene("Game");
 	}
 }
 

@@ -4,6 +4,7 @@
 #include <SFML/Window.hpp>
 #include <RAGE/Core.hpp>
 #include <vector>
+#include "Player.hpp"
 
 class SceneGame : public ra::Scene
 {
@@ -27,7 +28,9 @@ public:
 
 	void cleanup();
 private:
-	ra::Sprite sp;
+	ra::SceneManager *sm;
+	ra::AssetManager *am;
+	Player player;
 	ra::Text tx;
 	ra::RectangleShape r;
 	ra::CircleShape c;

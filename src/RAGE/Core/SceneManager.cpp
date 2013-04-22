@@ -4,6 +4,23 @@
 namespace ra
 {
 
+SceneManager* SceneManager::m_instance = 0;
+
+SceneManager* SceneManager::instance()
+{
+	if (m_instance == 0)
+		m_instance = new SceneManager();
+	return m_instance;
+}
+
+void SceneManager::release()
+{
+	if(m_instance)
+		delete m_instance;
+	m_instance = 0;
+}
+
+
 SceneManager::SceneManager() :
 	m_app(NULL),
 	m_activeScene(NULL),

@@ -3,6 +3,7 @@
 
 #include <map>
 #include <string>
+#include <vector>
 #include <RAGE/Core/Export.hpp>
 #include <RAGE/Core/Core_types.hpp>
 
@@ -29,6 +30,8 @@ public:
     * ConfigReader deconstructor
     */
     virtual ~ConfigReader();
+
+	std::vector<std::string> getAllNameSections() const;
 
     /**
     * IsSectionEmpty determines if theSection provided exists and has 1 or

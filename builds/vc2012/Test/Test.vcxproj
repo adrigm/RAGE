@@ -85,10 +85,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\Test\main.cpp" />
+    <ClCompile Include="..\..\..\src\Test\Player.cpp" />
     <ClCompile Include="..\..\..\src\Test\SceneGame.cpp" />
     <ClCompile Include="..\..\..\src\Test\SceneMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\src\Test\Player.hpp" />
     <ClInclude Include="..\..\..\src\Test\SceneGame.hpp" />
     <ClInclude Include="..\..\..\src\Test\SceneMenu.hpp" />
   </ItemGroup>

@@ -10,6 +10,8 @@ int main(int argc, char **argv)
 
 	anApp->registerExecutableDir(argc, argv);
 
+	ra::AssetManager::instance()->setPath("Data");
+
 	anApp->setFirstScene(new SceneGame("Game"));
 
 	anExitCode = anApp->run();

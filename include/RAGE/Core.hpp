@@ -19,5 +19,7 @@
 #include <RAGE/Core/RectangleShape.hpp>
 #include <RAGE/Core/Camera.hpp>
 #include <RAGE/Core/tmx/Tmx.hpp>
+#include <RAGE/Core/Animation.hpp>
+#include <RAGE/Core/Actor.hpp>
 
 #endif // RAGE_CORE_HPP

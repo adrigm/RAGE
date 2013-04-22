@@ -78,16 +78,6 @@ sf::RenderWindow& App::getWindow()
 	return m_window;
 }
 
-SceneManager* App::getSceneManager()
-{
-	return m_sceneManager;
-}
-
-AssetManager* App::getAssetManager()
-{
-	return m_assetManager;
-}
-
 Camera& App::getCamera()
 {
 	return *m_camera;
@@ -208,14 +198,14 @@ void App::createWindow()
 void App::init()
 {
 	// Creamos el AssetManager();
-	m_assetManager = new AssetManager();
+	m_assetManager = AssetManager::instance();
 
 	// Creamos la cámara
 	m_camera = new Camera();
 	m_camera->setDefaultCamera();
 
 	// Creamos el SceneManager
-	m_sceneManager = new SceneManager();
+	m_sceneManager = SceneManager::instance();
 
 	// Establecemos la escene inicial
 	if (m_initialScene != 0)
@@ -300,7 +290,7 @@ void App::cleanup()
 	m_sceneManager->removeAllScene();
 
 	// Eliminamos el SceneManager
-	delete m_sceneManager;
+	SceneManager::release();
 	m_sceneManager = 0;
 
 	// Eliminamos la camara
@@ -311,7 +301,7 @@ void App::cleanup()
 	m_assetManager->cleanup();
 
 	// Eliminamos el AssetManager
-	delete m_assetManager;
+	AssetManager::release();
 	m_assetManager = 0;
 }
 

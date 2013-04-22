@@ -42,6 +42,8 @@ class CircleShape;
 class ConvexShape;
 class RectangleShape;
 class Camera;
+class Animation;
+class Actor;
 
 // Foward declare TmxMap
 

@@ -6,6 +6,23 @@
 namespace ra
 {
 
+AssetManager* AssetManager::m_instance = 0;
+
+AssetManager* AssetManager::instance()
+{
+	if (m_instance == 0)
+		m_instance = new AssetManager();
+	return m_instance;
+}
+
+void AssetManager::release()
+{
+	if(m_instance)
+		delete m_instance;
+	m_instance = 0;
+}
+
+
 AssetManager::AssetManager()
 	: m_textures()
 	, m_images()
@@ -69,6 +86,8 @@ sf::Texture* AssetManager::getTexture(const std::string& theName)
 		texture->create(1, 1);
 		return texture;
 	}
+
+	texture->setRepeated(true);
 
 	m_app->getLog() << "AssetManager::getTexture() " << theName << " cargado" << std::endl;
 

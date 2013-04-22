@@ -36,10 +36,6 @@ public:
 
 	sf::RenderWindow& getWindow();
 
-	SceneManager* getSceneManager();
-
-	AssetManager* getAssetManager();
-
 	Camera& getCamera();
 
 	void registerExecutableDir(int argc, char **argv);
