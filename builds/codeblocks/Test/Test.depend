@@ -1,0 +1,238 @@
+# depslib dependency file v1.0
+1370669508 source:/home/hugo/Proyectos/Programacion/RAGE/src/Test/Player.cpp
+	"Player.hpp"
+
+1370669312 /home/hugo/Proyectos/Programacion/RAGE/src/Test/Player.hpp
+	<RAGE/Core.hpp>
+	<SFML/System.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core.hpp
+	<RAGE/Config.hpp>
+	<RAGE/Core/Core_types.hpp>
+	<RAGE/Core/StringUtil.hpp>
+	<RAGE/Core/App.hpp>
+	<RAGE/Core/ConfigReader.hpp>
+	<RAGE/Core/ConfigCreate.hpp>
+	<RAGE/Core/Scene.hpp>
+	<RAGE/Core/SceneManager.hpp>
+	<RAGE/Core/AssetManager.hpp>
+	<RAGE/Core/SceneObject.hpp>
+	<RAGE/Core/Sprite.hpp>
+	<RAGE/Core/Text.hpp>
+	<RAGE/Core/Shape.hpp>
+	<RAGE/Core/CircleShape.hpp>
+	<RAGE/Core/ConvexShape.hpp>
+	<RAGE/Core/RectangleShape.hpp>
+	<RAGE/Core/Camera.hpp>
+	<RAGE/Core/tmx/Tmx.hpp>
+	<RAGE/Core/Animation.hpp>
+	<RAGE/Core/Actor.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Config.hpp
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/Core_types.hpp
+	<map>
+	<string>
+	<RAGE/Config.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/StringUtil.hpp
+	<string>
+	<RAGE/Core/Export.hpp>
+	<RAGE/Core/Core_types.hpp>
+	<SFML/Graphics.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/Export.hpp
+	<RAGE/Config.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/App.hpp
+	<fstream>
+	<string>
+	<SFML/Graphics.hpp>
+	<RAGE/Core/Export.hpp>
+	<RAGE/Core/Core_types.hpp>
+	<RAGE/Core/Camera.hpp>
+
+1370668668 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/Camera.hpp
+	<SFML/Graphics.hpp>
+	<RAGE/Core/Export.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/ConfigReader.hpp
+	<map>
+	<string>
+	<vector>
+	<RAGE/Core/Export.hpp>
+	<RAGE/Core/Core_types.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/ConfigCreate.hpp
+	<string>
+	<fstream>
+	<RAGE/Core/Export.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/Scene.hpp
+	<list>
+	<SFML/Graphics.hpp>
+	<RAGE/Core/Export.hpp>
+	<RAGE/Core/Core_types.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/SceneManager.hpp
+	<RAGE/Core/Export.hpp>
+	<RAGE/Core/Scene.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/AssetManager.hpp
+	<map>
+	<string>
+	<SFML/Graphics.hpp>
+	<SFML/Audio.hpp>
+	<RAGE/Core/Core_types.hpp>
+	<RAGE/Core/ConfigReader.hpp>
+	<RAGE/Core/tmx/Tmx.hpp>
+	<RAGE/Core/Export.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/tmx/Tmx.hpp
+	<RAGE/Core/tmx/TmxMap.hpp>
+	<RAGE/Core/tmx/TmxTileset.hpp>
+	<RAGE/Core/tmx/TmxTile.hpp>
+	<RAGE/Core/tmx/TmxImage.hpp>
+	<RAGE/Core/tmx/TmxLayer.hpp>
+	<RAGE/Core/tmx/TmxObject.hpp>
+	<RAGE/Core/tmx/TmxObjectGroup.hpp>
+	<RAGE/Core/tmx/TmxEllipse.hpp>
+	<RAGE/Core/tmx/TmxPolygon.hpp>
+	<RAGE/Core/tmx/TmxPolyline.hpp>
+	<RAGE/Core/tmx/TmxPropertySet.hpp>
+	<RAGE/Core/tmx/TmxUtil.hpp>
+	<RAGE/Core/tmx/TmxImageLayer.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/tmx/TmxMap.hpp
+	<vector>
+	<string>
+	<RAGE/Core/tmx/TmxPropertySet.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/tmx/TmxPropertySet.hpp
+	<map>
+	<string>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/tmx/TmxTileset.hpp
+	<string>
+	<vector>
+	<RAGE/Core/tmx/TmxPropertySet.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/tmx/TmxTile.hpp
+	<RAGE/Core/tmx/TmxPropertySet.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/tmx/TmxImage.hpp
+	<string>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/tmx/TmxLayer.hpp
+	<string>
+	<RAGE/Core/tmx/TmxPropertySet.hpp>
+	<RAGE/Core/tmx/TmxMapTile.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/tmx/TmxMapTile.hpp
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/tmx/TmxObject.hpp
+	<string>
+	<RAGE/Core/tmx/TmxPropertySet.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/tmx/TmxObjectGroup.hpp
+	<string>
+	<vector>
+	<RAGE/Core/tmx/TmxPropertySet.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/tmx/TmxEllipse.hpp
+	<vector>
+	<RAGE/Core/tmx/TmxPoint.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/tmx/TmxPoint.hpp
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/tmx/TmxPolygon.hpp
+	<vector>
+	<RAGE/Core/tmx/TmxPoint.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/tmx/TmxPolyline.hpp
+	<vector>
+	<RAGE/Core/tmx/TmxPoint.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/tmx/TmxUtil.hpp
+	<string>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/tmx/TmxImageLayer.hpp
+	<string>
+	<vector>
+	<RAGE/Core/tmx/TmxPropertySet.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/SceneObject.hpp
+	<SFML/Graphics.hpp>
+	<RAGE/Core/Export.hpp>
+	<RAGE/Config.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/Sprite.hpp
+	<SFML/Graphics/Vertex.hpp>
+	<SFML/Graphics/Rect.hpp>
+	<RAGE/Core/Export.hpp>
+	<RAGE/Core/SceneObject.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/Text.hpp
+	<SFML/Graphics/Font.hpp>
+	<SFML/Graphics/Rect.hpp>
+	<SFML/Graphics/VertexArray.hpp>
+	<SFML/System/String.hpp>
+	<string>
+	<vector>
+	<RAGE/Core/Export.hpp>
+	<RAGE/Core/SceneObject.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/Shape.hpp
+	<SFML/Graphics/VertexArray.hpp>
+	<SFML/System/Vector2.hpp>
+	<RAGE/Core/Export.hpp>
+	<RAGE/Core/SceneObject.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/CircleShape.hpp
+	<RAGE/Core/Export.hpp>
+	<RAGE/Core/Shape.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/ConvexShape.hpp
+	<RAGE/Core/Export.hpp>
+	<RAGE/Core/Shape.hpp>
+	<vector>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/RectangleShape.hpp
+	<RAGE/Core/Export.hpp>
+	<RAGE/Core/Shape.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/Animation.hpp
+	<RAGE/Core/Export.hpp>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/include/RAGE/Core/Actor.hpp
+	<vector>
+	<map>
+	<SFML/Graphics.hpp>
+	<RAGE/Core/Core_types.hpp>
+	<RAGE/Core/Sprite.hpp>
+	<RAGE/Core/Animation.hpp>
+
+1370667056 source:/home/hugo/Proyectos/Programacion/RAGE/src/Test/SceneGame.cpp
+	"SceneGame.hpp"
+	"SceneMenu.hpp"
+	<iostream>
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/src/Test/SceneGame.hpp
+	<SFML/Window.hpp>
+	<RAGE/Core.hpp>
+	<vector>
+	"Player.hpp"
+
+1370667056 /home/hugo/Proyectos/Programacion/RAGE/src/Test/SceneMenu.hpp
+	<SFML/Window.hpp>
+	<RAGE/Core.hpp>
+
+1370667056 source:/home/hugo/Proyectos/Programacion/RAGE/src/Test/SceneMenu.cpp
+	"SceneMenu.hpp"
+	<iostream>
+
+1370670138 source:/home/hugo/Proyectos/Programacion/RAGE/src/Test/main.cpp
+	<iostream>
+	<RAGE/Core.hpp>
+	"SceneGame.hpp"
+

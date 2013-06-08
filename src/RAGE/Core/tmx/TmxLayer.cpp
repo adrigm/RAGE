@@ -37,13 +37,13 @@
 
 namespace ra
 {
-namespace Tmx 
+namespace Tmx
 {
-	Layer::Layer(const Map *_map) 
+	Layer::Layer(const Map *_map)
 		: map(_map)
-		, name() 
-		, width(0) 
-		, height(0) 
+		, name()
+		, width(0)
+		, height(0)
 		, opacity(1.0f)
 		, visible(true)
 		, zOrder(0)
@@ -55,7 +55,7 @@ namespace Tmx
 		tile_map = NULL;
 	}
 
-	Layer::~Layer() 
+	Layer::~Layer()
 	{
 		// If the tile map is allocated, delete it from the memory.
 		if (tile_map)
@@ -65,10 +65,10 @@ namespace Tmx
 		}
 	}
 
-	void Layer::Parse(const TiXmlNode *layerNode) 
+	void Layer::Parse(const TiXmlNode *layerNode)
 	{
 		const TiXmlElement *layerElem = layerNode->ToElement();
-	
+
 		// Read the attributes.
 		name = layerElem->Attribute("name");
 
@@ -76,20 +76,20 @@ namespace Tmx
 		layerElem->Attribute("height", &height);
 
 		const char *opacityStr = layerElem->Attribute("opacity");
-		if (opacityStr) 
+		if (opacityStr)
 		{
 			opacity = (float)atof(opacityStr);
 		}
 
 		const char *visibleStr = layerElem->Attribute("visible");
-		if (visibleStr) 
+		if (visibleStr)
 		{
 			visible = atoi(visibleStr) != 0; // to prevent visual c++ from complaining..
 		}
 
 		// Read the properties.
 		const TiXmlNode *propertiesNode = layerNode->FirstChild("properties");
-		if (propertiesNode) 
+		if (propertiesNode)
 		{
 			properties.Parse(propertiesNode);
 		}
@@ -104,33 +104,33 @@ namespace Tmx
 		const char *compressionStr = dataElem->Attribute("compression");
 
 		// Check for encoding.
-		if (encodingStr) 
+		if (encodingStr)
 		{
-			if (!strcmp(encodingStr, "base64")) 
+			if (!strcmp(encodingStr, "base64"))
 			{
 				encoding = TMX_ENCODING_BASE64;
-			} 
-			else if (!strcmp(encodingStr, "csv")) 
+			}
+			else if (!strcmp(encodingStr, "csv"))
 			{
 				encoding = TMX_ENCODING_CSV;
 			}
 		}
 
 		// Check for compression.
-		if (compressionStr) 
+		if (compressionStr)
 		{
-			if (!strcmp(compressionStr, "gzip")) 
+			if (!strcmp(compressionStr, "gzip"))
 			{
 				compression = TMX_COMPRESSION_GZIP;
-			} 
-			else if (!strcmp(compressionStr, "zlib")) 
+			}
+			else if (!strcmp(compressionStr, "zlib"))
 			{
 				compression = TMX_COMPRESSION_ZLIB;
 			}
 		}
-		
+
 		// Decode.
-		switch (encoding) 
+		switch (encoding)
 		{
 		case TMX_ENCODING_XML:
 			ParseXML(dataNode);
@@ -146,15 +146,15 @@ namespace Tmx
 		}
 	}
 
-	void Layer::ParseXML(const TiXmlNode *dataNode) 
+	void Layer::ParseXML(const TiXmlNode *dataNode)
 	{
 		const TiXmlNode *tileNode = dataNode->FirstChild("tile");
 		int tileCount = 0;
 
-		while (tileNode) 
+		while (tileNode)
 		{
 			const TiXmlElement *tileElem = tileNode->ToElement();
-			
+
 			unsigned gid = 0;
 
 			// Read the Global-ID of the tile.
@@ -182,35 +182,35 @@ namespace Tmx
 		}
 	}
 
-	void Layer::ParseBase64(const std::string &innerText) 
+	void Layer::ParseBase64(const std::string &innerText)
 	{
 		const std::string &text = Util::DecodeBase64(innerText);
 
 		// Temporary array of gids to be converted to map tiles.
 		unsigned *out = 0;
 
-		if (compression == TMX_COMPRESSION_ZLIB) 
+		if (compression == TMX_COMPRESSION_ZLIB)
 		{
 			// Use zlib to uncompress the layer into the temporary array of tiles.
 			uLongf outlen = width * height * 4;
 			out = (unsigned *)malloc(outlen);
 			uncompress(
-				(Bytef*)out, &outlen, 
+				(Bytef*)out, &outlen,
 				(const Bytef*)text.c_str(), text.size());
-	
-		} 
-		else if (compression == TMX_COMPRESSION_GZIP) 
+
+		}
+		else if (compression == TMX_COMPRESSION_GZIP)
 		{
 			// Use the utility class for decompressing (which uses zlib)
 			out = (unsigned *)Util::DecompressGZIP(
-				text.c_str(), 
-				text.size(), 
+				text.c_str(),
+				text.size(),
 				width * height * 4);
-		} 
-		else 
+		}
+		else
 		{
 			out = (unsigned *)malloc(text.size());
-		
+
 			// Copy every gid into the temporary array since
 			// the decoded string is an array of 32-bit integers.
 			memcpy(out, text.c_str(), text.size());
@@ -243,16 +243,16 @@ namespace Tmx
 		free(out);
 	}
 
-	void Layer::ParseCSV(const std::string &innerText) 
+	void Layer::ParseCSV(const std::string &innerText)
 	{
 		// Duplicate the string for use with C stdio.
 		char *csv = strdup(innerText.c_str());
-		
+
 		// Iterate through every token of ';' in the CSV string.
 		char *pch = strtok(csv, ",");
 		int tileCount = 0;
-		
-		while (pch) 
+
+		while (pch)
 		{
 			unsigned gid;
 			sscanf(pch, "%u", &gid);

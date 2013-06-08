@@ -35,9 +35,9 @@ using std::string;
 
 namespace ra
 {
-namespace Tmx 
+namespace Tmx
 {
-	ImageLayer::ImageLayer(const Tmx::Map *_map) 
+	ImageLayer::ImageLayer(const Tmx::Map *_map)
 		: map(_map)
 		, name()
 		, width(0)
@@ -50,12 +50,12 @@ namespace Tmx
 	{
 	}
 
-	ImageLayer::~ImageLayer() 
+	ImageLayer::~ImageLayer()
 	{
 		delete image;
 	}
 
-	void ImageLayer::Parse(const TiXmlNode *imageLayerNode) 
+	void ImageLayer::Parse(const TiXmlNode *imageLayerNode)
 	{
 		const TiXmlElement *imagenLayerElem = imageLayerNode->ToElement();
 
@@ -66,21 +66,21 @@ namespace Tmx
 		imagenLayerElem->Attribute("height", &height);
 
 		const char *opacityStr = imagenLayerElem->Attribute("opacity");
-		if (opacityStr) 
+		if (opacityStr)
 		{
 			opacity = (float)atof(opacityStr);
 		}
 
 		const char *visibleStr = imagenLayerElem->Attribute("visible");
-		if (visibleStr) 
+		if (visibleStr)
 		{
 			visible = atoi(visibleStr) != 0; // to prevent visual c++ from complaining..
 		}
 
 		// Parse the image.
 		const TiXmlNode *imageNode = imagenLayerElem->FirstChild("image");
-		
-		if (imageNode) 
+
+		if (imageNode)
 		{
 			image = new Image();
 			image->Parse(imageNode);
@@ -88,8 +88,8 @@ namespace Tmx
 
 		// Parse the properties if any.
 		const TiXmlNode *propertiesNode = imagenLayerElem->FirstChild("properties");
-		
-		if (propertiesNode) 
+
+		if (propertiesNode)
 		{
 			properties.Parse(propertiesNode);
 		}

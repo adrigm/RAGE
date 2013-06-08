@@ -36,9 +36,9 @@ using std::string;
 
 namespace ra
 {
-namespace Tmx 
+namespace Tmx
 {
-	Tileset::Tileset() 
+	Tileset::Tileset()
 		: first_gid(0)
 		, name()
 		, tile_width(0)
@@ -50,22 +50,22 @@ namespace Tmx
 	{
 	}
 
-	Tileset::~Tileset() 
+	Tileset::~Tileset()
 	{
 		// Delete the image from memory if allocated.
-		if (image) 
+		if (image)
 		{
 			delete image;
 			image = NULL;
 		}
-		
+
 		// Iterate through all of the tiles in the set and delete each of them.
 		vector< Tile* >::iterator tIter;
-		for (tIter = tiles.begin(); tIter != tiles.end(); ++tIter) 
+		for (tIter = tiles.begin(); tIter != tiles.end(); ++tIter)
 		{
 			Tile *tile = (*tIter);
-			
-			if (tile) 
+
+			if (tile)
 			{
 				delete tile;
 				tile = NULL;
@@ -73,7 +73,7 @@ namespace Tmx
 		}
 	}
 
-	void Tileset::Parse(const TiXmlNode *tilesetNode) 
+	void Tileset::Parse(const TiXmlNode *tilesetNode)
 	{
 		const TiXmlElement *tilesetElem = tilesetNode->ToElement();
 
@@ -88,8 +88,8 @@ namespace Tmx
 
 		// Parse the image.
 		const TiXmlNode *imageNode = tilesetNode->FirstChild("image");
-		
-		if (imageNode) 
+
+		if (imageNode)
 		{
 			image = new Image();
 			image->Parse(imageNode);
@@ -108,21 +108,21 @@ namespace Tmx
 
 			tileNode = tilesetNode->IterateChildren("tile", tileNode);
 		}
-		
+
 		// Parse the properties if any.
 		const TiXmlNode *propertiesNode = tilesetNode->FirstChild("properties");
-		
-		if (propertiesNode) 
+
+		if (propertiesNode)
 		{
 			properties.Parse(propertiesNode);
 		}
 	}
 
-	const Tile *Tileset::GetTile(int index) const 
+	const Tile *Tileset::GetTile(int index) const
 	{
-		for (unsigned int i = 0; i < tiles.size(); ++i) 
+		for (unsigned int i = 0; i < tiles.size(); ++i)
 		{
-			if (tiles.at(i)->GetId() == index) 
+			if (tiles.at(i)->GetId() == index)
 			{
 				return tiles.at(i);
 			}
