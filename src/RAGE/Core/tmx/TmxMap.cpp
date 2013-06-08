@@ -43,9 +43,9 @@ using std::string;
 
 namespace ra
 {
-namespace Tmx 
+namespace Tmx
 {
-	Map::Map() 
+	Map::Map()
 		: file_name()
 		, file_path()
 		, version(0.0)
@@ -56,20 +56,20 @@ namespace Tmx
 		, tile_height(0)
 		, layers()
 		, object_groups()
-		, tilesets() 
+		, tilesets()
 		, has_error(false)
 		, error_code(0)
 		, error_text()
 	{}
 
-	Map::~Map() 
+	Map::~Map()
 	{
 		// Iterate through all of the object groups and delete each of them.
 		vector< ObjectGroup* >::iterator ogIter;
-		for (ogIter = object_groups.begin(); ogIter != object_groups.end(); ++ogIter) 
+		for (ogIter = object_groups.begin(); ogIter != object_groups.end(); ++ogIter)
 		{
 			ObjectGroup *objectGroup = (*ogIter);
-			
+
 			if (objectGroup)
 			{
 				delete objectGroup;
@@ -79,11 +79,11 @@ namespace Tmx
 
 		// Iterate through all of the layers and delete each of them.
 		vector< Layer* >::iterator lIter;
-		for (lIter = layers.begin(); lIter != layers.end(); ++lIter) 
+		for (lIter = layers.begin(); lIter != layers.end(); ++lIter)
 		{
 			Layer *layer = (*lIter);
 
-			if (layer) 
+			if (layer)
 			{
 				delete layer;
 				layer = NULL;
@@ -92,11 +92,11 @@ namespace Tmx
 
 		// Iterate through all of the layers and delete each of them.
 		vector< ImageLayer* >::iterator ilIter;
-		for (ilIter = image_layers.begin(); ilIter != image_layers.end(); ++ilIter) 
+		for (ilIter = image_layers.begin(); ilIter != image_layers.end(); ++ilIter)
 		{
 			ImageLayer *layer = (*ilIter);
 
-			if (layer) 
+			if (layer)
 			{
 				delete layer;
 				layer = NULL;
@@ -105,11 +105,11 @@ namespace Tmx
 
 		// Iterate through all of the tilesets and delete each of them.
 		vector< Tileset* >::iterator tsIter;
-		for (tsIter = tilesets.begin(); tsIter != tilesets.end(); ++tsIter) 
+		for (tsIter = tilesets.begin(); tsIter != tilesets.end(); ++tsIter)
 		{
 			Tileset *tileset = (*tsIter);
-			
-			if (tileset) 
+
+			if (tileset)
 			{
 				delete tileset;
 				tileset = NULL;
@@ -117,18 +117,18 @@ namespace Tmx
 		}
 	}
 
-	void Map::ParseFile(const string &fileName) 
+	void Map::ParseFile(const string &fileName)
 	{
 		file_name = fileName;
 
 		int lastSlash = fileName.find_last_of("/");
 
 		// Get the directory of the file using substring.
-		if (lastSlash > 0) 
+		if (lastSlash > 0)
 		{
 			file_path = fileName.substr(0, lastSlash + 1);
-		} 
-		else 
+		}
+		else
 		{
 			file_path = "";
 		}
@@ -144,15 +144,15 @@ namespace Tmx
 #endif
 
 		// Check if the file could not be opened.
-		if (!file) 
+		if (!file)
 		{
 			has_error = true;
 			error_code = TMX_COULDNT_OPEN;
 			error_text = "Could not open the file.";
 			return;
 		}
-	
-		// Find out the file size.	
+
+		// Find out the file size.
 #ifdef USE_SDL2_LOAD
 		fileSize = file->size(file);
 #else
@@ -160,7 +160,7 @@ namespace Tmx
 		fileSize = ftell(file);
 		fseek(file, 0, SEEK_SET);
 #endif
-		
+
 		// Check if the file size is valid.
 		if (fileSize <= 0)
 		{
@@ -189,17 +189,17 @@ namespace Tmx
 		std::string text(fileText, fileText+fileSize);
 		delete [] fileText;
 
-		ParseText(text);		
+		ParseText(text);
 	}
 
-	void Map::ParseText(const string &text) 
+	void Map::ParseText(const string &text)
 	{
 		// Create a tiny xml document and use it to parse the text.
 		TiXmlDocument doc;
 		doc.Parse(text.c_str());
-	
+
 		// Check for parsing errors.
-		if (doc.Error()) 
+		if (doc.Error())
 		{
 			has_error = true;
 			error_code = TMX_PARSING_ERROR;
@@ -220,19 +220,19 @@ namespace Tmx
 		// Read the orientation
 		std::string orientationStr = mapElem->Attribute("orientation");
 
-		if (!orientationStr.compare("orthogonal")) 
+		if (!orientationStr.compare("orthogonal"))
 		{
 			orientation = TMX_MO_ORTHOGONAL;
-		} 
-		else if (!orientationStr.compare("isometric")) 
+		}
+		else if (!orientationStr.compare("isometric"))
 		{
 			orientation = TMX_MO_ISOMETRIC;
 		}
-		else if (!orientationStr.compare("staggered")) 
+		else if (!orientationStr.compare("staggered"))
 		{
 			orientation = TMX_MO_STAGGERED;
 		}
-		
+
 
 		const TiXmlNode *node = mapElem->FirstChild();
 		int zOrder = 0;
@@ -241,7 +241,7 @@ namespace Tmx
 			// Read the map properties.
 			if( strcmp( node->Value(), "properties" ) == 0 )
 			{
-				properties.Parse(node);			
+				properties.Parse(node);
 			}
 
 			// Iterate through all of the tileset elements.
@@ -255,7 +255,7 @@ namespace Tmx
 				tilesets.push_back(tileset);
 			}
 
-			// Iterate through all of the layer elements.			
+			// Iterate through all of the layer elements.
 			if( strcmp( node->Value(), "layer" ) == 0 )
 			{
 				// Allocate a new layer and parse it.
@@ -268,7 +268,7 @@ namespace Tmx
 				layers.push_back(layer);
 			}
 
-			// Iterate through all of the imagen layer elements.			
+			// Iterate through all of the imagen layer elements.
 			if( strcmp( node->Value(), "imagelayer" ) == 0 )
 			{
 				// Allocate a new layer and parse it.
@@ -289,7 +289,7 @@ namespace Tmx
 				objectGroup->Parse(node);
 				objectGroup->SetZOrder( zOrder );
 				++zOrder;
-		
+
 				// Add the object group to the list.
 				object_groups.push_back(objectGroup);
 			}
@@ -303,29 +303,29 @@ namespace Tmx
 		// Clean up the flags from the gid (thanks marwes91).
 		gid &= ~(FlippedHorizontallyFlag | FlippedVerticallyFlag | FlippedDiagonallyFlag);
 
-		for (int i = tilesets.size() - 1; i > -1; --i) 
+		for (int i = tilesets.size() - 1; i > -1; --i)
 		{
 			// If the gid beyond the tileset gid return its index.
-			if (gid >= tilesets[i]->GetFirstGid()) 
+			if (gid >= tilesets[i]->GetFirstGid())
 			{
 				return i;
 			}
 		}
-		
+
 		return -1;
 	}
 
-	const Tileset *Map::FindTileset(int gid) const 
+	const Tileset *Map::FindTileset(int gid) const
 	{
-		for (int i = tilesets.size() - 1; i > -1; --i) 
+		for (int i = tilesets.size() - 1; i > -1; --i)
 		{
 			// If the gid beyond the tileset gid return it.
-			if (gid >= tilesets[i]->GetFirstGid()) 
+			if (gid >= tilesets[i]->GetFirstGid())
 			{
 				return tilesets[i];
 			}
 		}
-		
+
 		return NULL;
 	}
 };

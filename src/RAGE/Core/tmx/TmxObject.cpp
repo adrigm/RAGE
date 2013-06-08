@@ -34,9 +34,9 @@
 
 namespace ra
 {
-namespace Tmx 
+namespace Tmx
 {
-	Object::Object() 
+	Object::Object()
 		: name()
 		, type()
 		, x(0)
@@ -47,10 +47,10 @@ namespace Tmx
 		, ellipse(0)
 		, polygon(0)
 		, polyline(0)
-		, properties() 
+		, properties()
 	{}
 
-	Object::~Object() 
+	Object::~Object()
 	{
 		if (ellipse != 0)
 		{
@@ -69,17 +69,17 @@ namespace Tmx
 		}
 	}
 
-	void Object::Parse(const TiXmlNode *objectNode) 
+	void Object::Parse(const TiXmlNode *objectNode)
 	{
 		const TiXmlElement *objectElem = objectNode->ToElement();
 
 		// Read the attributes of the object.
 		const char *tempName = objectElem->Attribute("name");
 		const char *tempType = objectElem->Attribute("type");
-		
+
 		if (tempName) name = tempName;
 		if (tempType) type = tempType;
-		
+
 		objectElem->Attribute("x", &x);
 		objectElem->Attribute("y", &y);
 		objectElem->Attribute("width", &width);
@@ -93,7 +93,7 @@ namespace Tmx
 			if (ellipse != 0)
 				delete ellipse;
 
-			ellipse = new Ellipse(x,y,width,height);			
+			ellipse = new Ellipse(x,y,width,height);
 		}
 
 		// Read the Polygon and Polyline of the object if there are any.
@@ -118,7 +118,7 @@ namespace Tmx
 
 		// Read the properties of the object.
 		const TiXmlNode *propertiesNode = objectNode->FirstChild("properties");
-		if (propertiesNode) 
+		if (propertiesNode)
 		{
 			properties.Parse(propertiesNode);
 		}

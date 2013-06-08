@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Test" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="../../../bin/Test-d" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../../bin" />
+				<Option object_output=".obj/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="RAGE-d" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="../../../bin/Test" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../../bin" />
+				<Option object_output=".obj/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="RAGE" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add directory="../../../include" />
+		</Compiler>
+		<Linker>
+			<Add directory="../../../bin" />
+		</Linker>
+		<Unit filename="../../../src/Test/Player.cpp" />
+		<Unit filename="../../../src/Test/Player.hpp" />
+		<Unit filename="../../../src/Test/SceneGame.cpp" />
+		<Unit filename="../../../src/Test/SceneGame.hpp" />
+		<Unit filename="../../../src/Test/SceneMenu.cpp" />
+		<Unit filename="../../../src/Test/SceneMenu.hpp" />
+		<Unit filename="../../../src/Test/main.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

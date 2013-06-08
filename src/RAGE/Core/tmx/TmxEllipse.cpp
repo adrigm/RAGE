@@ -31,7 +31,7 @@
 
 namespace ra
 {
-namespace Tmx 
+namespace Tmx
 {
 	Ellipse::Ellipse( int _x, int _y, int width, int height )
 		: x(_x+(width/2))

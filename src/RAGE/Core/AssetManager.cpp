@@ -50,7 +50,7 @@ void AssetManager::setPath(const std::string& thePath)
 	if (boost::filesystem::exists(path) && boost::filesystem::is_directory(path))
 	{
 		path = boost::filesystem::canonical(path);
-		path = path.generic_string();
+		//path = path.generic_string();
 		std::string path_s = path.string();
 		path_s.append("/");
 
@@ -60,8 +60,7 @@ void AssetManager::setPath(const std::string& thePath)
 	}
 	else
 	{
-
-		m_app->getLog() << "[error] AssetManager::SetPath() no existe dir=\"" 
+		m_app->getLog() << "[error] AssetManager::SetPath() no existe dir=\""
 			<< path.string() << "\"" << std::endl;
 	}
 }
@@ -151,7 +150,7 @@ sf::Texture* AssetManager::getTextureFromImage(const std::string& theName, const
 
 void AssetManager::deleteTexture(const std::string& theName)
 {
-	std::map<std::string, sf::Texture*>::const_iterator it = m_textures.find(theName);
+	std::map<std::string, sf::Texture*>::iterator it = m_textures.find(theName);
 	if (it != m_textures.end())
 	{
 		delete it->second;
@@ -165,7 +164,7 @@ void AssetManager::deleteTexture(const std::string& theName)
 
 void AssetManager::deleteTexture(const sf::Texture* theTexture)
 {
-	std::map<std::string, sf::Texture*>::const_iterator it;
+	std::map<std::string, sf::Texture*>::iterator it;
 	for (it = m_textures.begin(); it != m_textures.end(); it++)
 	{
 		if (theTexture == it->second)
@@ -238,7 +237,7 @@ sf::Image* AssetManager::getImageFromTexture(const std::string& theName, const s
 
 void AssetManager::deleteImage(const std::string& theName)
 {
-	std::map<std::string, sf::Image*>::const_iterator it = m_images.find(theName);
+	std::map<std::string, sf::Image*>::iterator it = m_images.find(theName);
 	if (it != m_images.end())
 	{
 		delete it->second;
@@ -252,7 +251,7 @@ void AssetManager::deleteImage(const std::string& theName)
 
 void AssetManager::deleteImage(const sf::Image* theImage)
 {
-	std::map<std::string, sf::Image*>::const_iterator it;
+	std::map<std::string, sf::Image*>::iterator it;
 	for (it = m_images.begin(); it != m_images.end(); it++)
 	{
 		if (theImage == it->second)
@@ -270,7 +269,7 @@ void AssetManager::deleteImage(const sf::Image* theImage)
 sf::Font* AssetManager::getFont(const std::string& theName)
 {
 	// Comprobamos si ya esta cargada
-	std::map<std::string, sf::Font*>::const_iterator it;
+	std::map<std::string, sf::Font*>::iterator it;
 	it = m_fonts.find(theName);
 	if (it != m_fonts.end())
 	{
@@ -298,7 +297,7 @@ sf::Font* AssetManager::getFont(const std::string& theName)
 
 void AssetManager::deleteFont(const std::string& theName)
 {
-	std::map<std::string, sf::Font*>::const_iterator it = m_fonts.find(theName);
+	std::map<std::string, sf::Font*>::iterator it = m_fonts.find(theName);
 	if (it != m_fonts.end())
 	{
 		delete it->second;
@@ -312,7 +311,7 @@ void AssetManager::deleteFont(const std::string& theName)
 
 void AssetManager::deleteFont(const sf::Font* theFont)
 {
-	std::map<std::string, sf::Font*>::const_iterator it;
+	std::map<std::string, sf::Font*>::iterator it;
 	for (it = m_fonts.begin(); it != m_fonts.end(); it++)
 	{
 		if (theFont == it->second)
@@ -330,7 +329,7 @@ void AssetManager::deleteFont(const sf::Font* theFont)
 sf::SoundBuffer* AssetManager::getSoundBuffer(const std::string& theName)
 {
 	// Comprobamos si ya esta cargada
-	std::map<std::string, sf::SoundBuffer*>::const_iterator it;
+	std::map<std::string, sf::SoundBuffer*>::iterator it;
 	it = m_sounds.find(theName);
 	if (it != m_sounds.end())
 	{
@@ -358,7 +357,7 @@ sf::SoundBuffer* AssetManager::getSoundBuffer(const std::string& theName)
 
 void AssetManager::deleteSoundBuffer(const std::string& theName)
 {
-	std::map<std::string, sf::SoundBuffer*>::const_iterator it = m_sounds.find(theName);
+	std::map<std::string, sf::SoundBuffer*>::iterator it = m_sounds.find(theName);
 	if (it != m_sounds.end())
 	{
 		delete it->second;
@@ -372,7 +371,7 @@ void AssetManager::deleteSoundBuffer(const std::string& theName)
 
 void AssetManager::deleteSoundBuffer(const sf::SoundBuffer* theSoundBuffer)
 {
-	std::map<std::string, sf::SoundBuffer*>::const_iterator it;
+	std::map<std::string, sf::SoundBuffer*>::iterator it;
 	for (it = m_sounds.begin(); it != m_sounds.end(); it++)
 	{
 		if (theSoundBuffer == it->second)
@@ -390,7 +389,7 @@ void AssetManager::deleteSoundBuffer(const sf::SoundBuffer* theSoundBuffer)
 sf::Music* AssetManager::getMusic(const std::string& theName)
 {
 	// Comprobamos si ya esta cargada
-	std::map<std::string, sf::Music*>::const_iterator it;
+	std::map<std::string, sf::Music*>::iterator it;
 	it = m_music.find(theName);
 	if (it != m_music.end())
 	{
@@ -418,7 +417,7 @@ sf::Music* AssetManager::getMusic(const std::string& theName)
 
 void AssetManager::deleteMusic(const std::string& theName)
 {
-	std::map<std::string, sf::Music*>::const_iterator it = m_music.find(theName);
+	std::map<std::string, sf::Music*>::iterator it = m_music.find(theName);
 	if (it != m_music.end())
 	{
 		delete it->second;
@@ -432,7 +431,7 @@ void AssetManager::deleteMusic(const std::string& theName)
 
 void AssetManager::deleteMusic(const sf::Music* theMusic)
 {
-	std::map<std::string, sf::Music*>::const_iterator it;
+	std::map<std::string, sf::Music*>::iterator it;
 	for (it = m_music.begin(); it != m_music.end(); it++)
 	{
 		if (theMusic == it->second)
@@ -450,7 +449,7 @@ void AssetManager::deleteMusic(const sf::Music* theMusic)
 ra::ConfigReader* AssetManager::getConfig(const std::string& theName)
 {
 	// Comprobamos si ya esta cargada
-	std::map<std::string, ra::ConfigReader*>::const_iterator it;
+	std::map<std::string, ra::ConfigReader*>::iterator it;
 	it = m_configs.find(theName);
 	if (it != m_configs.end())
 	{
@@ -478,7 +477,7 @@ ra::ConfigReader* AssetManager::getConfig(const std::string& theName)
 
 void AssetManager::deleteConfig(const std::string& theName)
 {
-	std::map<std::string, ra::ConfigReader*>::const_iterator it = m_configs.find(theName);
+	std::map<std::string, ra::ConfigReader*>::iterator it = m_configs.find(theName);
 	if (it != m_configs.end())
 	{
 		delete it->second;
@@ -492,7 +491,7 @@ void AssetManager::deleteConfig(const std::string& theName)
 
 void AssetManager::deleteConfig(const ra::ConfigReader* theConfig)
 {
-	std::map<std::string, ra::ConfigReader*>::const_iterator it;
+	std::map<std::string, ra::ConfigReader*>::iterator it;
 	for (it = m_configs.begin(); it != m_configs.end(); it++)
 	{
 		if (theConfig == it->second)
@@ -510,7 +509,7 @@ void AssetManager::deleteConfig(const ra::ConfigReader* theConfig)
 ra::Tmx::Map* AssetManager::getTmxMap(const std::string& theName)
 {
 	// Comprobamos si ya esta cargada
-	std::map<std::string, ra::Tmx::Map*>::const_iterator it;
+	std::map<std::string, ra::Tmx::Map*>::iterator it;
 	it = m_maps.find(theName);
 	if (it != m_maps.end())
 	{
@@ -538,7 +537,7 @@ ra::Tmx::Map* AssetManager::getTmxMap(const std::string& theName)
 
 void AssetManager::deleteTmxMap(const std::string& theName)
 {
-	std::map<std::string, ra::Tmx::Map*>::const_iterator it = m_maps.find(theName);
+	std::map<std::string, ra::Tmx::Map*>::iterator it = m_maps.find(theName);
 	if (it != m_maps.end())
 	{
 		delete it->second;
@@ -552,7 +551,7 @@ void AssetManager::deleteTmxMap(const std::string& theName)
 
 void AssetManager::deleteTmxMap(const ra::Tmx::Map* theMap)
 {
-	std::map<std::string, ra::Tmx::Map*>::const_iterator it;
+	std::map<std::string, ra::Tmx::Map*>::iterator it;
 	for (it = m_maps.begin(); it != m_maps.end(); it++)
 	{
 		if (theMap == it->second)
@@ -569,7 +568,7 @@ void AssetManager::deleteTmxMap(const ra::Tmx::Map* theMap)
 
 void AssetManager::cleanup()
 {
-	std::map<std::string, sf::Texture*>::const_iterator textIt;
+	std::map<std::string, sf::Texture*>::iterator textIt;
 	for (textIt = m_textures.begin(); textIt != m_textures.end(); textIt++)
 	{
 		delete textIt->second;
@@ -577,7 +576,7 @@ void AssetManager::cleanup()
 	}
 	m_textures.clear();
 
-	std::map<std::string, sf::Image*>::const_iterator imgIt;
+	std::map<std::string, sf::Image*>::iterator imgIt;
 	for (imgIt = m_images.begin(); imgIt != m_images.end(); imgIt++)
 	{
 		delete imgIt->second;
@@ -585,7 +584,7 @@ void AssetManager::cleanup()
 	}
 	m_images.clear();
 
-	std::map<std::string, sf::Font*>::const_iterator fonIt;
+	std::map<std::string, sf::Font*>::iterator fonIt;
 	for (fonIt = m_fonts.begin(); fonIt != m_fonts.end(); fonIt++)
 	{
 		delete fonIt->second;
@@ -593,7 +592,7 @@ void AssetManager::cleanup()
 	}
 	m_fonts.clear();
 
-	std::map<std::string, sf::SoundBuffer*>::const_iterator souIT;
+	std::map<std::string, sf::SoundBuffer*>::iterator souIT;
 	for (souIT = m_sounds.begin(); souIT != m_sounds.end(); souIT++)
 	{
 		delete souIT->second;
@@ -601,7 +600,7 @@ void AssetManager::cleanup()
 	}
 	m_sounds.clear();
 
-	std::map<std::string, sf::Music*>::const_iterator muIt;
+	std::map<std::string, sf::Music*>::iterator muIt;
 	for (muIt = m_music.begin(); muIt != m_music.end(); muIt++)
 	{
 		delete muIt->second;
@@ -609,7 +608,7 @@ void AssetManager::cleanup()
 	}
 	m_music.clear();
 
-	std::map<std::string, ra::ConfigReader*>::const_iterator conIt;
+	std::map<std::string, ra::ConfigReader*>::iterator conIt;
 	for (conIt = m_configs.begin(); conIt != m_configs.end(); conIt++)
 	{
 		delete conIt->second;
@@ -617,7 +616,7 @@ void AssetManager::cleanup()
 	}
 	m_configs.clear();
 
-	std::map<std::string, ra::Tmx::Map*>::const_iterator mapIt;
+	std::map<std::string, ra::Tmx::Map*>::iterator mapIt;
 	for (mapIt = m_maps.begin(); mapIt != m_maps.end(); mapIt++)
 	{
 		delete mapIt->second;

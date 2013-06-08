@@ -34,10 +34,10 @@ using std::map;
 
 namespace ra
 {
-namespace Tmx 
+namespace Tmx
 {
-		
-	PropertySet::PropertySet() : properties()  
+
+	PropertySet::PropertySet() : properties()
 	{}
 
 	PropertySet::~PropertySet()
@@ -45,14 +45,14 @@ namespace Tmx
 		properties.clear();
 	}
 
-	void PropertySet::Parse(const TiXmlNode *propertiesNode) 
+	void PropertySet::Parse(const TiXmlNode *propertiesNode)
 	{
 		// Iterate through all of the property nodes.
 		const TiXmlNode *propertyNode = propertiesNode->FirstChild("property");
 		string propertyName;
 		string propertyValue;
 
-		while (propertyNode) 
+		while (propertyNode)
 		{
 			const TiXmlElement* propertyElem = propertyNode->ToElement();
 
@@ -60,13 +60,13 @@ namespace Tmx
 			propertyName = string(propertyElem->Attribute("name"));
 			propertyValue = string(propertyElem->Attribute("value"));
 			properties[propertyName] = propertyValue;
-			
+
 			propertyNode = propertiesNode->IterateChildren(
 				"property", propertyNode);
 		}
 	}
 
-	string PropertySet::GetLiteralProperty(const string &name) const 
+	string PropertySet::GetLiteralProperty(const string &name) const
 	{
 		// Find the property in the map.
 		map< string, string >::const_iterator iter = properties.find(name);
@@ -77,12 +77,12 @@ namespace Tmx
 		return iter->second;
 	}
 
-	int PropertySet::GetNumericProperty(const string &name) const 
+	int PropertySet::GetNumericProperty(const string &name) const
 	{
 		return atoi(GetLiteralProperty(name).c_str());
 	}
 
-	float PropertySet::GetFloatProperty(const string &name) const 
+	float PropertySet::GetFloatProperty(const string &name) const
 	{
 		return float(atof(GetLiteralProperty(name).c_str()));
 	}

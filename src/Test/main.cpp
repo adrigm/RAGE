@@ -5,7 +5,7 @@
 int main(int argc, char **argv)
 {
 	int anExitCode = ra::StatusNoError;
-	
+
 	ra::App* anApp = ra::App::instance();
 
 	anApp->registerExecutableDir(argc, argv);
@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 	anExitCode = anApp->run();
 
 	ra::App::release();
-	
+
 	anApp = 0;
 
 	return anExitCode;
