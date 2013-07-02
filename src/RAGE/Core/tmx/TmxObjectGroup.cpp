@@ -32,7 +32,7 @@
 
 namespace ra
 {
-namespace Tmx 
+namespace Tmx
 {
 	ObjectGroup::ObjectGroup()
 		: name()
@@ -41,7 +41,7 @@ namespace Tmx
 		, zOrder(0)
 	{}
 
-	ObjectGroup::~ObjectGroup() 
+	ObjectGroup::~ObjectGroup()
 	{
 		for(std::size_t i = 0; i < objects.size(); i++)
 		{
@@ -50,32 +50,32 @@ namespace Tmx
 		}
 	}
 
-	void ObjectGroup::Parse(const TiXmlNode *objectGroupNode) 
+	void ObjectGroup::Parse(const TiXmlNode *objectGroupNode)
 	{
 		const TiXmlElement *objectGroupElem = objectGroupNode->ToElement();
 
 		// Read the object group attributes.
 		name = objectGroupElem->Attribute("name");
-		
+
 		objectGroupElem->Attribute("width", &width);
 		objectGroupElem->Attribute("height", &height);
 		objectGroupElem->Attribute("visible", &visible);
 
 		// Read the properties.
 		const TiXmlNode *propertiesNode = objectGroupNode->FirstChild("properties");
-		if (propertiesNode) 
+		if (propertiesNode)
 		{
 			properties.Parse(propertiesNode);
 		}
 
 		// Iterate through all of the object elements.
 		const TiXmlNode *objectNode = objectGroupNode->FirstChild("object");
-		while (objectNode) 
+		while (objectNode)
 		{
 			// Allocate a new object and parse it.
 			Object *object = new Object();
 			object->Parse(objectNode);
-			
+
 			// Add the object to the list.
 			objects.push_back(object);
 

@@ -7,6 +7,8 @@
 namespace ra
 {
 
+class App;
+
 class Camera : public sf::View
 {
 public:
@@ -20,7 +22,7 @@ public:
 	sf::FloatRect getRect() const;
 
 private:
-	friend class App;
+	friend App;
 	App* m_app;
 }; // class Camera
 

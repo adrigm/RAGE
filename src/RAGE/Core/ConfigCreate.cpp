@@ -13,7 +13,7 @@ ConfigCreate::~ConfigCreate()
 
 void ConfigCreate::open(const std::string& filename)
 {
-	file.open(filename);
+	file.open(filename.c_str());
 	file.clear();
 }
 

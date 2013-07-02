@@ -31,7 +31,7 @@
 
 namespace ra
 {
-namespace Tmx 
+namespace Tmx
 {
 	Polyline::Polyline()
 		: points()
@@ -41,7 +41,7 @@ namespace Tmx
 	void Polyline::Parse(const TiXmlNode *polylineNode)
 	{
 		char *pointsLine = strdup(polylineNode->ToElement()->Attribute("points"));
-		
+
 		char *token = strtok(pointsLine, " ");
 		while (token)
 		{
